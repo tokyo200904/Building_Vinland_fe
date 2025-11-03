@@ -10,7 +10,7 @@ $(document).ready(function() {
         return;
     }
 
-    const API_ENDPOINT = `http://localhost:8081/api/v1/bds/chitiet/${bdsId}`; // API của bạn
+    const API_ENDPOINT = `http://localhost:8081/api/admin/bds/chitiet/${bdsId}`; // API của bạn
 
     let propertyCarousel; // Biến toàn cục để giữ instance của Carousel
 

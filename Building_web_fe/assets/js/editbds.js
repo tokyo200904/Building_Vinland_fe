@@ -2,8 +2,8 @@ $(document).ready(function() {
     const urlParams = new URLSearchParams(window.location.search);
     const bdsId = urlParams.get('id'); // Lấy ID từ URL
 
-    const API_DETAIL_ENDPOINT = `http://localhost:8081/api/v1/bds/chitiet/${bdsId}`; // API chi tiết
-    const API_UPDATE_ENDPOINT = `http://localhost:8081/api/v1/bds/${bdsId}`; // API update (PUT/PATCH)
+    const API_DETAIL_ENDPOINT = `http://localhost:8081/api/admin/bds/chitiet/${bdsId}`; // API chi tiết
+    const API_UPDATE_ENDPOINT = `http://localhost:8081/api/admin/bds/${bdsId}`; // API update (PUT/PATCH)
 
     let currentMainImageUrl = null; // Để lưu trữ URL ảnh chính hiện tại từ backend
     let newMainImageFile = null;    // Để lưu trữ file ảnh chính mới được chọn

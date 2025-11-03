@@ -38,7 +38,7 @@ async function loadBds(filters = {}) { // Đặt filters mặc định là {}
 
     // Xây dựng URL API
     // Ví dụ: http://localhost:8081/api/v1/bds?searchTerm=villa&minPrice=100&loaiBds=CAN_HO
-    const API_URL = `http://localhost:8081/api/v1/bds/search?${queryParams.toString()}`;
+    const API_URL = `http://localhost:8081/api/search?${queryParams.toString()}`;
     console.log("Đang gọi API với URL:", API_URL); // Debug: Kiểm tra URL API
 
     try {
