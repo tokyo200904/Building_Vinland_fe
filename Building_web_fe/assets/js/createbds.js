@@ -1,153 +1,187 @@
-
-document.addEventListener('DOMContentLoaded', function () {
-    const API_ENDPOINT = '/api/yeucau/dangtin'; // Endpoint của bạn
-    const imageUploadArea = document.getElementById('imageUploadArea');
-    const imageUploadInput = document.getElementById('imageUploadInput');
-    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-    const postRealEstateForm = document.getElementById('postRealEstateForm');
-
-    let uploadedFiles = []; // Mảng chứa các File object
-    let mainImageIndex = -1; // Index của ảnh chính trong uploadedFiles
-
-    // --- IMAGE UPLOAD LOGIC ---
-    imageUploadArea.addEventListener('click', () => imageUploadInput.click());
-    imageUploadArea.addEventListener('dragover', (e) => { e.preventDefault(); imageUploadArea.style.borderColor = '#007bff'; });
-    imageUploadArea.addEventListener('dragleave', () => { imageUploadArea.style.borderColor = '#a0d9ff'; });
-    imageUploadArea.addEventListener('drop', (e) => {
-        e.preventDefault();
-        imageUploadArea.style.borderColor = '#a0d9ff';
-        handleFiles(Array.from(e.dataTransfer.files));
-    });
-    imageUploadInput.addEventListener('change', (e) => handleFiles(Array.from(e.target.files)));
-
-    function handleFiles(files) {
-        files.forEach(file => {
-            if (file.type.startsWith('image/')) {
-                uploadedFiles.push(file);
-            }
-        });
-        if (mainImageIndex === -1 && uploadedFiles.length > 0) {
-            mainImageIndex = 0; // Đặt ảnh đầu tiên làm ảnh chính nếu chưa có
-        }
-        renderPreviews();
-    }
-
-    function renderPreviews() {
-        imagePreviewContainer.innerHTML = '';
-        uploadedFiles.forEach((file, index) => {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const previewItem = document.createElement('div');
-                previewItem.className = 'image-preview-item';
-                if (index === mainImageIndex) {
-                    previewItem.classList.add('main-image');
+  // Hàm xử lý lỗi API chung
+    function handleApiError(jqXHR, errorContainer) {
+        if (jqXHR.status === 401 || jqXHR.status === 403) {
+            alert('Phiên đăng nhập đã hết hạn hoặc bạn không có quyền. Vui lòng đăng nhập lại.');
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('user_role');
+            localStorage.removeItem('user_name');
+            localStorage.removeItem('user_avatar');
+            window.location.href = '/Building_web_fe/login.html';
+        } else {
+            let msg = 'Đã có lỗi xảy ra. Vui lòng thử lại.';
+            if (jqXHR.responseJSON) {
+                if (Array.isArray(jqXHR.responseJSON)) {
+                    msg = jqXHR.responseJSON.join('\n');
+                } else if (jqXHR.responseJSON.message) {
+                    msg = jqXHR.responseJSON.message;
                 }
-
-                previewItem.innerHTML = `
-                            <img src="${e.target.result}" alt="Preview">
-                            <span class="remove-image" data-index="${index}"><i class="bi bi-x"></i></span>
-                            ${index !== mainImageIndex ? `<span class="set-main-image" data-index="${index}">Đặt làm ảnh chính</span>` : ''}
-                        `;
-                imagePreviewContainer.appendChild(previewItem);
-            };
-            reader.readAsDataURL(file);
-        });
-    }
-
-    imagePreviewContainer.addEventListener('click', (e) => {
-        if (e.target.closest('.remove-image')) {
-            const indexToRemove = parseInt(e.target.closest('.remove-image').dataset.index);
-            uploadedFiles.splice(indexToRemove, 1);
-            if (mainImageIndex === indexToRemove) {
-                mainImageIndex = uploadedFiles.length > 0 ? 0 : -1; // Chọn ảnh đầu tiên còn lại làm chính, hoặc reset
-            } else if (mainImageIndex > indexToRemove) {
-                mainImageIndex--; // Điều chỉnh index của ảnh chính
-            }
-            renderPreviews();
-        } else if (e.target.closest('.set-main-image')) {
-            mainImageIndex = parseInt(e.target.closest('.set-main-image').dataset.index);
-            renderPreviews();
-        }
-    });
-
-    // --- FORM SUBMIT LOGIC ---
-    postRealEstateForm.addEventListener('submit', async function (event) {
-        event.preventDefault();
-
-        if (uploadedFiles.length === 0) {
-            alert('Vui lòng tải lên ít nhất một hình ảnh cho bất động sản.');
-            return;
-        }
-        if (mainImageIndex === -1) {
-            mainImageIndex = 0; // Đảm bảo có ảnh chính nếu người dùng không chọn
-        }
-
-        const formData = new FormData();
-        const jsonBody = {};
-
-        // Thu thập dữ liệu text và số
-        const fields = [
-            'tieuDe', 'moTa', 'gia', 'donViTien', 'loaiBds', 'mucDichTinDang',
-            'viTri', 'quanHuyen', 'thanhPho', 'dienTich', 'soPhongNgu',
-            'soPhongTam', 'tang', 'tongTang', 'noiThat', 'namXayDung'
-        ];
-
-        fields.forEach(field => {
-            const input = this.elements[field];
-            if (input) {
-                if (input.type === 'number') {
-                    jsonBody[field] = input.value ? parseFloat(input.value) : null;
-                } else if (input.tagName === 'SELECT' || input.type === 'text' || input.tagName === 'TEXTAREA') {
-                    jsonBody[field] = input.value || null;
+            } else if (jqXHR.responseText) {
+                 try {
+                    msg = JSON.parse(jqXHR.responseText).message || msg;
+                } catch(e) { 
+                    msg = jqXHR.responseText; 
                 }
             }
-        });
+            errorContainer.text(msg).removeClass('d-none');
+        }
+    }
 
-        // --- Đã loại bỏ logic thu thập tiện ích ở đây ---
-
-        // Gắn JSON body vào FormData dưới dạng một phần tử JSON string
-        formData.append('data', JSON.stringify(jsonBody));
-
-        // Gắn ảnh chính và các ảnh phụ vào FormData
-        uploadedFiles.forEach((file, index) => {
-            if (index === mainImageIndex) {
-                formData.append('mainImageFile', file); // key cho ảnh chính
-            } else {
-                formData.append('otherImageFiles', file); // key cho các ảnh phụ
-            }
-        });
-
-        try {
-            const response = await fetch(API_ENDPOINT, {
-                method: 'POST',
-                body: formData,
-                // 'Authorization': 'Bearer YOUR_AUTH_TOKEN' // Thêm token nếu cần
+    // Hàm hiển thị ảnh preview
+    function renderPreview(file, container, isMainImage = false) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const previewItem = $(`
+                <div class="image-preview-item">
+                    <img src="${e.target.result}" />
+                    <span class="remove-image" data-file-name="${file.name}">&times;</span>
+                    ${isMainImage ? '<span class="main-image-label">Ảnh chính</span>' : ''}
+                </div>
+            `);
+            
+            // Xử lý nút xóa
+            previewItem.find('.remove-image').on('click', function() {
+                previewItem.remove();
+                // (Cần logic phức tạp hơn nếu muốn xóa file khỏi input 'files')
+                // Hiện tại, chỉ xóa preview.
+                if(isMainImage) {
+                    $('#mainImageFile').val(''); // Xóa file khỏi input chính
+                }
             });
 
-            // Lấy nội dung JSON từ response
-            const result = await response.json();
-
-            if (response.ok) {
-                // *** ĐÂY LÀ THAY ĐỔI QUAN TRỌNG ***
-
-                // Hiển thị thông báo động từ Backend
-                alert(result.message || 'Thao tác thành công!');
-
-                // Dựa vào status (nếu có) để quyết định thêm
-                // Ví dụ: if (result.status === 'published') { ... }
-
-                postRealEstateForm.reset(); // Reset form
-                uploadedFiles = [];
-                mainImageIndex = -1;
-                renderPreviews(); // Xóa ảnh preview
-
-            } else {
-                // Xử lý lỗi (giữ nguyên code cũ của bạn)
-                alert('Có lỗi xảy ra khi gửi yêu cầu: ' + (result.message || response.statusText));
-            }
-        } catch (error) {
-            console.error('Lỗi mạng hoặc server:', error);
-            alert('Không thể kết nối đến server. Vui lòng thử lại.');
+            container.append(previewItem);
         }
+        reader.readAsDataURL(file);
+    }
+
+    // Gắn sự kiện cho input file
+    $(document).ready(function() {
+        
+        // Xem trước ảnh chính (chỉ 1 ảnh)
+        $('#mainImageFile').on('change', function(e) {
+            const container = $('#mainImagePreview');
+            container.empty(); // Xóa ảnh chính cũ
+            if (this.files.length > 0) {
+                renderPreview(this.files[0], container, true);
+            }
+        });
+
+        // Xem trước ảnh phụ (nhiều ảnh)
+        $('#otherImageFiles').on('change', function(e) {
+            const container = $('#otherImagesPreview');
+            container.empty(); // Xóa các ảnh phụ cũ
+            if (this.files.length > 5) {
+                alert('Bạn chỉ được phép tải lên tối đa 5 ảnh phụ.');
+                $(this).val(''); // Xóa các file đã chọn
+                return;
+            }
+            if (this.files.length > 0) {
+                Array.from(this.files).forEach(file => {
+                    renderPreview(file, container, false);
+                });
+            }
+        });
+
+
+        // --- XỬ LÝ SUBMIT FORM ---
+        $('#dangTinForm').on('submit', function(e) {
+            e.preventDefault();
+
+            const form = $(this);
+            const token = localStorage.getItem('access_token');
+            const errorContainer = $('#formError');
+            const successContainer = $('#formSuccess');
+            const submitButton = $('#submitButton');
+            const submitSpinner = $('#submitSpinner');
+            const submitButtonText = $('#submitButtonText');
+            
+            // API Endpoint (Khớp với BatDongSanController)
+            const API_ENDPOINT = 'http://localhost:8081/api/dangtin';
+
+            if (!token) {
+                handleApiError({ status: 401 });
+                return;
+            }
+            
+            // Ẩn thông báo cũ
+            errorContainer.addClass('d-none').text('');
+            successContainer.addClass('d-none').text('');
+
+            // 1. Lấy dữ liệu từ Form (DTO)
+            const jsonData = {
+                tieuDe: $('#tieuDe').val(),
+                moTa: $('#moTa').val(),
+                loaiBds: $('#loaiBds').val(),
+                mucDichTinDang: $('#mucDichTinDang').val(),
+                gia: parseFloat($('#gia').val()) || null,
+                donViTien: $('#donViTien').val(),
+                dienTich: parseFloat($('#dienTich').val()) || null,
+                soPhongNgu: parseInt($('#soPhongNgu').val()) || null,
+                soPhongTam: parseInt($('#soPhongTam').val()) || null,
+                tang: parseInt($('#tang').val()) || null,
+                tongTang: parseInt($('#tongTang').val()) || null,
+                baiDoXe: $('#baiDoXe').is(':checked'),
+                banCong: $('#banCong').is(':checked'),
+                thangMay: $('#thangMay').is(':checked'),
+                viTri: $('#viTri').val(),
+                quanHuyen: $('#quanHuyen').val(),
+                thanhPho: $('#thanhPho').val(),
+                noiThat: $('#noiThat').val() || null,
+                namXayDung: parseInt($('#namXayDung').val()) || null
+            };
+
+            // 2. Lấy file ảnh
+            const mainImageFile = $('#mainImageFile')[0].files[0];
+            const otherImageFiles = $('#otherImageFiles')[0].files;
+
+            if (!mainImageFile) {
+                errorContainer.text('Vui lòng tải lên ít nhất một ảnh chính.').removeClass('d-none');
+                return;
+            }
+
+            // 3. Tạo FormData
+            const formData = new FormData();
+            formData.append('data', JSON.stringify(jsonData));
+            formData.append('mainImageFile', mainImageFile);
+            
+            if (otherImageFiles.length > 0) {
+                Array.from(otherImageFiles).forEach(file => {
+                    formData.append('otherImageFiles', file);
+                });
+            }
+
+            // 4. Gửi AJAX
+            $.ajax({
+                url: API_ENDPOINT,
+                type: 'POST',
+                data: formData,
+                processData: false, // Rất quan trọng
+                contentType: false, // Rất quan trọng
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                beforeSend: function() {
+                    submitButton.prop('disabled', true);
+                    submitButtonText.text('Đang tải lên...');
+                    submitSpinner.removeClass('d-none');
+                },
+                success: function(responseMessage) {
+                    // responseMessage sẽ là "Đăng tin thành công!" hoặc "Yêu cầu... chờ duyệt!"
+                    successContainer.text(responseMessage).removeClass('d-none');
+                    form[0].reset(); // Xóa form
+                    $('#mainImagePreview').empty();
+                    $('#otherImagesPreview').empty();
+                    window.scrollTo(0, 0); // Cuộn lên đầu trang
+                },
+                error: function(jqXHR) {
+                    handleApiError(jqXHR, errorContainer);
+                    window.scrollTo(0, 0); // Cuộn lên đầu trang
+                },
+                complete: function() {
+                    submitButton.prop('disabled', false);
+                    submitButtonText.text('Đăng Tin');
+                    submitSpinner.addClass('d-none');
+                }
+            });
+        });
+
     });
-});

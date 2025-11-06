@@ -4,86 +4,165 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản Lý Tin Đăng Chờ Duyệt</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <style>
-        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .container-admin { max-width: 1200px; margin: 40px auto; background-color: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        h2 {
-            color: #1a73e8; /* Google Blue */
-            margin-bottom: 30px;
-            font-weight: 700;
-            text-align: center;
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 15px;
-        }
-        .listing-card {
-            margin-bottom: 25px;
-            border: none; /* Remove default bootstrap border */
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-        .listing-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-        .listing-card img {
-            width: 100%;
-            height: 200px; /* Tăng chiều cao ảnh */
-            object-fit: cover;
-        }
-        .listing-card .card-body { padding: 20px; } /* Tăng padding */
-        .listing-card .card-title {
-            font-size: 1.2em; /* Tăng cỡ chữ tiêu đề */
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #333;
-            height: 50px; /* Giới hạn chiều cao tiêu đề để đồng bộ */
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
-            -webkit-box-orient: vertical;
-        }
-        .listing-card .card-text {
-            font-size: 0.95em; /* Tăng cỡ chữ text */
-            color: #666;
-            margin-bottom: 4px;
-        }
-        .listing-card .card-text strong { color: #333; }
-        .action-buttons button { margin-right: 8px; margin-bottom: 5px; border-radius: 0.5em; } /* Nút tròn hơn */
-        .action-buttons .btn-info { background-color: #0d6efd; border-color: #0d6efd; color: white; } /* Blue for info */
-
-        /* Modal specific styles */
-        .modal-header { background-color: #1a73e8; color: white; border-top-left-radius: 10px; border-top-right-radius: 10px; }
-        .modal-content { border-radius: 10px; }
-        #detailModalBody h4 { color: #1a73e8; font-weight: 700; margin-bottom: 20px; }
-        #detailModalBody p { margin-bottom: 8px; }
-        #detailModalBody p strong { color: #333; }
-        #detailModalBody .img-fluid {
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            max-height: 400px; /* Giới hạn chiều cao ảnh chính */
-            object-fit: contain; /* Đảm bảo ảnh không bị cắt */
-            background-color: #f0f2f5; /* Màu nền cho ảnh chính */
-        }
-        #detailOtherImages img {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            transition: transform 0.2s ease-in-out;
-        }
-        #detailOtherImages img:hover {
-            transform: scale(1.05);
-            cursor: pointer;
-        }
-        .modal-footer .btn-danger { background-color: #dc3545; border-color: #dc3545; }
-        .modal-footer .btn-success { background-color: #28a745; border-color: #28a745; }
-        #rejectModal .modal-header { background-color: #dc3545; }
-        #rejectModal .modal-footer .btn-primary { background-color: #dc3545; border-color: #dc3545; }
-    </style>
+      <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+      <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+   <link rel="stylesheet" href="assets/css/style_admin_duettin.css">
 </head>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <!-- BƯỚC 1: LOGO MỚI -->
+      <a href="Building_trangchu.html" class="logo d-flex align-items-center">
+        <!-- Thay thế logo cũ bằng Bootstrap Icon -->
+        <i class="bi bi-buildings-fill" style="font-size: 26px; color: #0d6efd; margin-left: 10px;"></i>
+        <span class="d-none d-lg-block ms-2">BĐS Admin</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div>
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <!-- BƯỚC 2: PROFILE DROPDOWN (ĐÃ SỬA) -->
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <!-- (Bạn có thể đổi ảnh đại diện mặc định này) -->
+                        <img src="https://placehold.co/40x40/0d6efd/white?text=?" 
+                 alt="Profile" 
+                 class="rounded-circle" 
+                 id="profile-image"> <!-- <-- THÊM ID NÀY -->
+            
+            
+            <!-- ID MỚI: Tên rút gọn của user (lấy từ localStorage) -->
+            <span id="profile-name-short" class="d-none d-md-block dropdown-toggle ps-2">...</span>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <!-- ID MỚI: Tên đầy đủ của user (lấy từ localStorage) -->
+              <h6 id="profile-name-full">Đang tải...</h6>
+              <!-- ID MỚI: Vai trò của user (lấy từ localStorage) -->
+              <span id="profile-role">...</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <!-- (Đổi link này đến trang profile của bạn) -->
+              <a class="dropdown-item d-flex align-items-center" href="admin-profile.html">
+                <i class="bi bi-person"></i>
+                <span>Thông tin tài khoản</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <!-- NÚT ĐĂNG XUẤT (Sẽ được xử lý bằng JS) -->
+              <a class="dropdown-item d-flex align-items-center" href="#" id="logout-button">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Đăng xuất</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="index.html">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Quản lý BĐS</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="Building_list.html">
+              <i class="bi bi-circle"></i><span>Danh sách BĐS</span>
+            </a>
+          </li>
+          <li>
+            <a href="Building_them.html">
+              <i class="bi bi-circle"></i><span>Thêm mới BĐS</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Components Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>Duyệt tin</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="Building_admin_duyetTinBDS.html">
+              <i class="bi bi-circle"></i><span>Duyệt tin BĐS</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>Duyệt tin tức</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Forms Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Quản lý tài khoản</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>Danh sách tài khoản</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+
+    </ul>
+
+  </aside>
+    <main id="main" class="main">
+
+    <div class="pagetitle">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <p>Home</p>
+          </li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+
 <body>
     <div class="container-admin">
         <h2 class="text-center mb-4"><i class="bi bi-hourglass-split me-2"></i>Tin Đăng Chờ Duyệt</h2>
@@ -161,255 +240,17 @@
 
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const API_BASE_URL = '/api/admin/yeucau'; // Endpoint chung cho các yêu cầu admin
-        let currentListingData = null; // Biến lưu toàn bộ dữ liệu của tin đang được xem/thao tác
+      <script src="assets/jquery-3.7.1.min.js"></script>
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/js/duyettin.js"></script>
+    <Script src="assets/js/dangxuat.js"></Script>
 
-        document.addEventListener('DOMContentLoaded', function() {
-            loadPendingListings();
-
-            async function loadPendingListings() {
-                const container = document.getElementById('pendingListingsContainer');
-                const loadingMessage = document.getElementById('loadingMessage');
-                container.innerHTML = ''; // Clear previous listings
-                loadingMessage.style.display = 'block';
-
-                try {
-                    // Endpoint này cần được tạo ở backend để trả về danh sách YeuCauDangTin CHO_DUYET
-                    const response = await fetch(`${API_BASE_URL}/pending`);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const listings = await response.json();
-
-                    loadingMessage.style.display = 'none';
-
-                    if (listings.length === 0) {
-                        container.innerHTML = '<p class="text-center text-muted">Không có tin đăng nào chờ duyệt.</p>';
-                        return;
-                    }
-
-                    listings.forEach(listing => {
-                        const card = `
-                            <div class="col-md-4">
-                                <div class="card listing-card">
-                                    <img src="${listing.anhChinh || 'https://via.placeholder.com/400x200?text=No+Image'}" class="card-img-top" alt="${listing.tieuDe}">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${listing.tieuDe}</h5>
-                                        <p class="card-text mb-1"><strong>Người gửi:</strong> ${listing.userGuiYeuCau ? listing.userGuiYeuCau.username : 'N/A'}</p>
-                                        <p class="card-text mb-1"><strong>Giá:</strong> ${listing.gia ? new Intl.NumberFormat('vi-VN').format(listing.gia) + ' ' + listing.donViTien : 'Thỏa thuận'}</p>
-                                        <p class="card-text mb-1"><strong>Diện tích:</strong> ${listing.dienTich ? listing.dienTich + ' m²' : 'N/A'}</p>
-                                        <p class="card-text mb-1"><strong>Địa chỉ:</strong> ${listing.quanHuyen}, ${listing.thanhPho}</p>
-                                        <div class="mt-3 action-buttons">
-                                            <button type="button" class="btn btn-info btn-sm view-detail-btn" data-id="${listing.maYeuCauBds}">
-                                                <i class="bi bi-eye"></i> Xem chi tiết
-                                            </button>
-                                            <button type="button" class="btn btn-success btn-sm approve-btn" data-id="${listing.maYeuCauBds}">
-                                                <i class="bi bi-check-circle"></i> Phê duyệt
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm reject-btn" data-id="${listing.maYeuCauBds}">
-                                                <i class="bi bi-x-circle"></i> Từ chối
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        container.innerHTML += card;
-                    });
-                } catch (error) {
-                    console.error("Lỗi khi tải tin đăng chờ duyệt:", error);
-                    loadingMessage.style.display = 'none';
-                    container.innerHTML = '<p class="text-center text-danger">Không thể tải tin đăng chờ duyệt. Vui lòng thử lại.</p>';
-                }
-            }
-
-            // --- Xử lý các nút hành động (sử dụng event delegation) ---
-            document.getElementById('pendingListingsContainer').addEventListener('click', async function(event) {
-                const target = event.target.closest('button');
-                if (!target) return;
-
-                const listingId = target.dataset.id;
-                
-                // Lấy toàn bộ dữ liệu của listing từ API hoặc cache nếu có
-                // Để đơn giản, tôi sẽ gọi lại API chi tiết nếu cần, hoặc bạn có thể cache dữ liệu listings đã tải.
-                try {
-                    const response = await fetch(`${API_BASE_URL}/${listingId}`);
-                    if (!response.ok) throw new Error('Failed to fetch listing details');
-                    currentListingData = await response.json(); // Lưu dữ liệu đầy đủ
-                } catch (error) {
-                    console.error('Error fetching listing details:', error);
-                    alert('Không thể tải chi tiết tin đăng.');
-                    return;
-                }
-                
-                if (target.classList.contains('view-detail-btn')) {
-                    showListingDetail(currentListingData);
-                } else if (target.classList.contains('approve-btn')) {
-                    if (confirm('Bạn có chắc muốn phê duyệt tin đăng này?')) {
-                        approveListing(currentListingData.maYeuCauBds);
-                    }
-                } else if (target.classList.contains('reject-btn')) {
-                    // Mở modal từ chối
-                    const rejectModal = new bootstrap.Modal(document.getElementById('rejectModal'));
-                    rejectModal.show();
-                }
-            });
-
-            // --- Xử lý nút Phê duyệt từ Modal chi tiết ---
-            document.getElementById('approveFromModalBtn').addEventListener('click', function() {
-                if (currentListingData && confirm('Bạn có chắc muốn phê duyệt tin đăng này?')) {
-                    approveListing(currentListingData.maYeuCauBds);
-                    bootstrap.Modal.getInstance(document.getElementById('detailModal')).hide(); // Đóng modal
-                }
-            });
-
-            // --- Xử lý nút Từ chối từ Modal chi tiết ---
-            document.getElementById('rejectFromModalBtn').addEventListener('click', function() {
-                if (currentListingData) {
-                    bootstrap.Modal.getInstance(document.getElementById('detailModal')).hide(); // Đóng modal chi tiết
-                    const rejectModal = new bootstrap.Modal(document.getElementById('rejectModal')); // Mở modal từ chối
-                    rejectModal.show();
-                }
-            });
-
-            // --- Xử lý nút Xác nhận Từ chối trong modal từ chối ---
-            document.getElementById('confirmRejectBtn').addEventListener('click', function() {
-                const reason = document.getElementById('rejectReason').value;
-                if (currentListingData) {
-                    rejectListing(currentListingData.maYeuCauBds, reason);
-                    bootstrap.Modal.getInstance(document.getElementById('rejectModal')).hide(); // Đóng modal từ chối
-                    // detailModal đã đóng ở bước trước
-                }
-            });
-
-            // --- Hàm hiển thị chi tiết tin đăng trong Modal ---
-            async function showListingDetail(listing) {
-                document.getElementById('detailTitle').textContent = listing.tieuDe;
-                document.getElementById('detailId').textContent = listing.maYeuCauBds;
-                document.getElementById('detailUser').textContent = listing.userGuiYeuCau ? listing.userGuiYeuCau.username : 'N/A';
-                document.getElementById('detailDate').textContent = new Date(listing.ngayTaoYeuCau).toLocaleString('vi-VN');
-                document.getElementById('detailPrice').textContent = listing.gia ? `${new Intl.NumberFormat('vi-VN').format(listing.gia)} ${listing.donViTien}` : 'Thỏa thuận';
-                document.getElementById('detailArea').textContent = listing.dienTich ? `${listing.dienTich} m²` : 'N/A';
-                document.getElementById('detailType').textContent = mapLoaiBds(listing.loaiBds);
-                document.getElementById('detailPurpose').textContent = mapMucDich(listing.mucDichTinDang);
-                document.getElementById('detailLocation').textContent = `${listing.viTri || ''}, ${listing.quanHuyen || ''}, ${listing.thanhPho || ''}`;
-                document.getElementById('detailBedrooms').textContent = listing.soPhongNgu || 'N/A';
-                document.getElementById('detailBathrooms').textContent = listing.soPhongTam || 'N/A';
-                document.getElementById('detailFloors').textContent = (listing.tang ? `Tầng ${listing.tang}` : 'N/A') + (listing.tongTang ? ` / Tổng ${listing.tongTang} tầng` : '');
-                document.getElementById('detailFurniture').textContent = mapNoiThat(listing.noiThat);
-                document.getElementById('detailYearBuilt').textContent = listing.namXayDung || 'N/A';
-                document.getElementById('detailDescription').innerHTML = listing.moTa.replace(/\n/g, '<br>'); // Hiển thị xuống dòng
-
-                document.getElementById('detailMainImage').src = listing.anhChinh || 'https://via.placeholder.com/600x400?text=No+Image';
-
-                const otherImagesContainer = document.getElementById('detailOtherImages');
-                otherImagesContainer.innerHTML = '';
-                if (listing.hinhAnhYeuCauList && listing.hinhAnhYeuCauList.length > 0) {
-                    listing.hinhAnhYeuCauList.forEach(img => {
-                        const imgElement = document.createElement('img');
-                        imgElement.src = img.url; // Giả sử HinhAnhYeuCau có trường 'url'
-                        imgElement.className = 'img-thumbnail';
-                        imgElement.style.width = '100px';
-                        imgElement.style.height = '70px';
-                        imgElement.style.objectFit = 'cover';
-                        otherImagesContainer.appendChild(imgElement);
-                    });
-                } else {
-                    otherImagesContainer.innerHTML = '<small class="text-muted">Không có ảnh phụ.</small>';
-                }
-
-                const detailModal = new bootstrap.Modal(document.getElementById('detailModal'));
-                detailModal.show();
-            }
-
-            // --- Hàm gửi yêu cầu Phê duyệt đến Backend ---
-            async function approveListing(id) {
-                try {
-                    const response = await fetch(`${API_BASE_URL}/approve/${id}`, {
-                        method: 'PUT', // Hoặc POST tùy theo API của bạn
-                        headers: {
-                            'Content-Type': 'application/json',
-                            // 'Authorization': 'Bearer YOUR_ADMIN_TOKEN' // Thêm token xác thực Admin
-                        },
-                        // body: JSON.stringify({ userIdDuyet: adminUserId }) // Nếu bạn muốn gửi ID người duyệt
-                    });
-
-                    if (response.ok) {
-                        alert('Tin đăng đã được phê duyệt thành công!');
-                        loadPendingListings(); // Tải lại danh sách để tin đã duyệt biến mất
-                    } else {
-                        const errorData = await response.json();
-                        alert('Lỗi khi phê duyệt tin đăng: ' + (errorData.message || response.statusText));
-                    }
-                } catch (error) {
-                    console.error('Lỗi mạng hoặc server:', error);
-                    alert('Có lỗi xảy ra, vui lòng thử lại.');
-                }
-            }
-
-            // --- Hàm gửi yêu cầu Từ chối đến Backend ---
-            async function rejectListing(id, reason) {
-                try {
-                    const response = await fetch(`${API_BASE_URL}/reject/${id}`, {
-                        method: 'PUT', // Hoặc POST tùy theo API của bạn
-                        headers: {
-                            'Content-Type': 'application/json',
-                            // 'Authorization': 'Bearer YOUR_ADMIN_TOKEN'
-                        },
-                        body: JSON.stringify({
-                            loiNhanTuChoi: reason
-                            // userIdDuyet: adminUserId
-                        })
-                    });
-
-                    if (response.ok) {
-                        alert('Tin đăng đã bị từ chối.');
-                        loadPendingListings(); // Tải lại danh sách để tin đã từ chối biến mất
-                    } else {
-                        const errorData = await response.json();
-                        alert('Lỗi khi từ chối tin đăng: ' + (errorData.message || response.statusText));
-                    }
-                } catch (error) {
-                    console.error('Lỗi mạng hoặc server:', error);
-                    alert('Có lỗi xảy ra, vui lòng thử lại.');
-                }
-            }
-
-            // --- Hàm chuyển đổi Enum sang Text hiển thị (giữ nguyên từ lần trước) ---
-            function mapLoaiBds(enumValue) {
-                switch(enumValue) {
-                    case 'CANHO': return 'Căn hộ';
-                    case 'DATNEN': return 'Đất nền';
-                    case 'BIETTHU': return 'Biệt thự';
-                    case 'NHAPHO': return 'Nhà phố';
-                    case 'PHONGTRO': return 'Phòng trọ';
-                    case 'VANPHONG': return 'Văn phòng';
-                    case 'KHOXUONG': return 'Kho xưởng';
-                    case 'KHAC': return 'Khác';
-                    default: return enumValue;
-                }
-            }
-
-            function mapMucDich(enumValue) {
-                switch(enumValue) {
-                    case 'BAN': return 'Bán';
-                    case 'THUE': return 'Cho Thuê';
-                    default: return enumValue;
-                }
-            }
-
-            function mapNoiThat(enumValue) {
-                switch(enumValue) {
-                    case 'DAY_DU': return 'Đầy đủ nội thất';
-                    case 'CO_BAN': return 'Nội thất cơ bản';
-                    case 'TRONG': return 'Không nội thất';
-                    default: return 'Chưa xác định';
-                }
-            }
-        });
-    </script>
 </body>
 </html>
