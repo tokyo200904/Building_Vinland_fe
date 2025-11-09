@@ -15,41 +15,20 @@ $(document).ready(function() {
     let propertyCarousel; // Biến toàn cục để giữ instance của Carousel
 
     function loadPropertyDetail() {
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+            showError("Không tìm thấy token. Đang chuyển về trang đăng nhập.");
+            window.location.href = '/Building_web_fe/login.html'; // Chuyển về login
+            return; // Dừng hàm
+        }
         $.ajax({
             url: API_ENDPOINT,
             type: 'GET',
             dataType: 'json',
+            headers: {
+            'Authorization': 'Bearer ' + token
+        },
             success: function(data) {
-                // Dữ liệu JSON mới của bạn:
-                // {
-                //   "maBds": 1,
-                //   "tieuDe": "Căn hộ cao cấp Sunshine",
-                //   "moTa": "Căn hộ 3PN, view đẹp, đầy đủ tiện nghi",
-                //   "gia": 5000000000.00,
-                //   "donViTien": "VND",
-                //   "loaiBds": "can_ho",
-                //   "trangThai": "cho_thue",
-                //   "viTri": "Quận 1, TP.HCM",
-                //   "dienTich": 120.50,
-                //   "soPhongNgu": 3,
-                //   "soPhongTam": 2,
-                //   "tongTang": 20,
-                //   "noiThat": "day_du",
-                //   "namXayDung": 2020,
-                //   "baiDoXe": true,
-                //   "banCong": true,
-                //   "thangMay": true,
-                //   "anhChinh": "http://localhost:8081/upload/Reze.jpg", // Ảnh chính
-                //   "anhDaiDien": "'http://localhost:8081/upload/Reze.jpg'", // Ảnh đại diện (Agent?)
-                //   "hoTen": "Tran Thi B", // Tên Agent
-                //   "vaiTro": "Agent",
-                //   "soDienThoai": "0912345678",
-                //   "duongDan": [ // Danh sách đường dẫn ảnh khác
-                //      "/assets/img/bds1_main.jpg", 
-                //      "/assets/img/bds1_2.jpg", 
-                //      "/assets/img/bds1_3.jpg"
-                //   ]
-                // }
 
                 // Tạo danh sách ảnh từ `anhChinh` và `duongDan`
                 const allImages = [];

@@ -24,7 +24,15 @@ $(document).ready(function() {
     // Tải thông tin bất động sản khi trang load
     async function loadBdsDetail() {
         try {
-            const response = await fetch(API_DETAIL_ENDPOINT);
+            const token = localStorage.getItem('access_token');
+            if (!token) { throw new Error("Không tìm thấy token đăng nhập."); }
+             const response = await fetch(API_DETAIL_ENDPOINT, {
+                // --- THÊM KHỐI NÀY ---
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+            
             if (!response.ok) {
                 if (response.status === 404) {
                     throw new Error("Không tìm thấy bất động sản này hoặc đã bị xóa.");
@@ -138,7 +146,13 @@ $(document).ready(function() {
         e.preventDefault(); // Ngăn chặn form submit mặc định
 
         $('#loading-spinner').removeClass('d-none'); // Hiển thị spinner
-
+const token = localStorage.getItem('access_token');
+        if (!token) {
+            alert("Token không hợp lệ. Vui lòng đăng nhập lại.");
+            localStorage.clear();
+            window.location.href = '/Building_web_fe/login.html';
+            return;
+        }
         const formData = new FormData();
         // Không cần gửi 'maBds' trong FormData nếu bạn lấy từ PathVariable ở backend
         // Nếu backend yêu cầu, hãy thêm: formData.append('maBds', bdsId);
@@ -177,7 +191,11 @@ $(document).ready(function() {
         try {
             const response = await fetch(API_UPDATE_ENDPOINT, {
                 method: 'PUT', // Đảm bảo khớp với method API backend
-                body: formData // FormData tự động set Content-Type
+                body: formData, // FormData tự động set Content-Type
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                    // (Không cần 'Content-Type' khi dùng FormData)
+                }
             });
 
             if (!response.ok) {

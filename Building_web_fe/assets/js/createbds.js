@@ -95,7 +95,7 @@
             const submitButtonText = $('#submitButtonText');
             
             // API Endpoint (Khớp với BatDongSanController)
-            const API_ENDPOINT = 'http://localhost:8081/api/dangtin';
+            const API_ENDPOINT = 'http://localhost:8081/api/admin/dangtin';
 
             if (!token) {
                 handleApiError({ status: 401 });
@@ -106,15 +106,21 @@
             errorContainer.addClass('d-none').text('');
             successContainer.addClass('d-none').text('');
 
+            const getValueOrNull = (selector) => {
+                const value = $(selector).val();
+                return value === "" ? null : value;
+            };
             // 1. Lấy dữ liệu từ Form (DTO)
             const jsonData = {
                 tieuDe: $('#tieuDe').val(),
-                moTa: $('#moTa').val(),
-                loaiBds: $('#loaiBds').val(),
-                mucDichTinDang: $('#mucDichTinDang').val(),
+                moTa: $('#moTa').val(),
+
+                loaiBds: getValueOrNull('#loaiBds'),
+                mucDichTinDang: getValueOrNull('#mucDichTinDang'),
                 gia: parseFloat($('#gia').val()) || null,
-                donViTien: $('#donViTien').val(),
-                dienTich: parseFloat($('#dienTich').val()) || null,
+                donViTien: getValueOrNull('#donViTien'),
+                dienTich: parseFloat($('#dienTich').val()) || null,
+
                 soPhongNgu: parseInt($('#soPhongNgu').val()) || null,
                 soPhongTam: parseInt($('#soPhongTam').val()) || null,
                 tang: parseInt($('#tang').val()) || null,
@@ -139,8 +145,9 @@
             }
 
             // 3. Tạo FormData
-            const formData = new FormData();
-            formData.append('data', JSON.stringify(jsonData));
+const formData = new FormData();
+formData.append('data', new Blob([JSON.stringify(jsonData)], { type: "application/json" }));
+
             formData.append('mainImageFile', mainImageFile);
             
             if (otherImageFiles.length > 0) {

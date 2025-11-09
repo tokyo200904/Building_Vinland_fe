@@ -203,13 +203,25 @@ function showDeleteModal(id, tieuDe) {
 
 document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
     if (bdsToDeleteId) {
-        try {
-            const response = await fetch(`http://localhost:8081/api/v1/bds/${bdsToDeleteId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+try {
+            // --- THÊM TOKEN ---
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                alert('Lỗi: Không tìm thấy token, vui lòng đăng nhập lại.');
+                return;
+            }
+
+            // --- SỬA ĐƯỜNG DẪN API (thêm /admin) ---
+            const API_DELETE_URL = `http://localhost:8081/api/admin/bds/${bdsToDeleteId}`;
+
+            const response = await fetch(API_DELETE_URL, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // --- SỬA HEADER (thêm Authorization) ---
+                    'Authorization': 'Bearer ' + token 
+                }
+            });
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({ message: 'Không thể đọc thông báo lỗi từ server.' }));
