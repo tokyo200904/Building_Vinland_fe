@@ -1,0 +1,46 @@
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; /* Ngăn cuộn ngang */
+            background-color: #f8f9fa; /* Màu nền xám nhạt */
+        }
+
+        /* Tùy chỉnh cột hình ảnh */
+        .image-column {
+            background-image: url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Lớp phủ màu tối cho hình ảnh */
+        .image-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            /* inset: 0; (CSS hiện đại) hoặc: */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        /* Đảm bảo form căn giữa trên màn hình lớn */
+        .form-column {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Điều chỉnh nhỏ cho form-floating */
+        .form-floating .form-control {
+            padding-left: 2.5rem; /* Thêm padding cho icon */
+        }
+        .form-floating > label {
+            padding-left: 2.5rem; /* Căn label với icon */
+        }
+        .form-floating > .form-icon {
+            position: absolute;
+            top: 50%;
+            left: 0.75rem;
+            transform: translateY(-50%);
+            color: #6c757d; /* Màu xám của Bootstrap */
+            z-index: 2;
+        }

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Quản lý tài khoản</title>
+  <script src="assets/js/baomat.js"></script>
+
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="assets/css/style_admin_qlUser.css">
+</head>
+
+<body>
+
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    </header>
+  <aside id="sidebar" class="sidebar">
+    </aside>
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Quản lý tài khoản</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="Building_trangchu.html">Trang chủ</a></li>
+          <li class="breadcrumb-item active">Quản lý tài khoản</li>
+        </ol>
+      </nav>
+    </div><section class="section">
+      <div class="card">
+        <div class="card-body pt-3">
+
+          <ul class="nav nav-tabs nav-tabs-bordered" id="userTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="admin-tab" data-bs-toggle="tab" data-bs-target="#tab-pane-content" type="button" role="tab" data-role="ADMIN">
+                <i class="bi bi-shield-lock"></i> Admin
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="staff-tab" data-bs-toggle="tab" data-bs-target="#tab-pane-content" type="button" role="tab" data-role="NHAN_VIEN">
+                <i class="bi bi-person-badge"></i> Nhân viên
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="agent-tab" data-bs-toggle="tab" data-bs-target="#tab-pane-content" type="button" role="tab" data-role="AGENT">
+                <i class="bi bi-person-video2"></i> Agent
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="customer-tab" data-bs-toggle="tab" data-bs-target="#tab-pane-content" type="button" role="tab" data-role="CUSTOMER">
+                <i class="bi bi-people"></i> Người dùng
+              </button>
+            </li>
+          </ul>
+
+          <div class="tab-content pt-2" id="userTabsContent">
+            
+            <div class="tab-pane fade show active" id="tab-pane-content" role="tabpanel">
+              <div class="search-bar-container py-3">
+                <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm theo tên hoặc email...">
+              </div>
+              <div class="list-container list-group" id="userListContainer">
+                </div>
+            </div>
+
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+  </main><div class="modal fade" id="editRoleModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Phân quyền tài khoản</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editUserId">
+          <p>Thay đổi vai trò cho: <strong id="editUserName"></strong></p>
+          
+          <label for="editUserRole" class="form-label">Chọn vai trò mới:</label>
+          <select class="form-select" id="editUserRole">
+            </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-primary" id="saveRoleButton">Lưu thay đổi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/jquery-3.7.1.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/dangxuat.js"></script>
+
+  <script src="assets/js/qlUser.js"></script>
+</body>
+</html>

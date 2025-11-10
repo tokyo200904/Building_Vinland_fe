@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập - Bất Động Sản</title>
+      <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+      <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/style_dangnhap.css">
+
+</head>
+<body>
+
+    <div class="container-fluid p-0">
+        <div class="row g-0 min-vh-100">
+            
+            <!-- ======================================== -->
+            <!--        PHẦN 1: BÊN HÌNH ẢNH (TRÁI)        -->
+            <!-- ======================================== -->
+            <!-- Ẩn trên di động, hiện trên máy tính (d-lg-block) -->
+            <div class="col-lg-7 d-none d-lg-block position-relative image-column">
+                <div class="image-overlay d-flex flex-column justify-content-end p-5">
+                    <!-- Tiêu đề và slogan -->
+                    <h1 class="display-5 fw-bold text-white mb-4">
+                        Tìm kiếm ngôi nhà mơ ước của bạn.
+                    </h1>
+                    <p class="fs-5 text-light">
+                        Đăng nhập để khám phá hàng ngàn bất động sản độc quyền và các cơ hội đầu tư tốt nhất.
+                    </p>
+                </div>
+            </div>
+
+            <!-- ======================================== -->
+            <!--         PHẦN 2: FORM ĐĂNG NHẬP (PHẢI)      -->
+            <!-- ======================================== -->
+            <div class="col-lg-5 col-12 bg-white form-column p-4 p-sm-5">
+                <div class="w-100" style="max-width: 450px;">
+
+                    <!-- Logo (Bạn có thể thay bằng img) -->
+                    <div class="text-center mb-5">
+                        <span class="fs-2 fw-bold text-primary">
+                            <i class="bi bi-buildings-fill"></i>
+                            MyHome
+                        </span>
+                        <h2 class="h1 fw-bold text-dark mt-4">Đăng Nhập</h2>
+                        <p class="text-muted mt-2">Chào mừng bạn trở lại!</p>
+                    </div>
+
+                    <!-- Form Đăng nhập -->
+                    <form id="loginForm">
+                        <!-- Email -->
+                        <div class="form-floating mb-3">
+                            <i class="bi bi-envelope form-icon"></i>
+                            <input type="email" class="form-control rounded-3" id="email" placeholder="email@example.com" required>
+                            <label for="email">Email</label>
+                        </div>
+                        
+                        <!-- Mật khẩu -->
+                        <div class="form-floating mb-3">
+                            <i class="bi bi-lock form-icon"></i>
+                            <input type="password" class="form-control rounded-3" id="matKhau" placeholder="••••••••" required>
+                            <label for="matKhau">Mật khẩu</label>
+                        </div>
+
+                        <!-- Quên mật khẩu -->
+                        <div class="text-end mb-3">
+                            <a href="#" class="text-primary text-decoration-none small">Quên mật khẩu?</a>
+                        </div>
+
+                        <!-- Nơi hiển thị lỗi -->
+                        <div id="errorMessage" class="alert alert-danger d-none" role="alert">
+                            <!-- Lỗi sẽ được chèn vào đây bởi JS -->
+                        </div>
+
+                        <!-- Nút Đăng Nhập -->
+                        <button type="submit" id="loginButton" class="w-100 btn btn-primary btn-lg rounded-3 py-3 fw-semibold d-flex align-items-center justify-content-center">
+                            <span id="loginButtonText">Đăng Nhập</span>
+                            <!-- Spinner (hiện khi đang tải) -->
+                            <div id="loginSpinner" class="spinner-border spinner-border-sm text-white ms-2 d-none" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </button>
+                    </form>
+
+                    <!-- Vạch chia "HOẶC" -->
+                    <div class="my-4 d-flex align-items-center">
+                        <hr class="flex-grow-1">
+                        <span class="px-3 text-muted small text-uppercase">HOẶC</span>
+                        <hr class="flex-grow-1">
+                    </div>
+                    
+                    <!-- Đăng nhập Social (trỏ đến link Backend) -->
+                    <div class="d-grid gap-3">
+                        <!-- Nút Google -->
+                        <a href="/oauth2/authorization/google" class="btn btn-outline-dark btn-lg rounded-3 d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-google text-danger"></i>
+                            <span class="small fw-medium">Đăng nhập với Google</span>
+                        </a>
+                        <!-- Nút Facebook -->
+                         <a href="/oauth2/authorization/facebook" class="btn btn-outline-dark btn-lg rounded-3 d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-facebook text-primary"></i>
+                            <span class="small fw-medium">Đăng nhập với Facebook</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Link Đăng ký -->
+                    <p class="text-center text-muted mt-5">
+                        Chưa có tài khoản? 
+                        <a href="register.html" class="text-primary fw-semibold text-decoration-none">
+                            Đăng ký ngay
+                        </a>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+   <script src="assets/jquery-3.7.1.min.js"></script>
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <script src="assets/js/main.js"></script>
+    <script src="assets/js/login.js"></script>
+
+</body>
+
+</html>

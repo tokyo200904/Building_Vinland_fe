@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Trang chủ - Website Bất Động Sản</title>
+
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  
+  <link href="assets/css/style_trangchu.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <header id="header" class="header fixed-top shadow-sm">
+    <div class="container d-flex align-items-center justify-content-between">
+      
+      <div class="d-flex align-items-center">
+        <a href="Bulding_trangchu.html" class="logo d-flex align-items-center">
+          <i class="bi bi-buildings-fill"></i>
+          <span>Nhom13BDS</span>
+        </a>
+
+        <nav class="header-nav-main d-none d-lg-flex ms-4">
+          <ul class="d-flex align-items-center list-unstyled m-0">
+            <li><a href="#">Nhà đất bán</a></li>
+            <li><a href="#">Nhà đất cho thuê</a></li>
+            <li><a href="#">Dự án</a></li>
+            <li><a href="#">Tin tức</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="d-flex align-items-center">
+        <nav class="header-nav-secondary d-none d-lg-flex align-items-center">
+          <ul class="d-flex align-items-center list-unstyled m-0">
+            <li><a href="#">Tải ứng dụng</a></li>
+            <li><a href="#" class="ms-3"><i class="bi bi-heart me-1"></i>Yêu thích</a></li>
+            
+            <li id="auth-links" class="ms-3">
+              <a href="login.html">Đăng nhập</a>
+              <span class="mx-1">|</span>
+              <a href="register.html">Đăng ký</a>
+            </li>
+            <li id="user-dropdown" class="nav-item dropdown ms-3 d-none">
+              <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                <img id="user-avatar-sm" src="https://placehold.co/40x40" alt="Profile" class="rounded-circle">
+                <span id="user-name-sm" class="d-none d-md-block dropdown-toggle ps-2">...</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                </ul>
+            </li>
+            
+          </ul>
+        </nav>
+
+        <a class="btn btn-outline-danger ms-3 btn-dang-tin" href="Building_them.html">
+          Đăng tin
+        </a>
+
+        <i class="bi bi-list d-lg-none ms-3 mobile-nav-toggle"></i>
+      </div>
+      
+    </div>
+  </header>
+
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <h1 class="hero-title">Tìm kiếm bất động sản mơ ước của bạn</h1>
+          <p class="hero-subtitle">Nền tảng uy tín cho mọi nhu cầu về nhà ở.</p>
+
+          <div class="search-box card shadow-lg">
+            <div class="card-body p-4">
+              <ul class="nav nav-tabs" id="searchTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="buy-tab" data-bs-toggle="tab" data-bs-target="#buy-content" type="button" role="tab">
+                    <i class="bi bi-house-door-fill"></i> Mua Bán
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="rent-tab" data-bs-toggle="tab" data-bs-target="#rent-content" type="button" role="tab">
+                    <i class="bi bi-key-fill"></i> Cho Thuê
+                  </button>
+                </li>
+              </ul>
+              
+              <div class="tab-content" id="searchTabContent">
+                <div class="tab-pane fade show active" id="buy-content" role="tabpanel">
+                  <form class="row g-3 mt-2" id="searchFormBuy">
+                    <div class="col-md-4">
+                      <select id="loaiBds" class="form-select form-select-lg">
+                        <option value="">Chọn loại nhà đất</option>
+                        <option value="can_ho">Căn hộ</option>
+                        <option value="nha_o">Nhà ở</option>
+                        <option value="dat">Đất</option>
+                        <option value="thuong_mai">Thương mại</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <input type="text" id="khuVuc" class="form-control form-control-lg" placeholder="Nhập tỉnh/thành phố, quận/huyện...">
+                    </div>
+                    <div class="col-md-2">
+                      <select id="gia" class="form-select form-select-lg">
+                        <option value="">Mức giá</option>
+                        <option value="1-3ty">1 - 3 tỷ</option>
+                        <option value="3-5ty">3 - 5 tỷ</option>
+                        <option value="5-10ty">5 - 10 tỷ</option>
+                      </select>
+                    </div>
+                    <div class="col-md-2 d-grid">
+                      <button type="submit" class="btn btn-primary btn-lg btn-tim-kiem">
+                        <i class="bi bi-search"></i> Tìm
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div class="tab-pane fade" id="rent-content" role="tabpanel">
+                   </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section><main id="main" class="container my-5">
+
+    <section class="py-4">
+      <h2 class="section-title">Khám phá theo loại hình</h2>
+      <div class="row g-4">
+        
+        <div class="col-6 col-md-4 col-lg-2">
+          <a href="#" class="category-box">
+            <i class="bi bi-building category-icon"></i>
+            <h5>Căn hộ</h5>
+            <p>(1,234 tin)</p>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <a href="#" class="category-box">
+            <i class="bi bi-house category-icon"></i>
+            <h5>Nhà riêng</h5>
+            <p>(5,678 tin)</p>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <a href="#" class="category-box">
+            <i class="bi bi-map category-icon"></i>
+            <h5>Đất nền</h5>
+            <p>(910 tin)</p>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <a href="#" class="category-box">
+            <i class="bi bi-shop category-icon"></i>
+            <h5>Thương mại</h5>
+            <p>(456 tin)</p>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <a href="#" class="category-box">
+            <i class="bi bi-house-gear category-icon"></i>
+            <h5>Biệt thự</h5>
+            <p>(789 tin)</p>
+          </a>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <a href="#" class="category-box">
+            <i class="bi bi-door-open category-icon"></i>
+            <h5>Phòng trọ</h5>
+            <p>(2,345 tin)</p>
+          </a>
+        </div>
+        
+      </div>
+    </section>
+
+    <section class="py-5">
+      <h2 class="section-title">Tin đăng nổi bật 💎</h2>
+      <div id="featured-listings" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        
+        <div class="col">
+          <div class="card property-card h-100">
+            <div class="property-card-img-container">
+              <span class="property-card-badge bg-danger">Bán</span>
+              <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNjUyOXwwfDF8c2VhcmNofDN8fG1vZGVybiUyMGhvdXNlfGVufDB8fHx8MTcxNzY2NzY3OHww&ixlib=rb-4.0.3&q=80&w=400" class="card-img-top property-card-img" alt="Tên nhà">
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h5 class="property-card-price">5.2 Tỷ</h5>
+              <h6 class="property-card-title">Căn hộ cao cấp 2PN The Landmark 81, view sông Sài Gòn</h6>
+              <p class="property-card-address">
+                <i class="bi bi-geo-alt-fill"></i> Quận Bình Thạnh, TP. Hồ Chí Minh
+              </p>
+              <div class="property-card-stats mt-auto">
+                <span><i class="bi bi-building"></i> 2 PN</span>
+                <span><i class="bi bi-droplet"></i> 2 WC</span>
+                <span><i class="bi bi-arrows-fullscreen"></i> 75 m²</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card property-card h-100">
+            <div class="property-card-img-container">
+              <span class="property-card-badge bg-success">Cho Thuê</span>
+              <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNjUyOXwwfDF8c2VhcmNofDJ8fGhvdXNlfGVufDB8fHx8MTcxNzY2NzY0Nnww&ixlib=rb-4.0.3&q=80&w=400" class="card-img-top property-card-img" alt="Tên nhà">
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h5 class="property-card-price">18 Triệu/tháng</h5>
+              <h6 class="property-card-title">Nhà mặt tiền đường Nguyễn Trãi, 1 trệt 2 lầu</h6>
+              <p class="property-card-address">
+                <i class="bi bi-geo-alt-fill"></i> Quận 1, TP. Hồ Chí Minh
+              </p>
+              <div class="property-card-stats mt-auto">
+                <span><i class="bi bi-building"></i> 4 PN</span>
+                <span><i class="bi bi-droplet"></i> 3 WC</span>
+                <span><i class="bi bi-arrows-fullscreen"></i> 120 m²</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        </div>
+      <div class="text-center mt-5">
+        <a href="#" class="btn btn-outline-primary btn-lg">Xem tất cả tin đăng</a>
+      </div>
+    </section>
+
+  </main><footer class="footer-dark pt-5 pb-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <h5>Nhom13BDS</h5>
+          <p>Nền tảng giao dịch bất động sản hàng đầu. Uy tín - Nhanh chóng - Bảo mật.</p>
+        </div>
+        <div class="col-md-2 mb-3">
+          <h6>Khám phá</h6>
+          <ul class="list-unstyled footer-links">
+            <li><a href="#">Nhà Bán</a></li>
+            <li><a href="#">Cho Thuê</a></li>
+            <li><a href="#">Dự Án</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h6>Liên kết</h6>
+          <ul class="list-unstyled footer-links">
+            <li><a href="#">Về chúng tôi</a></li>
+            <li><a href="#">Liên hệ</a></li>
+            <li><a href="#">Câu hỏi thường gặp</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h6>Theo dõi chúng tôi</h6>
+          <a href="#" class="footer-social me-2"><i class="bi bi-facebook fs-4"></i></a>
+          <a href="#" class="footer-social me-2"><i class="bi bi-youtube fs-4"></i></a>
+          <a href="#" class="footer-social"><i class="bi bi-linkedin fs-4"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/jquery-3.7.1.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/dangxuat.js"></script>
+  <script src="assets/js/baomat.js"></script> 
+</body>
+</html>

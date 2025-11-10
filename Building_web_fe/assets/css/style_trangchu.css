@@ -1,0 +1,411 @@
+/* --- CSS Tùy chỉnh cho Trang Chủ (Thiết kế sang trọng) --- */
+
+/* 1. Thiết lập Font chữ & Màu sắc chung */
+:root {
+  --font-primary: 'Poppins', sans-serif;
+  --font-secondary: 'Open Sans', sans-serif;
+  --color-text-dark: #212529;
+  --color-text-body: #343a40;
+  --color-text-muted: #6c757d;
+  --color-primary: #003366;
+  --color-accent: #B8860B;
+  --color-bg-light: #f8f9fa;
+  --color-bds-red: #E03C31; /* Màu đỏ của batdongsan.com */
+}
+
+body {
+  font-family: var(--font-secondary);
+  color: var(--color-text-body);
+  /* Thêm 60px padding-top để nội dung không bị header che */
+  padding-top: 60px; 
+}
+/* ... (Giữ nguyên các style cũ cho h1, h2, ... .section-title) ... */
+
+
+/* 2. HEADER MỚI (Kiểu batdongsan.com) */
+.header {
+  background-color: #fff;
+  height: 60px; /* Chiều cao chuẩn 60px */
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0;
+}
+.header .logo {
+  text-decoration: none;
+}
+.header .logo span {
+  font-family: var(--font-primary);
+  color: var(--color-bds-red); /* Màu đỏ của logo */
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+.header .logo i {
+  color: var(--color-bds-red);
+  font-size: 2rem;
+  margin-right: 5px;
+}
+
+/* Nav Chính (Nhà đất bán...) */
+.header-nav-main ul {
+  gap: 1.5rem; /* Khoảng cách giữa các mục */
+  margin: 0;
+}
+.header-nav-main a {
+  font-family: var(--font-primary);
+  font-size: 0.95rem; /* Giống bds.com */
+  font-weight: 500;
+  color: var(--color-text-dark); /* #212529 */
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.header-nav-main a:hover {
+  color: var(--color-bds-red); /* Màu đỏ logo */
+}
+
+/* Nav Phụ (Tải ứng dụng...) */
+.header-nav-secondary ul {
+  gap: 1.25rem; /* Khoảng cách giữa các mục */
+  margin: 0;
+}
+.header-nav-secondary a {
+  font-family: var(--font-secondary);
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--color-text-body); /* #343a40 */
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.header-nav-secondary a:hover {
+  color: var(--color-bds-red);
+}
+
+/* Nút Đăng tin (Giống ảnh) */
+.btn-dang-tin.btn-outline-danger {
+  color: var(--color-bds-red);
+  border-color: var(--color-bds-red);
+  font-weight: 600;
+  border-radius: 0.25rem;
+  padding: 0.4rem 1rem;
+  font-family: var(--font-primary);
+}
+.btn-dang-tin.btn-outline-danger:hover {
+  color: #fff;
+  background-color: var(--color-bds-red);
+  border-color: var(--color-bds-red);
+}
+
+/* Dropdown tài khoản */
+#user-dropdown .nav-profile img {
+  width: 32px;
+  height: 32px;
+}
+#user-dropdown .nav-profile span {
+  color: var(--color-text-body);
+}
+
+/* Mobile Nav Toggle */
+.mobile-nav-toggle {
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--color-text-dark);
+}
+
+/* --- (Giữ nguyên CSS cũ cho Hero, Search, Cards, Footer) --- */
+/* 3. Hero Section (Tìm kiếm) */
+.hero-section {
+  position: relative;
+  height: 500px;
+  background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&q=80&w=2070');
+  /* ... (Giữ nguyên CSS Hero Section từ tin nhắn trước) ... */
+}
+body {
+  font-family: var(--font-secondary);
+  color: var(--color-text-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  color: var(--color-text-dark);
+}
+
+/* 2. Header */
+.header {
+  background-color: #ffffff;
+  height: 70px;
+  /* Thêm một đường viền mỏng tinh tế */
+  border-bottom: 1px solid #dee2e6; 
+}
+.header .logo span {
+  font-family: var(--font-primary);
+  color: var(--color-primary); /* Đổi màu logo */
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+.header .logo i {
+  color: var(--color-primary);
+  font-size: 2rem;
+}
+
+.header-nav .nav-link {
+  color: var(--color-text-body);
+  font-weight: 600;
+  transition: color 0.3s;
+  font-family: var(--font-secondary);
+}
+.header-nav .nav-link:hover,
+.header-nav .nav-link.active {
+  color: var(--color-primary);
+}
+
+.btn-dang-tin {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.btn-dang-tin:hover {
+  background-color: #a0740a; /* Sậm hơn 1 chút */
+  border-color: #a0740a;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.btn-outline-primary {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.btn-outline-primary:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+
+/* 3. Hero Section (Tìm kiếm) */
+.hero-section {
+  position: relative;
+  height: 500px; /* Chiều cao của ảnh nền */
+  /* Ảnh nền chất lượng cao, tông màu tối */
+  background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&q=80&w=2070');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Lớp phủ màu xanh đậm (sang hơn màu đen) */
+  background: linear-gradient(to top, rgba(0, 51, 102, 0.7), rgba(0, 51, 102, 0.5)); 
+}
+.hero-section .container {
+  position: relative; 
+  z-index: 2;
+}
+.hero-title {
+  font-family: var(--font-primary);
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.hero-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 4. Hộp Tìm Kiếm */
+.search-box {
+  border-radius: 12px;
+  border: none;
+}
+.search-box .nav-tabs {
+  border-bottom: 1px solid #dee2e6;
+}
+.search-box .nav-tabs .nav-link {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-muted); /* Màu xám */
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 0.75rem 1.25rem;
+}
+.search-box .nav-tabs .nav-link.active {
+  color: var(--color-primary); /* Màu xanh navy */
+  border-bottom: 3px solid var(--color-primary);
+  background-color: transparent;
+}
+.form-control-lg, .form-select-lg {
+  font-size: 1rem; 
+  color: var(--color-text-body);
+}
+.btn-tim-kiem {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  font-weight: 600;
+}
+.btn-tim-kiem:hover {
+  background-color: #002244; /* Xanh navy sậm hơn */
+  border-color: #002244;
+}
+
+/* 5. Tiêu đề chung cho các Section */
+.section-title {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  color: var(--color-text-dark);
+  margin-bottom: 2.5rem; /* Tăng khoảng cách */
+  text-align: center;
+  font-size: 2.25rem;
+}
+
+/* 6. Danh mục */
+.category-box {
+  display: block;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--color-text-body);
+  transition: all 0.3s ease;
+}
+.category-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 51, 102, 0.1); /* Bóng mờ màu xanh */
+  border-color: var(--color-primary);
+}
+.category-icon {
+  font-size: 2.5rem;
+  color: var(--color-primary);
+}
+.category-box h5 {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  margin-top: 0.5rem;
+  margin-bottom: 0.2rem;
+  font-size: 1.1rem;
+  color: var(--color-text-dark);
+}
+.category-box p {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* 7. Thẻ Bất Động Sản (Property Card) */
+.property-card {
+  border: 1px solid #e9ecef; /* Viền xám nhạt */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  transition: all 0.3s ease;
+}
+.property-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 51, 102, 0.1); /* Bóng mờ xanh */
+  transform: translateY(-3px);
+}
+.property-card-img-container {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+}
+.property-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.property-card:hover .property-card-img {
+  transform: scale(1.05); /* Zoom ảnh khi hover */
+}
+.property-card-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 4px;
+}
+.property-card-price {
+  font-family: var(--font-primary);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-accent); /* Màu vàng gold */
+}
+.property-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-dark); /* Dùng màu #212529 */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 3rem; /* 1.5rem * 2 dòng */
+  margin-top: 0.25rem;
+}
+.property-card-address {
+  font-size: 0.9rem;
+  color: var(--color-text-muted); /* Dùng màu #6c757d */
+  margin-bottom: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.property-card-address i {
+  color: var(--color-primary); /* Xanh navy */
+}
+.property-card-stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--color-text-body);
+  border-top: 1px solid #f0f0f0;
+  padding-top: 0.75rem;
+}
+.property-card-stats span i {
+  margin-right: 5px;
+  color: var(--color-text-muted);
+}
+
+/* 8. Footer */
+.footer-dark {
+  background-color: var(--color-text-dark); /* Dùng màu #212529 */
+  color: #adb5bd; /* Màu chữ xám nhạt */
+}
+.footer-dark h5 {
+  font-family: var(--font-primary);
+  color: #fff;
+  font-weight: 600;
+}
+.footer-links {
+  padding-left: 0;
+}
+.footer-links li {
+  margin-bottom: 0.5rem;
+}
+.footer-links a {
+  text-decoration: none;
+  color: #adb5bd;
+  transition: color 0.3s;
+}
+.footer-links a:hover {
+  color: #fff;
+}
+.footer-social {
+  color: #adb5bd;
+  transition: color 0.3s;
+}
+.footer-social:hover {
+  color: #fff;
+}

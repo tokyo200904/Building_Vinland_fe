@@ -4,253 +4,304 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản Lý Tin Đăng Chờ Duyệt</title>
-      <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-      <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script src="assets/js/baomat.js"></script>
+
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
-   <link rel="stylesheet" href="assets/css/style_admin_duettin.css">
+    
+    <link rel="stylesheet" href="assets/css/style_admin_duettin.css">
 </head>
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
-
-    <div class="d-flex align-items-center justify-content-between">
-      <!-- BƯỚC 1: LOGO MỚI -->
-      <a href="Building_trangchu.html" class="logo d-flex align-items-center">
-        <!-- Thay thế logo cũ bằng Bootstrap Icon -->
-        <i class="bi bi-buildings-fill" style="font-size: 26px; color: #0d6efd; margin-left: 10px;"></i>
-        <span class="d-none d-lg-block ms-2">BĐS Admin</span>
-      </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div>
-
-    <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
-
-        <!-- BƯỚC 2: PROFILE DROPDOWN (ĐÃ SỬA) -->
-        <li class="nav-item dropdown pe-3">
-
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <!-- (Bạn có thể đổi ảnh đại diện mặc định này) -->
-                        <img src="https://placehold.co/40x40/0d6efd/white?text=?" 
-                 alt="Profile" 
-                 class="rounded-circle" 
-                 id="profile-image"> <!-- <-- THÊM ID NÀY -->
-            
-            
-            <!-- ID MỚI: Tên rút gọn của user (lấy từ localStorage) -->
-            <span id="profile-name-short" class="d-none d-md-block dropdown-toggle ps-2">...</span>
-          </a>
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-              <!-- ID MỚI: Tên đầy đủ của user (lấy từ localStorage) -->
-              <h6 id="profile-name-full">Đang tải...</h6>
-              <!-- ID MỚI: Vai trò của user (lấy từ localStorage) -->
-              <span id="profile-role">...</span>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <!-- (Đổi link này đến trang profile của bạn) -->
-              <a class="dropdown-item d-flex align-items-center" href="admin-profile.html">
-                <i class="bi bi-person"></i>
-                <span>Thông tin tài khoản</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <!-- NÚT ĐĂNG XUẤT (Sẽ được xử lý bằng JS) -->
-              <a class="dropdown-item d-flex align-items-center" href="#" id="logout-button">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Đăng xuất</span>
-              </a>
-            </li>
-
-          </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
-
-      </ul>
-    </nav><!-- End Icons Navigation -->
-
-  </header><!-- End Header -->
-
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
-
-    <ul class="sidebar-nav" id="sidebar-nav">
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Quản lý BĐS</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="Building_list.html">
-              <i class="bi bi-circle"></i><span>Danh sách BĐS</span>
-            </a>
-          </li>
-          <li>
-            <a href="Building_them.html">
-              <i class="bi bi-circle"></i><span>Thêm mới BĐS</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Components Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Duyệt tin</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="Building_admin_duyetTinBDS.html">
-              <i class="bi bi-circle"></i><span>Duyệt tin BĐS</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Duyệt tin tức</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Forms Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Quản lý tài khoản</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="#">
-              <i class="bi bi-circle"></i><span>Danh sách tài khoản</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Tables Nav -->
-
-    </ul>
-
-  </aside>
-    <main id="main" class="main">
-
-    <div class="pagetitle">
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <p>Home</p>
-          </li>
-          <li class="breadcrumb-item active">Dashboard</li>
-        </ol>
-      </nav>
-
 <body>
-    <div class="container-admin">
-        <h2 class="text-center mb-4"><i class="bi bi-hourglass-split me-2"></i>Tin Đăng Chờ Duyệt</h2>
+    <header id="header" class="header fixed-top d-flex align-items-center">
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="Building_trangchu.html" class="logo d-flex align-items-center">
+                <i class="bi bi-buildings-fill" style="font-size: 26px; color: #0d6efd; margin-left: 10px;"></i>
+                <span class="d-none d-lg-block ms-2">BĐS Admin</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+        </div>
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+                <li class="nav-item dropdown pe-3">
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <img src="https://placehold.co/40x40/0d6efd/white?text=?" 
+                             alt="Profile" 
+                             class="rounded-circle" 
+                             id="profile-image">
+                        <span id="profile-name-short" class="d-none d-md-block dropdown-toggle ps-2">...</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h6 id="profile-name-full">Đang tải...</h6>
+                            <span id="profile-role">...</span>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="admin-profile.html">
+                                <i class="bi bi-person"></i>
+                                <span>Thông tin tài khoản</span>
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="#" id="logout-button">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Đăng xuất</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-        <div id="pendingListingsContainer" class="row">
-            <p class="text-center text-muted" id="loadingMessage">Đang tải tin đăng chờ duyệt...</p>
+    <aside id="sidebar" class="sidebar">
+        <ul class="sidebar-nav" id="sidebar-nav">
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="index.html">
+                    <i class="bi bi-grid"></i><span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-menu-button-wide"></i><span>Quản lý BĐS</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+                    <li><a href="Building_list.html"><i class="bi bi-circle"></i><span>Danh sách BĐS</span></a></li>
+                    <li><a href="Building_them.html"><i class="bi bi-circle"></i><span>Thêm mới BĐS</span></a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-journal-text"></i><span>Duyệt tin</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+                    <li><a href="Building_admin_duyetTinBDS.html" class="active"><i class="bi bi-circle"></i><span>Duyệt tin BĐS</span></a></li>
+                    <li><a href="#"><i class="bi bi-circle"></i><span>Duyệt tin tức</span></a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>Quản lý tài khoản</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li><a href="#"><i class="bi bi-circle"></i><span>Danh sách tài khoản</span></a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Duyệt Tin Đăng Bất Động Sản</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item">Duyệt tin</li>
+                    <li class="breadcrumb-item active">Duyệt tin BĐS</li>
+                </ol>
+            </nav>
         </div>
 
-        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="detailModalLabel"><i class="bi bi-info-circle me-2"></i>Chi Tiết Tin Đăng</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <section class="section">
+            <div class="container-fluid">
+                <div id="pendingListingsContainer" class="row">
+                    <div id="loadingMessage" class="text-center text-muted col-12">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Đang tải tin đăng chờ duyệt...</p>
                     </div>
-                    <div class="modal-body" id="detailModalBody">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <img id="detailMainImage" src="" alt="Ảnh chính" class="img-fluid mb-3">
-                                <div id="detailOtherImages" class="d-flex flex-wrap gap-2 justify-content-center"></div>
-                            </div>
-                            <div class="col-md-6">
-                                <h4 id="detailTitle"></h4>
-                                <p><strong>Mã YC:</strong> <span id="detailId"></span></p>
-                                <p><strong>Người gửi:</strong> <span id="detailUser"></span></p>
-                                <p><strong>Ngày gửi:</strong> <span id="detailDate"></span></p>
-                                <hr>
-                                <p><strong>Giá:</strong> <span id="detailPrice"></span></p>
-                                <p><strong>Diện tích:</strong> <span id="detailArea"></span></p>
-                                <p><strong>Loại BĐS:</strong> <span id="detailType"></span></p>
-                                <p><strong>Mục đích:</strong> <span id="detailPurpose"></span></p>
-                                <p><strong>Địa chỉ:</strong> <span id="detailLocation"></span></p>
-                                <p><strong>Số phòng ngủ:</strong> <span id="detailBedrooms"></span></p>
-                                <p><strong>Số phòng tắm:</strong> <span id="detailBathrooms"></span></p>
-                                <p><strong>Tầng / Tổng tầng:</strong> <span id="detailFloors"></span></p>
-                                <p><strong>Nội thất:</strong> <span id="detailFurniture"></span></p>
-                                <p><strong>Năm xây dựng:</strong> <span id="detailYearBuilt"></span></p>
-                                <p class="mt-3"><strong>Mô tả chi tiết:</strong></p>
-                                <div id="detailDescription" class="card card-body bg-light"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable"> 
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailModalLabel"><i class="bi bi-info-circle me-2"></i>Chi Tiết Yêu Cầu Duyệt Tin</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="detailModalBody">
+                    
+                    <div class="row mb-3">
+                        <div class="col-lg-8">
+                            <h2 class="property-title" id="detailTitle"></h2>
+                            <p class="property-address" id="detailLocation">
+                                <i class="bi bi-geo-alt-fill me-2"></i>
+                            </p>
+                        </div>
+                        <div class="col-lg-4 text-lg-end">
+                            <div class="property-price" id="detailPrice"></div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <section class="mb-4">
+                                <div id="detailGalleryCarousel" class="carousel slide bg-light rounded-lg shadow-sm overflow-hidden" data-bs-interval="false">
+                                    <div class="carousel-inner" id="carouselMainImages"></div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#detailGalleryCarousel" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#detailGalleryCarousel" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                                <div class="thumbnail-nav mt-3 d-flex flex-nowrap overflow-auto" id="detailThumbnailNav"></div>
+                            </section>
+
+                            <section class="card shadow-sm border-0 mb-4 property-stats">
+                                <div class="card-body py-4">
+                                    <div class="row text-center">
+                                        <div class="col-6 col-md-3 mb-3 mb-md-0">
+                                            <i class="bi bi-arrows-fullscreen stat-icon"></i>
+                                            <div>Diện tích</div>
+                                            <strong id="statArea"></strong>
+                                        </div>
+                                        <div class="col-6 col-md-3 mb-3 mb-md-0">
+                                            <i class="bi bi-door-closed stat-icon"></i>
+                                            <div>Phòng ngủ</div>
+                                            <strong id="statBedrooms"></strong>
+                                        </div>
+                                        <div class="col-6 col-md-3">
+                                            <i class="bi bi-droplet stat-icon"></i>
+                                            <div>Phòng tắm</div>
+                                            <strong id="statBathrooms"></strong>
+                                        </div>
+                                        <div class="col-6 col-md-3">
+                                            <i class="bi bi-calendar-check stat-icon"></i>
+                                            <div>Năm XD</div>
+                                            <strong id="statYearBuilt"></strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="card shadow-sm border-0 mb-4">
+                                <div class="card-body p-4">
+                                    <h4 class="section-title">Thông tin chi tiết</h4>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><i class="bi bi-house-door-fill me-2"></i><strong>Loại BĐS:</strong> <span id="detailLoaiBDS" class="fw-bold"></span></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><i class="bi bi-tag-fill me-2"></i><strong>Mục đích:</strong> <span id="detailMucDich" class="fw-bold"></span></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><i class="bi bi-lamp-fill me-2"></i><strong>Nội thất:</strong> <span id="detailNoiThat" class="fw-bold"></span></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><i class="bi bi-layers-fill me-2"></i><strong>Tầng:</strong> <span id="detailTang" class="fw-bold"></span></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><i class="bi bi-building-fill me-2"></i><strong>Tổng tầng:</strong> <span id="detailTongTang" class="fw-bold"></span></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <h5 class="mt-3">Tiện ích:</h5>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p><i class="bi bi-p-circle me-2"></i>Bãi đỗ xe: <span id="detailBaiDoXe" class="fw-bold"></span></p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p><i class="bi bi-view-list me-2"></i>Ban công: <span id="detailBanCong" class="fw-bold"></span></p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p><i class="bi bi-arrow-up-circle me-2"></i>Thang máy: <span id="detailThangMay" class="fw-bold"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="card shadow-sm border-0 mb-4">
+                                <div class="card-body p-4">
+                                    <h4 class="section-title">Mô tả chi tiết</h4>
+                                    <div id="detailDescription" class="property-description"></div>
+                                </div>
+                            </section>
+
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="card border-0 shadow-sm sticky-top agent-card" style="top: 15px;">
+                                <div class="card-body p-4 text-center">
+                                    <img src="https://placehold.co/120x120/EFEFEF/AAAAAA?text=User" 
+                                         class="rounded-circle agent-avatar mb-3" 
+                                         alt="Ảnh đại diện"
+                                         id="detailAgentAvatar">
+                                    
+                                    <h5 class="card-title fw-bold mb-1" id="detailAgentName"></h5>
+                                    <p class="text-muted mb-3" id="detailAgentRole"></p>
+
+                                    <div class="d-grid gap-3">
+                                        <a href="#" id="btnShowPhone" class="btn btn-success btn-lg fw-bold">
+                                            <i class="bi bi-telephone-fill me-2"></i> 
+                                            <span id="detailAgentPhone">HIỆN SỐ</span>
+                                        </a>
+                                        <a href="#" id="btnChatEmail" class="btn btn-primary btn-lg fw-bold">
+                                            <i class="bi bi-envelope-fill me-2"></i> 
+                                            <span id="detailAgentEmail">Gửi Email</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-light p-3">
+                                    <p class="mb-1"><i class="bi bi-key-fill me-2"></i>Mã YC: <strong id="detailId"></strong></p>
+                                    <p class="mb-0"><i class="bi bi-calendar-plus me-2"></i>Ngày gửi: <strong id="detailDate"></strong></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-circle me-2"></i>Đóng</button>
-                        <div>
-                            <button type="button" class="btn btn-danger" id="rejectFromModalBtn"><i class="bi bi-x-octagon-fill me-2"></i>Từ chối</button>
-                            <button type="button" class="btn btn-success" id="approveFromModalBtn"><i class="bi bi-check-circle-fill me-2"></i>Phê duyệt</button>
-                        </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-circle me-2"></i>Đóng</button>
+                    <div>
+                        <button type="button" class="btn btn-danger" id="rejectFromModalBtn"><i class="bi bi-x-octagon-fill me-2"></i>Từ chối</button>
+                        <button type="button" class="btn btn-success" id="approveFromModalBtn"><i class="bi bi-check-circle-fill me-2"></i>Phê duyệt</button>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header bg-danger text-white">
-                        <h5 class="modal-title" id="rejectModalLabel"><i class="bi bi-exclamation-triangle-fill me-2"></i>Từ Chối Tin Đăng</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Bạn có chắc chắn muốn từ chối tin đăng này?</p>
-                        <div class="mb-3">
-                            <label for="rejectReason" class="form-label">Lý do từ chối (tùy chọn, sẽ hiển thị cho người gửi)</label>
-                            <textarea class="form-control" id="rejectReason" rows="4"></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="button" class="btn btn-primary" id="confirmRejectBtn">Xác nhận Từ chối</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-      <script src="assets/jquery-3.7.1.min.js"></script>
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
-  <script src="assets/vendor/quill/quill.js"></script>
-  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/js/duyettin.js"></script>
-    <Script src="assets/js/dangxuat.js"></Script>
+    <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="rejectModalLabel"><i class="bi bi-exclamation-triangle-fill me-2"></i>Từ Chối Tin Đăng</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn từ chối tin đăng này?</p>
+                    <div class="mb-3">
+                        <label for="rejectReason" class="form-label">Lý do từ chối (sẽ hiển thị cho người gửi)</label>
+                        <textarea class="form-control" id="rejectReason" rows="4" placeholder="Ví dụ: Tiêu đề không hợp lệ, hình ảnh mờ..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-danger" id="confirmRejectBtn">Xác nhận Từ chối</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script src="assets/jquery-3.7.1.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    
+    <script src="assets/js/duyettin.js"></script>
+    <script src="assets/js/dangxuat.js"></script>
 </body>
 </html>

@@ -1,0 +1,139 @@
+/* --- CSS Tùy chỉnh cho Trang Quản lý Tài khoản (Thiết kế mới) --- */
+
+/* 1. Thiết lập Font chữ & Màu sắc chung */
+/* Sử dụng Poppins cho các tiêu đề và tên, Open Sans cho nội dung */
+
+body, .pagetitle h1, .breadcrumb, .card-body, .modal-body {
+  font-family: 'Open Sans', sans-serif;
+  color: #343a40; /* Màu chữ chính (Đen nhạt) */
+}
+
+/* 2. Thanh tìm kiếm */
+.search-bar-container {
+  max-width: 500px;
+}
+.search-bar-container .form-control {
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+}
+
+/* 3. Container chứa danh sách */
+.list-container {
+  border-top: 1px solid #dee2e6; /* Đường kẻ phân cách */
+}
+
+/* 4. Card item cho mỗi người dùng (giống ảnh của bạn) */
+.user-list-item {
+  display: flex;
+  flex-wrap: wrap; /* Cho phép xuống hàng trên di động */
+  align-items: center;
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+}
+
+/* --- THÊM HIỆU ỨNG HOVER MÀU XÁM NHẠT --- */
+.user-list-item:hover {
+  background-color: #f8f9fa; /* Màu xám nhạt (Bootstrap) */
+}
+
+/* 5. Cột Ảnh đại diện */
+.user-avatar-col {
+  flex-basis: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #f0f0f0;
+}
+
+/* 6. Cột Thông tin (Tên, Email, SĐT, Vai trò) */
+.user-info-col {
+  flex: 1; /* Tự động co giãn */
+  min-width: 220px;
+  padding: 0 1rem;
+  line-height: 1.5;
+}
+
+/* --- SỬA FONT VÀ MÀU THEO YÊU CẦU CỦA BẠN --- */
+.user-info-col .user-name {
+  font-family: 'Poppins', sans-serif; /* Font Poppins */
+  font-weight: 600;
+  color: #212529; /* Màu chữ đậm nhất */
+  font-size: 1.05rem; /* Tăng kích thước 1 chút */
+  margin-bottom: 0;
+}
+.user-info-col .user-email,
+.user-info-col .user-phone {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.9rem;
+  color: #6c757d; /* Màu chữ xám (thứ cấp) */
+  margin-bottom: 0;
+}
+.user-info-col .user-phone i {
+  margin-right: 4px;
+}
+/* --- KẾT THÚC PHẦN SỬA FONT VÀ MÀU --- */
+
+/* 7. Badge Vai trò (Thiết kế lại giống ảnh) */
+.role-badge {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35em 0.7em;
+  border-radius: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.role-admin { background-color: #ffc107; color: #343a40; } /* Màu vàng (giống ảnh) */
+.role-nhan_vien { background-color: #198754; color: white; } /* Màu xanh lá */
+.role-agent { background-color: #fd7e14; color: white; } /* Màu cam */
+.role-customer { background-color: #6c757d; color: white; } /* Màu xám */
+
+
+/* 8. Cột Hành động (Nút) */
+.user-actions-col {
+  flex-basis: 150px;
+  text-align: right;
+  padding-right: 1rem;
+}
+.user-actions-col .btn {
+  margin-left: 8px;
+  border-radius: 50px; /* Nút tròn */
+  width: 40px;
+  height: 40px;
+  font-size: 0.9rem;
+  
+  /* Căn giữa icon */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 9. Thông báo */
+.list-message {
+  padding: 3rem;
+  text-align: center;
+  color: #6c757d; /* Màu xám */
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* 10. Trạng thái bị cấm */
+.is-banned .user-info-col .user-name {
+  color: #adb5bd; /* Màu xám nhạt hơn */
+  text-decoration: line-through;
+}
+.is-banned .user-info-col .user-email,
+.is-banned .user-info-col .user-phone {
+  color: #ced4da; /* Màu xám nhạt nhất */
+  text-decoration: line-through;
+}
+.is-banned .user-avatar {
+  filter: grayscale(100%);
+  opacity: 0.6;
+}
