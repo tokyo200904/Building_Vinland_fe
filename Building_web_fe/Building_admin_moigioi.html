@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Quản Lý Môi Giới</title>
+  
+  <!-- Bảo mật -->
+  <script src="assets/js/baomat.js"></script>
+
+  <!-- CSS -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+  
+  <!-- CSS TÙY CHỈNH CHO CARD MÔI GIỚI (Giống ảnh bạn gửi) -->
+  <style>
+    .agency-card {
+        background: #fff;
+        border: 1px solid #f0f0f0;
+        border-radius: 8px;
+        padding: 20px;
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        align-items: flex-start;
+        gap: 20px; /* Khoảng cách giữa logo và nội dung */
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .agency-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        border-color: #0d6efd;
+    }
+
+    /* Logo bên trái */
+    .agency-logo-wrapper {
+        flex-shrink: 0;
+        width: 100px;
+        height: 100px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+    }
+
+    .agency-logo-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Đảm bảo logo không bị méo */
+        padding: 5px;
+    }
+
+    /* Nội dung bên phải */
+    .agency-info {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .agency-name {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 8px;
+        line-height: 1.4;
+    }
+
+    .agency-detail {
+        font-size: 0.9rem;
+        color: #555;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .agency-detail i {
+        color: #888;
+        margin-right: 8px;
+        font-size: 1.1rem;
+        margin-top: 2px; /* Căn chỉnh icon */
+    }
+
+    /* Nút hành động (Ẩn mặc định, hiện khi hover) */
+    .agency-actions {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+    .agency-card:hover .agency-actions {
+        opacity: 1;
+    }
+    
+    /* Nút thêm mới đẹp hơn */
+    .btn-add-new {
+        background: linear-gradient(45deg, #0d6efd, #0a58ca);
+        border: none;
+        box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <!-- BƯỚC 1: LOGO MỚI -->
+      <a href="Building_trangchu.html" class="logo d-flex align-items-center">
+        <!-- Thay thế logo cũ bằng Bootstrap Icon -->
+        <i class="bi bi-buildings-fill" style="font-size: 26px; color: #0d6efd; margin-left: 10px;"></i>
+        <span class="d-none d-lg-block ms-2">BĐS Admin</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div>
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <!-- BƯỚC 2: PROFILE DROPDOWN (ĐÃ SỬA) -->
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <!-- (Bạn có thể đổi ảnh đại diện mặc định này) -->
+                        <img src="https://placehold.co/40x40/0d6efd/white?text=?" 
+                 alt="Profile" 
+                 class="rounded-circle" 
+                 id="profile-image"> <!-- <-- THÊM ID NÀY -->
+            
+            
+            <!-- ID MỚI: Tên rút gọn của user (lấy từ localStorage) -->
+            <span id="profile-name-short" class="d-none d-md-block dropdown-toggle ps-2">...</span>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <!-- ID MỚI: Tên đầy đủ của user (lấy từ localStorage) -->
+              <h6 id="profile-name-full">Đang tải...</h6>
+              <!-- ID MỚI: Vai trò của user (lấy từ localStorage) -->
+              <span id="profile-role">...</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <!-- (Đổi link này đến trang profile của bạn) -->
+              <a class="dropdown-item d-flex align-items-center" href="admin-profile.html">
+                <i class="bi bi-person"></i>
+                <span>Thông tin tài khoản</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <!-- NÚT ĐĂNG XUẤT (Sẽ được xử lý bằng JS) -->
+              <a class="dropdown-item d-flex align-items-center" href="#" id="logout-button">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Đăng xuất</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="index.html">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link " data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Quản lý BĐS</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="Building_list.html">
+              <i class="bi bi-circle"></i><span>Danh sách BĐS</span>
+            </a>
+          </li>
+          <li>
+            <a href="Building_them.html">
+              <i class="bi bi-circle"></i><span>Thêm mới BĐS</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Components Nav -->
+      
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>Duyệt tin</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="Building_admin_duyetTinBDS.html">
+              <i class="bi bi-circle"></i><span>Duyệt tin BĐS</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>Duyệt tin tức</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Forms Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Quản lý tài khoản</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="Building_admin_qlUser.html">
+              <i class="bi bi-circle"></i><span>Danh sách tài khoản</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+
+    </ul>
+
+  </aside>
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="Building_trangchu.html" class="logo d-flex align-items-center">
+        <i class="bi bi-buildings-fill" style="font-size: 26px; color: #0d6efd; margin-left: 10px;"></i>
+        <span class="d-none d-lg-block ms-2">BĐS Admin</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div>
+    <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+          <li class="nav-item dropdown pe-3">
+            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+              <img id="profile-image" src="https://placehold.co/40x40" alt="Profile" class="rounded-circle">
+              <span id="profile-name-short" class="d-none d-md-block dropdown-toggle ps-2">...</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                <li><a class="dropdown-item d-flex align-items-center" href="#" id="logout-button"><i class="bi bi-box-arrow-right"></i><span>Đăng xuất</span></a></li>
+            </ul>
+          </li>
+        </ul>
+    </nav>
+  </header>
+
+  <aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link " data-bs-target="#partner-nav" data-bs-toggle="collapse" href="#">
+              <i class="bi bi-people"></i><span>Đối Tác</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="partner-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+              <li>
+                <a href="quan-ly-moi-gioi.html" class="active">
+                  <i class="bi bi-circle"></i><span>Quản lý Môi Giới</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+    </ul>
+  </aside>
+
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Quản Lý Công Ty Môi Giới</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="Building_trangchu.html">Trang chủ</a></li>
+          <li class="breadcrumb-item active">Môi giới</li>
+        </ol>
+      </nav>
+    </div>
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="card-title m-0 fs-4">Danh sách đối tác</h5>
+                <button class="btn btn-primary btn-add-new px-4 py-2 rounded-pill" id="btnAddMoiGioi">
+                    <i class="bi bi-plus-lg me-2"></i> Thêm Công Ty Mới
+                </button>
+            </div>
+
+            <!-- CONTAINER CHỨA CARD (GRID) -->
+            <div class="row g-4" id="moiGioiContainer">
+                <!-- Dữ liệu sẽ được JS chèn vào đây -->
+                <div class="col-12 text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Đang tải...</span>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL THÊM / SỬA (Giữ nguyên form như cũ) -->
+  <div class="modal fade" id="moiGioiModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Thông Tin Môi Giới</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+            <form id="moiGioiForm">
+                <input type="hidden" id="maMoiGioi">
+                
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Tên Công Ty <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="tenCongTy" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Số Giấy Phép</label>
+                        <input type="text" class="form-control" id="soGiayPhep">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Email <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Số Điện Thoại <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="soDienThoai" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Địa Chỉ</label>
+                        <input type="text" class="form-control" id="diaChi">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Giới Thiệu</label>
+                        <textarea class="form-control" id="gioiThieu" rows="3"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Logo / Hình Ảnh</label>
+                        <input type="file" class="form-control" id="imageFile" accept="image/*">
+                        <div class="mt-2" id="previewContainer"></div>
+                    </div>
+                </div>
+            </form>
+                        <hr class="my-4">
+            <h5 class="mb-3"><i class="bi bi-people-fill me-2"></i>Danh Sách Nhân Viên</h5>
+            
+            <div id="employeeListContainer">
+                <!-- Danh sách nhân viên sẽ được JS chèn vào đây -->
+                <p class="text-muted fst-italic">Chưa có thông tin nhân viên.</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-primary" id="btnSave">Lưu Thông Tin</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/admin-global.js"></script>
+  <script src="assets/js/main.js"></script>
+  <!-- Script riêng -->
+  <script src="assets/js/qlmoigioi.js"></script>
+
+</body>
+</html>

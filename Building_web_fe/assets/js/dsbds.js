@@ -91,19 +91,19 @@ function renderPage(page) {
         let badgeClass = 'bg-secondary';
         let badgeText = '';
         switch (bds.trangThai) {
-            case 'CHO_THUE': // Đảm bảo khớp với giá trị ENUM từ Backend
+            case 'cho_thue': // Đảm bảo khớp với giá trị ENUM từ Backend
                 badgeClass = 'bg-success';
                 badgeText = 'Cho thuê';
                 break;
-            case 'BAN': // Đảm bảo khớp với giá trị ENUM từ Backend
+            case 'ban': // Đảm bảo khớp với giá trị ENUM từ Backend
                 badgeClass = 'bg-danger';
                 badgeText = 'Bán';
                 break;
-            case 'DANG_XU_LY': // Đảm bảo khớp với giá trị ENUM từ Backend
+            case 'dang_xu_ly': // Đảm bảo khớp với giá trị ENUM từ Backend
                 badgeClass = 'bg-warning text-dark';
                 badgeText = 'Đang chờ xử lý';
                 break;
-            case 'DA_BAN': // Đảm bảo khớp với giá trị ENUM từ Backend
+            case 'da_ban': // Đảm bảo khớp với giá trị ENUM từ Backend
                 badgeClass = 'bg-primary';
                 badgeText = 'Đã bán';
                 break;

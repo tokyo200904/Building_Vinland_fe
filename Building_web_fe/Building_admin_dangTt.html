@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Tin Tức Mới</title>
+    
+    <!-- BẢO MẬT (Chạy trước) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script src="assets/js/baomat.js"></script>
+
+    <!-- (Các link CSS của template) -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    
+    <!-- CSS cho Quill (Trình soạn thảo) -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    
+    <style>
+        .ql-editor {
+            min-height: 250px; /* Đặt chiều cao tối thiểu cho khung soạn thảo */
+        }
+        .image-preview-container {
+            margin-top: 15px;
+            max-width: 300px;
+        }
+        .image-preview-item {
+            position: relative;
+        }
+        .image-preview-item img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- (Chèn Header và Sidebar của admin_template.html vào đây) -->
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+        <!-- (Copy toàn bộ code <header>...</header> từ admin_template.html của bạn) -->
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="Building_trangchu.html" class="logo d-flex align-items-center">
+              <i class="bi bi-buildings-fill" style="font-size: 26px; color: #0d6efd; margin-left: 10px;"></i>
+              <span class="d-none d-lg-block ms-2">BĐS Admin</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+          </div>
+          <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+              <li class="nav-item dropdown pe-3">
+                <a class="nav-link nav_profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                  <img id="profile-image" src="https://placehold.co/40x40/0d6efd/white?text=A" alt="Profile" class="rounded-circle">
+                  <span id="profile-name-short" class="d-none d-md-block dropdown-toggle ps-2">...</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                  <li class="dropdown-header">
+                    <h6 id="profile-name-full">Đang tải...</h6>
+                    <span id="profile-role">...</span>
+                  </li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li>
+                    <a class="dropdown-item d-flex align-items-center" href="admin-profile.html">
+                      <i class="bi bi-person"></i>
+                      <span>Thông tin tài khoản</span>
+                    </a>
+                  </li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li>
+                    <a class="dropdown-item d-flex align-items-center" href="#" id="logout-button">
+                      <i class="bi bi-box-arrow-right"></i>
+                      <span>Đăng xuất</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+    </header>
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+        <!-- (Copy toàn bộ code <aside>...</aside> từ admin_template.html của bạn) -->
+        <!-- (Hãy đảm bảo highlight đúng trang "Duyệt tin tức" hoặc "Đăng tin tức") -->
+        <ul class="sidebar-nav" id="sidebar-nav">
+           <!-- (Ví dụ) -->
+           <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#news-nav" data-bs-toggle="collapse" href="#">
+              <i class="bi bi-newspaper"></i><span>Quản lý Tin Tức</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="news-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+              <li>
+                <a href="Building_admin_dangTinTuc.html" class="active">
+                  <i class="bi bi-circle"></i><span>Đăng tin tức mới</span>
+                </a>
+              </li>
+              <li>
+                <a href="Building_admin_duyetTinTuc.html">
+                  <i class="bi bi-circle"></i><span>Duyệt tin tức</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </aside>
+    <!-- ======= Hết Header/Sidebar ======= -->
+
+
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Đăng Tin Tức Mới</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="Building_trangchu.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item">Tin tức</li>
+                    <li class="breadcrumb-item active">Đăng mới</li>
+                </ol>
+            </nav>
+        </div>
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Soạn thảo tin tức</h5>
+
+                            <form id="dangTinTucForm" class="row g-3">
+                                <!-- Thông báo -->
+                                <div id="formError" class="alert alert-danger d-none" role="alert"></div>
+                                <div id="formSuccess" class="alert alert-success d-none" role="alert"></div>
+
+                                <div class="col-12">
+                                    <label for="tieuDe" class="form-label fw-bold">Tiêu đề <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="tieuDe" name="tieuDe" required>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="duongDan" class="form-label fw-bold">Đường dẫn (slug) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="duongDan" name="duongDan" placeholder="vi-du-bai-viet-moi" required>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label fw-bold">Ảnh đại diện <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="file" id="anhDaiDienFile" name="anhDaiDienFile" accept="image/*" required>
+                                    <div class="image-preview-container" id="imagePreview"></div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <label for="ngayXuatBan" class="form-label fw-bold">Ngày xuất bản (Tùy chọn)</label>
+                                    <input type="datetime-local" class="form-control" id="ngayXuatBan" name="ngayXuatBan">
+                                    <small class="text-muted">Nếu để trống, sẽ xuất bản ngay lập tức (nếu được duyệt).</small>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label fw-bold">Nội dung bài viết <span class="text-danger">*</span></label>
+                                    <!-- Khung soạn thảo Quill -->
+                                    <div id="editor" style="height: 300px;"></div>
+                                </div>
+                                
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg" id="submitButton">
+                                        <span id="submitSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                        <span id="submitButtonText">Gửi Bài Viết</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- (JS của Template) -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/admin-global.js"></script>
+    <script src="assets/js/main.js"></script> 
+    
+    <!-- JS cho Quill Editor -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    
+    <!-- JS Logic của trang này -->
+    <script src="assets/js/dangtintuc.js"></script>
+</body>
+</html>

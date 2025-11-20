@@ -18,8 +18,9 @@
         '/Building_web_fe/Building_list.html',
         '/Building_web_fe/Building_them.html',
         '/Building_web_fe/Bulding_admin_ctsp.html',
-        '/Building_web_fe/Building_admin_qlUser.html'
-
+        '/Building_web_fe/Building_admin_qlUser.html',
+        '/Building_web_fe/Building_admin_duyenTT.html',
+        '/Building_web_fe/Building_admin_QlTt.html'
     ];
 
     // Định nghĩa các trang công khai

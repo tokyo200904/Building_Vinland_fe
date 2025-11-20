@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Tin Tức</title>
+    
+    <!-- BẢO MẬT (Chạy trước) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script src="assets/js/baomat.js"></script>
+
+    <!-- (Các link CSS của template) -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    
+    <!-- CSS Tùy chỉnh (Giống trang duyệt tin) -->
+    <style>
+        .news-card-item {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: box-shadow 0.3s ease;
+            overflow: hidden; 
+        }
+        .news-card-item:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        .news-card-item .card-img-container {
+            position: relative;
+            height: 100%;
+            min-height: 220px;
+        }
+        .news-card-item .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px 0 0 12px;
+        }
+        .news-card-item .news-tag {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: #0d6efd; /* Màu xanh cho tin đã đăng */
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        /* Style cho các trạng thái khác */
+        .news-card-item .news-tag.nhap { background-color: #6c757d; }
+        .news-card-item .news-tag.luu_tru { background-color: #ffc107; }
+
+        
+        .news-card-item .card-body { padding: 1.5rem 2rem; }
+        .news-card-item .card-meta { font-size: 0.85rem; color: #6c757d; margin-bottom: 0.5rem; }
+        .news-card-item .card-meta span { font-weight: 500; color: #495057; }
+        .news-card-item .card-title { font-size: 1.4rem; font-weight: 700; color: #212529; margin-bottom: 0.75rem; }
+        .news-card-item .action-buttons .btn { margin-right: 5px; padding: 0.3rem 0.6rem; font-size: 0.85rem; }
+
+        /* (Style cho Modal Chi Tiết - Giống hệt trang duyệt tin) */
+        #detailModal .modal-content { border-radius: 12px; border: none; }
+        #detailModal .modal-header { background-color: #f8f9fa; border-bottom: 1px solid #dee2e6; padding: 1rem 2rem; }
+        #detailModal .modal-title { font-weight: 600; color: #495057; }
+        #detailModal .modal-body { padding: 2rem 2.5rem; }
+        #detailModal h2.news-title { font-size: 2.2rem; font-weight: 700; color: #212529; line-height: 1.3; margin-bottom: 0.5rem; }
+        #detailModal .news-meta { font-size: 0.95rem; color: #6c757d; margin-bottom: 1.5rem; }
+        #detailModal .news-meta strong { color: #0d6efd; }
+        #detailModal .news-main-image { width: 100%; height: auto; max-height: 450px; object-fit: cover; border-radius: 8px; margin-bottom: 2rem; }
+        #detailModal .news-content-body { font-size: 1.1rem; line-height: 1.7; }
+        #detailNoiDung p { margin-bottom: 1.25rem; }
+        #detailNoiDung h1, #detailNoiDung h2, #detailNoiDung h3 { font-weight: 700; margin-top: 1.5rem; margin-bottom: 1rem; color: #343a40; }
+        #detailNoiDung img { max-width: 100%; height: auto; border-radius: 5px; margin: 1rem 0; }
+    </style>
+</head>
+<body>
+
+    <!-- (Copy Header và Sidebar của bạn vào đây) -->
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+        <!-- (Code <header>...</header> của bạn) -->
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="Building_trangchu.html" class="logo d-flex align-items-center">
+              <i class="bi bi-buildings-fill" style="font-size: 26px; color: #0d6efd; margin-left: 10px;"></i>
+              <span class="d-none d-lg-block ms-2">BĐS Admin</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+          </div>
+          <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+              <li class="nav-item dropdown pe-3">
+                <a class="nav-link nav_profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                  <img id="profile-image" src="https://placehold.co/40x40/0d6efd/white?text=A" alt="Profile" class="rounded-circle">
+                  <span id="profile-name-short" class="d-none d-md-block dropdown-toggle ps-2">...</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                  <li class="dropdown-header">
+                    <h6 id="profile-name-full">Đang tải...</h6>
+                    <span id="profile-role">...</span>
+                  </li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li>
+                    <a class="dropdown-item d-flex align-items-center" href="admin-profile.html">
+                      <i class="bi bi-person"></i>
+                      <span>Thông tin tài khoản</span>
+                    </a>
+                  </li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li>
+                    <a class="dropdown-item d-flex align-items-center" href="#" id="logout-button">
+                      <i class="bi bi-box-arrow-right"></i>
+                      <span>Đăng xuất</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+    </header>
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+        <!-- (Code <aside>...</aside> của bạn, highlight đúng trang) -->
+        <ul class="sidebar-nav" id="sidebar-nav">
+           <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#news-nav" data-bs-toggle="collapse" href="#">
+              <i class="bi bi-newspaper"></i><span>Quản lý Tin Tức</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="news-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+              <li>
+                <a href="Building_admin_quanLyTinTuc.html" class="active"> <!-- (Trang này) -->
+                  <i class="bi bi-circle"></i><span>Danh sách tin tức</span>
+                </a>
+              </li>
+              <li>
+                <a href="Building_admin_dangTinTuc.html"> 
+                  <i class="bi bi-circle"></i><span>Đăng tin tức mới</span>
+                </a>
+              </li>
+              <li>
+                <a href="Building_admin_duyetTinTuc.html">
+                  <i class="bi bi-circle"></i><span>Duyệt tin tức</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </aside>
+    <!-- ======= Hết Header/Sidebar ======= -->
+
+
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Quản Lý Tin Tức</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="Building_trangchu.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item">Tin tức</li>
+                    <li class="breadcrumb-item active">Quản lý</li>
+                </ol>
+            </nav>
+        </div>
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="publishedNewsContainer" class="row">
+                        <!-- Thẻ tin tức sẽ được JS chèn vào đây -->
+                    </div>
+                    
+                    <div id="loadingMessage" class="text-center p-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Đang tải...</span>
+                        </div>
+                        <p class="mt-2">Đang tải danh sách...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- (Modals) -->
+
+    <!-- Modal: Xem Chi Tiết (Thiết kế lại) -->
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailModalLabel">Chi Tiết Bài Viết</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h2 class="news-title" id="detailTieuDe"></h2>
+                    <p class="news-meta" id="detailMetaInfo"></p>
+                    <img id="detailAnhDaiDien" src="" alt="Ảnh đại diện" class="news-main-image">
+                    <div id="detailNoiDung" class="news-content-body">
+                        <!-- Nội dung HTML từ Quill sẽ được chèn vào đây -->
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <!-- (Không có nút duyệt/từ chối ở đây) -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Xóa (MỚI) -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteModalLabel">Xác Nhận Xóa Tin Tức</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn xóa vĩnh viễn tin tức: "<strong id="deleteTitle"></strong>"?</p>
+                    <p class="text-danger">Hành động này không thể hoàn tác.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</Bao>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Xác nhận Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- (JS của Template) -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/admin-global.js"></script>
+    <script src="assets/js/main.js"></script> 
+    
+    <!-- JS Logic của trang này (MỚI) -->
+    <script src="assets/js/Qltt.js"></script>
+</body>
+</html>
