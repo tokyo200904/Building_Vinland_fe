@@ -79,8 +79,8 @@ $(document).ready(function() {
                 }
 
                 const card = `
-                <div class="col-12">
-                    <div class="card news-card-item mb-4">
+                <div class="col-md-6">
+                    <div class="card news-card-item h-100">
                         <div class="row g-0">
                             <!-- Cột Ảnh -->
                             <div class="col-md-4">
@@ -104,9 +104,6 @@ $(document).ready(function() {
                                     <div class="action-buttons mt-auto pt-3">
                                         <button class="btn btn-info view-btn" data-id="${item.maTin}" title="Xem chi tiết">
                                             <i class="bi bi-eye me-1"></i> Xem chi tiết
-                                        </button>
-                                        <button class="btn btn-warning edit-btn" data-id="${item.maTin}" title="Chỉnh sửa">
-                                            <i class="bi bi-pencil-square me-1"></i> Sửa
                                         </button>
                                         <button class="btn btn-danger delete-btn" data-id="${item.maTin}" data-title="${item.tieuDe}" title="Xóa (Chỉ Admin)">
                                             <i class="bi bi-trash me-1"></i> Xóa

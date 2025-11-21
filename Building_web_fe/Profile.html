@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Hồ Sơ Cá Nhân</title>
+  
+  <script src="assets/js/baomat.js"></script>
+
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+  
+  <!-- CSS TÙY CHỈNH CHO PROFILE -->
+  <style>
+    /* Card bên trái */
+    .profile-card {
+        text-align: center;
+        padding-bottom: 30px;
+    }
+    .profile-cover {
+        height: 120px;
+        background: linear-gradient(45deg, #0d6efd, #0dcaf0);
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        margin-bottom: -60px; /* Đẩy ảnh avatar lên */
+    }
+    .profile-card img.profile-img-main {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 5px solid #fff;
+        background: #fff;
+        position: relative;
+    }
+    .profile-card h2 {
+        margin-top: 15px;
+        font-size: 24px;
+        font-weight: 700;
+        color: #2c384e;
+    }
+    .profile-card h3 {
+        font-size: 16px;
+        color: #888;
+        margin-bottom: 20px;
+    }
+    
+    /* Nút Mạng Xã Hội */
+    .social-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin: 0 5px;
+        transition: 0.3s;
+        text-decoration: none;
+        font-size: 18px;
+    }
+    .social-btn.facebook { background: #e7f3ff; color: #1877f2; }
+    .social-btn.facebook:hover { background: #1877f2; color: #fff; }
+    
+    .social-btn.zalo { 
+        background: #e6f5ff; 
+        color: #0068ff; 
+        font-weight: bold;
+        font-family: sans-serif;
+        font-size: 14px;
+    }
+    .social-btn.zalo:hover { background: #0068ff; color: #fff; }
+
+    /* Phần Tổng Quan */
+    .profile-overview .row {
+        margin-bottom: 20px;
+        font-size: 15px;
+        border-bottom: 1px solid #f6f9ff;
+        padding-bottom: 15px;
+    }
+    .profile-overview .row:last-child { border-bottom: none; }
+    .profile-overview .label {
+        font-weight: 600;
+        color: #012970;
+    }
+    .profile-overview .value {
+        color: #444;
+    }
+
+    /* Icon trong overview */
+    .overview-icon {
+        color: #0d6efd;
+        margin-right: 8px;
+        font-size: 16px;
+    }
+.logo .custom-logo-img {
+  max-height: 50px; /* Chiều cao tối đa, vừa vặn với header */
+  width: auto;      /* Tự động chỉnh chiều rộng theo tỉ lệ */
+  margin-right: 5px;
+}
+
+/* Tạo phong cách chữ "Cổ điển/Sang trọng" cho chữ VINLAND */
+.logo .vinland-brand-text {
+  font-family: "Georgia", "Times New Roman", serif; /* Dùng font có chân tạo cảm giác cổ điển */
+  font-weight: 700;   /* Chữ đậm */
+  font-size: 24px;    /* Kích thước chữ */
+  color: #2c3e50;     /* Màu xanh than đậm hoặc màu nâu gỗ #5d4037 tùy bạn chọn */
+  letter-spacing: 1px; /* Khoảng cách giữa các chữ cái rộng hơn xíu cho sang */
+  text-transform: uppercase; /* Viết hoa toàn bộ */}
+  </style>
+</head>
+
+<body>
+ <header id="header" class="header fixed-top d-flex align-items-center">
+
+  <div class="d-flex align-items-center justify-content-between">
+    <a href="Building_trangchu.html" class="logo d-flex align-items-center">
+      <img src="assets/img/unnamed.jpg" alt="Vinland Sage Real Estate Logo" style="max-height: 60px; width: auto;">
+    </a>
+    
+    <i class="bi bi-list toggle-sidebar-btn"></i>
+  </div>
+
+  <nav class="header-nav ms-auto">
+    <ul class="d-flex align-items-center">
+
+      <li class="nav-item dropdown pe-3">
+
+        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+          <img src="https://placehold.co/40x40/0d6efd/white?text=?" 
+               alt="Profile" 
+               class="rounded-circle" 
+               id="profile-image">
+          <span id="profile-name-short" class="d-none d-md-block dropdown-toggle ps-2">...</span>
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+          <li class="dropdown-header">
+            <h6 id="profile-name-full">Đang tải...</h6>
+            <span id="profile-role">...</span>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="Profile.html">
+              <i class="bi bi-person"></i>
+              <span>Thông tin tài khoản</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="#" id="logout-button">
+              <i class="bi bi-box-arrow-right"></i>
+              <span>Đăng xuất</span>
+            </a>
+          </li>
+
+        </ul></li></ul>
+  </nav></header>
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="index.html">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+      <li class="nav-heading">QUẢN LÝ</li>
+
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="Building_list.html">
+          <i class="bi bi-menu-button-wide"></i>
+          <span>Quản lý bất động sản</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="Building_admin_QlTt.html">
+          <i class="bi bi-journal-text"></i>
+          <span>Quản lý tin tức</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="Building_admin_qlUser.html">
+          <i class="bi bi-layout-text-window-reverse"></i>
+          <span>Quản lý tài khoản</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="Building_admin_moigioi.html">
+          <i class="bi bi-newspaper"></i>
+          <span>Quản lý công ty môi giới</span>
+        </a>
+      </li>
+
+      <li class="nav-heading">ĐĂNG TIN</li>
+
+
+            <li class="nav-item">
+        <a class="nav-link collapsed" href="Building_them.html">
+          <i class="bi-building-add"></i>
+          <span>Đăng tin bất động sản</span>
+        </a>
+      </li>
+
+            <li class="nav-item">
+        <a class="nav-link collapsed" href="Building_admin_dangTt.html">
+          <i class="bi-newspaper"></i>
+          <span>Đăng tin tức</span>
+        </a>
+      </li>
+
+      <li class="nav-heading">DUYỆT TIN</li>
+
+            <li class="nav-item">
+        <a class="nav-link collapsed" href="Building_admin_duyetTinBDS.html">
+          <i class="bi-house-check"></i>
+          <span>Duyệt tin bất động sản</span>
+        </a>
+      </li>
+
+     <li class="nav-item">
+        <a class="nav-link collapsed" href="Building_admin_duyenTT.html">
+          <i class="bi-file-check"></i>
+          <span>Duyệt tin tức</span>
+        </a>
+      </li>
+            <li class="nav-heading">PAGES</li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="Profile.html">
+          <i class="bi bi-menu-button-wide"></i>
+          <span>Profile</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+              <a class="nav-link collapsed" href="#" id="logout-button">
+                <i class="bi bi-box-arrow-right"></i>
+          <span>Login</span>
+        </a>
+      </li>
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Hồ Sơ Cá Nhân</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="Building_trangchu.html">Trang chủ</a></li>
+          <li class="breadcrumb-item active">Thông tin cá nhân</li>
+        </ol>
+      </nav>
+    </div>
+
+    <section class="section profile">
+      <div class="row">
+        
+        <!-- CỘT TRÁI: Card Thông Tin Tóm Tắt -->
+        <div class="col-xl-4">
+          <div class="card">
+            <!-- Ảnh bìa màu sắc -->
+            <div class="profile-cover"></div>
+            
+            <div class="card-body profile-card pt-0">
+              <img id="overviewAvatar" src="https://placehold.co/120x120" alt="Profile" class="profile-img-main">
+              <h2 id="overviewName">Đang tải...</h2>
+              <h3 id="overviewRole">...</h3>
+              
+              <div class="d-flex justify-content-center mt-3 gap-2">
+                  <!-- Link Facebook -->
+                  <a href="#" class="social-btn facebook" id="linkFacebook" target="_blank" title="Facebook">
+                      <i class="bi bi-facebook"></i>
+                  </a>
+                  <!-- Link Zalo (Dùng chữ Z vì bootstrap ko có icon zalo chuẩn) -->
+                  <a href="#" class="social-btn zalo" id="linkZalo" target="_blank" title="Zalo">
+                      Zalo
+                  </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CỘT PHẢI: Tabs Chi Tiết -->
+        <div class="col-xl-8">
+
+          <div class="card">
+            <div class="card-body pt-3">
+              <ul class="nav nav-tabs nav-tabs-bordered">
+
+                <li class="nav-item">
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">
+                      <i class="bi bi-info-circle me-1"></i> Tổng Quan
+                  </button>
+                </li>
+
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">
+                      <i class="bi bi-pencil-square me-1"></i> Chỉnh Sửa
+                  </button>
+                </li>
+
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">
+                      <i class="bi bi-key me-1"></i> Đổi Mật Khẩu
+                  </button>
+                </li>
+
+              </ul>
+              
+              <div class="tab-content pt-4">
+
+                <!-- TAB 1: TỔNG QUAN (Giao diện mới) -->
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                  
+                  <h5 class="card-title text-primary"><i class="bi bi-person-vcard me-2"></i>Thông tin chi tiết</h5>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label"><i class="bi bi-person overview-icon"></i> Họ và Tên</div>
+                    <div class="col-lg-9 col-md-8 value fw-bold" id="viewFullName">...</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label"><i class="bi bi-envelope overview-icon"></i> Email</div>
+                    <div class="col-lg-9 col-md-8 value" id="viewEmail">...</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label"><i class="bi bi-telephone overview-icon"></i> Số điện thoại</div>
+                    <div class="col-lg-9 col-md-8 value" id="viewPhone">...</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label"><i class="bi bi-geo-alt overview-icon"></i> Địa chỉ</div>
+                    <div class="col-lg-9 col-md-8 value" id="viewCompany">...</div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label"><i class="bi bi-building overview-icon"></i> Công ty</div>
+                    <div class="col-lg-9 col-md-8 value" id="viewcongty"></div>
+                  </div>
+
+                  <h5 class="card-title text-primary mt-4"><i class="bi bi-chat-quote me-2"></i>Giới thiệu</h5>
+                  <div class="p-3 bg-light rounded border">
+                      <p class="small fst-italic mb-0" id="viewGioiThieu">Chưa có thông tin giới thiệu.</p>
+                  </div>
+
+                </div>
+
+                <!-- TAB 2: CHỈNH SỬA (Thêm input Facebook/Zalo) -->
+                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                  <form id="editProfileForm">
+                    <!-- Ảnh đại diện -->
+                    <div class="row mb-3">
+                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Ảnh đại diện</label>
+                      <div class="col-md-8 col-lg-9">
+                        <img id="editAvatarPreview" src="https://placehold.co/120x120" alt="Profile" class="rounded mb-2 border" style="width: 100px; height: 100px; object-fit: cover;">
+                        <div>
+                          <label for="avatarUpload" class="btn btn-primary btn-sm" title="Tải ảnh mới"><i class="bi bi-upload"></i> Tải ảnh lên</label>
+                          <input type="file" id="avatarUpload" accept="image/*" hidden>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Các trường thông tin -->
+                    <div class="row mb-3">
+                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Họ và Tên</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="fullName" type="text" class="form-control" id="fullName">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="about" class="col-md-4 col-lg-3 col-form-label">Giới thiệu</label>
+                      <div class="col-md-8 col-lg-9">
+                        <textarea name="about" class="form-control" id="about" style="height: 100px"></textarea>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="address" class="col-md-4 col-lg-3 col-form-label">Địa chỉ</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="address" type="text" class="form-control" id="address">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="phone" class="col-md-4 col-lg-3 col-form-label">Số điện thoại</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="phone" type="text" class="form-control" id="phone">
+                      </div>
+                    </div>
+
+                    <!-- === MẠNG XÃ HỘI (MỚI) === -->
+                    <div class="row mb-3">
+                      <label for="inputFacebook" class="col-md-4 col-lg-3 col-form-label">Link Facebook</label>
+                      <div class="col-md-8 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-facebook text-primary"></i></span>
+                            <input name="facebook" type="text" class="form-control" id="inputFacebook" placeholder="https://facebook.com/...">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="inputZalo" class="col-md-4 col-lg-3 col-form-label">Link Zalo</label>
+                      <div class="col-md-8 col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-text fw-bold text-primary" style="font-size: 12px;">Zalo</span>
+                            <input name="zalo" type="text" class="form-control" id="inputZalo" placeholder="https://zalo.me/...">
+                        </div>
+                      </div>
+                    </div>
+                    <!-- ========================= -->
+
+                    <div class="text-center mt-4">
+                      <button type="submit" class="btn btn-primary px-4">Lưu Thay Đổi</button>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- TAB 3: ĐỔI MẬT KHẨU (Giữ nguyên) -->
+                <div class="tab-pane fade pt-3" id="profile-change-password">
+                  <form id="changePasswordForm">
+                    <div class="row mb-3">
+                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Mật khẩu hiện tại</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="currentPassword" type="password" class="form-control" id="currentPassword" required>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Mật khẩu mới</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="newPassword" type="password" class="form-control" id="newPassword" required>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Nhập lại mật khẩu mới</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="renewPassword" type="password" class="form-control" id="renewPassword" required>
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Đổi Mật Khẩu</button>
+                    </div>
+                  </form>
+                </div>
+
+              </div><!-- End Tab Content -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/admin-global.js"></script>
+  <script src="assets/js/main.js"></script>
+  
+  <!-- SCRIPT RIÊNG CHO PROFILE -->
+  <script src="assets/js/profile.js"></script>
+  <script src="assets/js/dangxuat.js"></script>
+
+</body>
+</html>

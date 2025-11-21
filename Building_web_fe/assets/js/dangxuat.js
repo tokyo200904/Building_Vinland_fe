@@ -1,58 +1,60 @@
-// Chạy ngay khi DOM (Nội dung HTML) được tải, không cần chờ ảnh
 document.addEventListener("DOMContentLoaded", function() {
     
-    // 1. Lấy thông tin đã lưu
+    // 1. Lấy thông tin từ LocalStorage
     const userName = localStorage.getItem('user_name');
     const userRole = localStorage.getItem('user_role');
+    const userAvatar = localStorage.getItem('user_avatar'); // Backend bạn trả về full link rồi
 
-    // (baomat.js đã kiểm tra token, nhưng chúng ta kiểm tra lại tên cho chắc)
-    if (userName && userRole) {
-        
-        // 2. "Nhét" thông tin vào Header
-        const nameShort = document.getElementById('profile-name-short');
-        const nameFull = document.getElementById('profile-name-full');
-        const roleSpan = document.getElementById('profile-role');
+    // 2. Hiển thị Tên & Role
+    const nameShort = document.getElementById('profile-name-short');
+    const nameFull = document.getElementById('profile-name-full');
+    const roleSpan = document.getElementById('profile-role');
+    
+    if (userName) {
+        if(nameShort) nameShort.innerText = userName;
+        if(nameFull) nameFull.innerText = userName;
+    }
+    
+    if (roleSpan && userRole) {
+         // Map role tiếng Anh sang tiếng Việt cho đẹp
+         const roleMap = {
+            'ADMIN': 'Quản trị viên',
+            'AGENT': 'Môi giới',
+            'CUSTOMER': 'Khách hàng'
+         };
+         roleSpan.innerText = roleMap[userRole] || 'Người dùng';
+    }
 
-        if (nameShort) nameShort.innerText = userName;
-        if (nameFull) nameFull.innerText = userName;
-        
-        // Chuyển vai trò (VD: 'ADMIN') thành chữ ('Quản trị viên')
-        if (roleSpan) {
-            switch (userRole) {
-                case 'ADMIN':
-                    roleSpan.innerText = 'Quản trị viên';
-                    break;
-                case 'EDITOR':
-                    roleSpan.innerText = 'Biên tập viên';
-                    break;
-                case 'AGENT':
-                    roleSpan.innerText = 'Môi giới';
-                    break;
-                case 'CUSTOMER':
-                    roleSpan.innerText = 'Khách hàng';
-                    break;
-                default:
-                    roleSpan.innerText = 'Người dùng';
-            }
+    // 3. XỬ LÝ HIỂN THỊ ẢNH (QUAN TRỌNG)
+    const profileImg = document.getElementById('profile-image');
+    
+    if (profileImg) {
+        // Kiểm tra xem có link ảnh không và không phải chữ "null"
+        if (userAvatar && userAvatar !== 'null' && userAvatar.trim() !== '') {
+            
+            // Vì Backend bạn trả về Full URL (http://...) nên cứ thế mà gán vào
+            profileImg.src = userAvatar;
+
+            // Nếu ảnh bị lỗi (404) thì dùng ảnh chữ cái
+            profileImg.onerror = function() {
+                console.log("Không tải được ảnh từ: " + this.src); // Xem log lỗi
+                this.src = 'https://placehold.co/40x40/0d6efd/white?text=' + (userName ? userName.charAt(0) : 'U');
+            };
+        } else {
+            // Không có ảnh trong DB
+            profileImg.src = 'https://placehold.co/40x40/0d6efd/white?text=' + (userName ? userName.charAt(0) : 'U');
         }
     }
 
-    // 3. Gắn logic cho nút "Đăng xuất"
-    const logoutButton = document.getElementById('logout-button');
-    if (logoutButton) {
-        logoutButton.addEventListener('click', function(e) {
-            e.preventDefault(); // Ngăn thẻ <a> nhảy trang
-
-            if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
-                // Xóa thông tin đăng nhập
-                localStorage.removeItem('access_token');
-                localStorage.removeItem('user_role');
-                localStorage.removeItem('user_name');
-                localStorage.removeItem('user_avatar');
-                // (Đảm bảo đường dẫn này chính xác)
-                alert('Bạn đã đăng xuất thành công.');
-                window.location.href = '/Building_web_fe/login.html';
+    // 4. Đăng xuất
+    const logoutBtn = document.getElementById('logout-button');
+    if(logoutBtn) {
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if(confirm('Đăng xuất?')) {
+                localStorage.clear();
+                window.location.href = 'login.html';
             }
-        });
+        })
     }
 });

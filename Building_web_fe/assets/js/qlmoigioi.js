@@ -3,7 +3,6 @@ $(document).ready(function() {
     const moiGioiModal = new bootstrap.Modal(document.getElementById('moiGioiModal'));
     let currentId = null;
 
-    // (Hàm callApi giữ nguyên)
     function callApi(url, method, data = null, isMultipart = false) {
         const token = localStorage.getItem('access_token');
         const options = {
@@ -24,7 +23,7 @@ $(document).ready(function() {
         return $.ajax(options);
     }
 
-    // (Hàm loadList giữ nguyên)
+    // --- 1. RENDER DANH SÁCH CÔNG TY (Giữ nguyên card công ty bạn đã thích) ---
     function loadList() {
         const container = $('#moiGioiContainer');
         callApi(API_URL, 'GET').done(function(list) {
@@ -34,39 +33,42 @@ $(document).ready(function() {
                 return;
             }
             list.forEach(item => {
-                const imgUrl = item.hinhAnh || 'https://placehold.co/100x100?text=Logo';
-                
-                // Thêm hiển thị số lượng nhân viên vào card (nếu muốn)
+                const imgUrl = item.hinhAnh || 'https://placehold.co/100x100/e9ecef/888?text=Logo';
                 const employeeCount = item.danhSachNhanVien ? item.danhSachNhanVien.length : 0;
 
                 const cardHtml = `
-                <div class="col-md-6 col-lg-4 col-xl-4">
-                    <div class="agency-card position-relative">
+                <div class="col-md-6 col-lg-6 col-xl-4">
+                    <div class="agency-card">
+                        <div class="agency-actions-top">
+                            <button class="btn btn-icon-sm btn-edit-custom btn-edit" data-id="${item.maMoiGioi}" title="Chỉnh sửa">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button class="btn btn-icon-sm btn-delete-custom btn-delete" data-id="${item.maMoiGioi}" title="Xóa">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
                         <div class="agency-logo-wrapper">
                             <img src="${imgUrl}" alt="${item.tenCongTy}">
                         </div>
                         <div class="agency-info">
                             <h5 class="agency-name" title="${item.tenCongTy}">${item.tenCongTy}</h5>
-                            <div class="agency-detail" title="${item.diaChi || ''}">
-                                <i class="bi bi-geo-alt-fill"></i>
-                                <span class="text-truncate">${item.diaChi || 'Chưa cập nhật địa chỉ'}</span>
+                            <div class="agency-detail">
+                                <i class="bi bi-envelope-fill icon-email"></i>
+                                <span class="text-truncate" title="${item.email}">${item.email}</span>
                             </div>
                             <div class="agency-detail">
-                                <i class="bi bi-telephone-fill"></i>
+                                <i class="bi bi-telephone-fill icon-phone"></i>
                                 <span>${item.soDienThoai}</span>
                             </div>
-                            <div class="agency-detail">
-                                <i class="bi bi-people-fill"></i>
-                                <span>${employeeCount} Nhân viên</span> <!-- Hiển thị số lượng -->
+                            <div class="agency-detail mt-1">
+                                <i class="bi bi-geo-alt-fill icon-loc"></i>
+                                <span class="text-truncate" title="${item.diaChi || ''}">${item.diaChi || 'Chưa cập nhật địa chỉ'}</span>
                             </div>
-                        </div>
-                        <div class="agency-actions">
-                            <button class="btn btn-sm btn-light text-primary shadow-sm btn-edit me-1" data-id="${item.maMoiGioi}" title="Chỉnh sửa / Xem chi tiết">
-                                <i class="bi bi-pencil-square"></i>
-                            </button>
-                            <button class="btn btn-sm btn-light text-danger shadow-sm btn-delete" data-id="${item.maMoiGioi}" title="Xóa">
-                                <i class="bi bi-trash-fill"></i>
-                            </button>
+                            <div class="agency-detail mt-2">
+                                <span class="badge bg-light text-dark border">
+                                    <i class="bi bi-people-fill text-primary me-1"></i> ${employeeCount} Nhân viên
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -78,27 +80,32 @@ $(document).ready(function() {
         });
     }
 
-    // --- MỞ MODAL THÊM ---
-    $('#btnAddMoiGioi').click(function() {
-        currentId = null;
+    // --- 2. XỬ LÝ FORM & VALIDATION (Giữ nguyên) ---
+    function resetForm() {
         $('#moiGioiForm')[0].reset();
-        $('#modalTitle').text('Thêm Mới Môi Giới');
-        $('#previewContainer').empty();
-        
-        // Ẩn danh sách nhân viên khi thêm mới
-        $('#employeeListContainer').html('<p class="text-muted small">Danh sách nhân viên sẽ hiển thị sau khi tạo công ty.</p>');
-        
-        moiGioiModal.show();
-    });
+        $('.form-control').removeClass('is-invalid');
+        $('#formAlert').addClass('d-none').text('');
+        $('#previewContainer').html('<span class="text-muted small">Chưa có ảnh</span>');
+    }
 
-    // --- MỞ MODAL SỬA (VÀ XEM NHÂN VIÊN) ---
-    $(document).on('click', '.btn-edit', function() {
-        const id = $(this).data('id');
-        currentId = id;
-        $('#modalTitle').text('Cập Nhật Môi Giới');
-        
+    function validateForm() {
+        let isValid = true;
+        $('.form-control').removeClass('is-invalid');
+        const requiredFields = ['#tenCongTy', '#email', '#soDienThoai', '#diaChi'];
+        requiredFields.forEach(selector => {
+            const input = $(selector);
+            if (!input.val().trim()) {
+                input.addClass('is-invalid');
+                isValid = false;
+            }
+        });
+        return isValid;
+    }
+
+    // --- 3. RELOAD MODAL (CẬP NHẬT DANH SÁCH NHÂN VIÊN DẠNG CARD) ---
+    function reloadModalData(id) {
         callApi(`${API_URL}/${id}`, 'GET').done(function(data) {
-            // 1. Điền thông tin công ty
+            // Điền Form (Giữ nguyên)
             $('#maMoiGioi').val(data.maMoiGioi);
             $('#tenCongTy').val(data.tenCongTy);
             $('#soGiayPhep').val(data.soGiayPhep);
@@ -108,67 +115,113 @@ $(document).ready(function() {
             $('#gioiThieu').val(data.gioiThieu);
             
             if (data.hinhAnh) {
-                $('#previewContainer').html(`<img src="${data.hinhAnh}" style="height:100px; border-radius:5px; border:1px solid #ddd;">`);
+                $('#previewContainer').html(`<img src="${data.hinhAnh}" style="max-width:100%; max-height:100px;">`);
             } else {
-                $('#previewContainer').empty();
+                $('#previewContainer').html('<span class="text-muted small">Chưa có ảnh</span>');
             }
 
-            // 2. Hiển thị danh sách nhân viên
+            // --- HIỂN THỊ NHÂN VIÊN (GRID CARD NGANG) ---
             const empContainer = $('#employeeListContainer');
             empContainer.empty();
 
             if (data.danhSachNhanVien && data.danhSachNhanVien.length > 0) {
-                let tableHtml = `
-                    <div class="table-responsive">
-                        <table class="table table-sm table-bordered">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Avatar</th>
-                                    <th>Họ Tên</th>
-                                    <th>Email</th>
-                                    <th>SĐT</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                `;
-                
                 data.danhSachNhanVien.forEach(nv => {
-                    const avatar = nv.anhDaiDien || 'https://placehold.co/30x30?text=U';
-                    tableHtml += `
-                        <tr>
-                            <td class="text-center"><img src="${avatar}" style="width:30px; height:30px; border-radius:50%;"></td>
-                            <td>${nv.hoTen || 'N/A'}</td>
-                            <td>${nv.email}</td>
-                            <td>${nv.soDienThoai || '-'}</td>
-                        </tr>
+                    const avatar = nv.anhDaiDien || 'https://placehold.co/50x50/e9ecef/888?text=U';
+                    
+                    // HTML Card Nhân viên mới
+                    const empCard = `
+                    <div class="col-md-6">
+                        <div class="employee-card-horizontal">
+                            
+                            <!-- Avatar bên trái -->
+                            <div class="emp-avatar-wrapper">
+                                <img src="${avatar}" alt="User">
+                            </div>
+                            
+                            <!-- Thông tin ở giữa -->
+                            <div class="emp-info">
+                                <div class="emp-name" title="${nv.hoTen}">${nv.hoTen || 'Chưa cập nhật tên'}</div>
+                                <div class="emp-details">
+                                    <span><i class="bi bi-envelope"></i> ${nv.email}</span>
+                                    <span><i class="bi bi-telephone"></i> ${nv.soDienThoai || '---'}</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Nút xóa bên phải -->
+                            <div class="emp-action">
+                                <button class="btn btn-remove-emp" data-uid="${nv.userId}" title="Gỡ nhân viên này khỏi công ty">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     `;
+                    empContainer.append(empCard);
                 });
-                
-                tableHtml += `</tbody></table></div>`;
-                empContainer.html(tableHtml);
             } else {
-                empContainer.html('<div class="alert alert-secondary">Công ty này chưa có nhân viên nào.</div>');
+                empContainer.html('<div class="col-12 text-center text-muted py-3 small">Chưa có nhân viên nào.</div>');
             }
-
-            moiGioiModal.show();
+            
+            if (!$('#moiGioiModal').hasClass('show')) {
+                moiGioiModal.show();
+            }
         });
+    }
+
+    // --- CÁC SỰ KIỆN (Giữ nguyên) ---
+
+    $('#btnAddMoiGioi').click(function() {
+        currentId = null;
+        resetForm();
+        $('#modalTitle').text('Thêm Công Ty Mới');
+        $('#employeeSection').hide();
+        moiGioiModal.show();
     });
 
-    // --- XỬ LÝ LƯU (Giữ nguyên) ---
+    $(document).on('click', '.btn-edit', function() {
+        const id = $(this).data('id');
+        currentId = id;
+        resetForm();
+        $('#modalTitle').text('Cập Nhật Công Ty');
+        $('#employeeSection').show();
+        reloadModalData(id);
+    });
+
+    $('#btnAddEmployee').click(function() {
+        const emailNv = $('#newEmployeeEmail').val();
+        if (!emailNv) { alert('Vui lòng nhập email.'); return; }
+        
+        callApi(`${API_URL}/${currentId}/them`, 'POST', { emailNhanVien: emailNv }).done(function(msg) {
+            alert(msg);
+            $('#newEmployeeEmail').val('');
+            reloadModalData(currentId);
+        }).fail(err => { alert('Lỗi: ' + (err.responseText || 'Không tìm thấy user')); });
+    });
+
+    $(document).on('click', '.btn-remove-emp', function() {
+        const userId = $(this).data('uid');
+        if (confirm('Bạn có chắc chắn muốn gỡ nhân viên này khỏi công ty?')) {
+            callApi(`${API_URL}/${currentId}/xoa/${userId}`, 'DELETE').done(function() {
+                reloadModalData(currentId);
+            }).fail(err => { alert('Lỗi: ' + err.responseText); });
+        }
+    });
+
     $('#btnSave').click(function() {
+        if (!validateForm()) return;
+
         const dto = {
             maMoiGioi: currentId,
-            tenCongTy: $('#tenCongTy').val(),
-            soGiayPhep: $('#soGiayPhep').val(),
-            email: $('#email').val(),
-            soDienThoai: $('#soDienThoai').val(),
-            diaChi: $('#diaChi').val(),
-            gioiThieu: $('#gioiThieu').val()
+            tenCongTy: $('#tenCongTy').val().trim(),
+            soGiayPhep: $('#soGiayPhep').val().trim(),
+            email: $('#email').val().trim(),
+            soDienThoai: $('#soDienThoai').val().trim(),
+            diaChi: $('#diaChi').val().trim(),
+            gioiThieu: $('#gioiThieu').val().trim()
         };
 
         const formData = new FormData();
         formData.append('data', new Blob([JSON.stringify(dto)], { type: "application/json" }));
-        
         const fileInput = $('#imageFile')[0];
         if (fileInput.files.length > 0) {
             formData.append('imageFile', fileInput.files[0]);
@@ -179,21 +232,20 @@ $(document).ready(function() {
             moiGioiModal.hide();
             loadList();
         }).fail(err => {
-            alert('Lỗi: ' + (err.responseText || 'Không thành công'));
+            let errorMsg = 'Có lỗi xảy ra.';
+            if (err.responseText) errorMsg = err.responseText;
+            $('#formAlert').text(errorMsg).removeClass('d-none');
         });
     });
 
-    // --- XỬ LÝ XÓA (Giữ nguyên) ---
     $(document).on('click', '.btn-delete', function() {
-        const id = $(this).data('id');
-        if (confirm('Bạn có chắc chắn muốn xóa môi giới này?')) {
-            callApi(`${API_URL}/${id}`, 'DELETE').done(function(msg) {
+        if (confirm('Xóa công ty này?')) {
+            callApi(`${API_URL}/${$(this).data('id')}`, 'DELETE').done(function(msg) {
                 alert(msg);
                 loadList();
             });
         }
     });
 
-    // Load lần đầu
     loadList();
 });

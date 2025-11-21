@@ -1,276 +1,530 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Trang chủ - Website Bất Động Sản</title>
+  <title>Vinland - Kênh thông tin Bất Động Sản</title>
 
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
+  <!-- CSS Bootstrap -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   
-  <link href="assets/css/style_trangchu.css" rel="stylesheet">
+  <!-- Google Fonts (Inter & Roboto) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+        --primary-color: #E03C31; /* Màu đỏ đặc trưng BĐS */
+        --text-color: #2C2C2C;
+        --hover-color: #c93026;
+        --footer-bg: #F2F2F2;
+    }
+
+    body {
+        font-family: 'Roboto', sans-serif;
+        color: var(--text-color);
+        background-color: #fff;
+    }
+
+    /* ================= HEADER (Giống ảnh 2) ================= */
+    #header {
+        background: #fff;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        padding: 12px 0;
+        transition: all 0.3s;
+    }
+    
+    .navbar-brand {
+        font-family: 'Inter', sans-serif;
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: var(--primary-color) !important;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .nav-link {
+        font-weight: 500;
+        color: #2C2C2C !important;
+        margin: 0 8px;
+        font-size: 0.95rem;
+    }
+    .nav-link:hover { color: var(--primary-color) !important; }
+
+    /* Phần bên phải Header */
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .header-icon-btn {
+        position: relative;
+        font-size: 1.4rem;
+        color: #2C2C2C;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+    }
+    .header-icon-btn:hover { color: var(--primary-color); }
+
+    .badge-notification {
+        position: absolute;
+        top: -5px;
+        right: -8px;
+        font-size: 0.65rem;
+        padding: 3px 5px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .btn-post-news {
+        border: 1px solid #ccc;
+        color: #2C2C2C;
+        font-weight: 600;
+        padding: 6px 16px;
+        border-radius: 8px;
+        background: #fff;
+        transition: 0.2s;
+    }
+    .btn-post-news:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        background: #fff5f5;
+    }
+
+    .user-dropdown .dropdown-toggle::after { display: none; }
+    
+    .user-avatar-circle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        border: 1px solid #eee;
+        object-fit: cover;
+    }
+
+    /* ================= HERO SECTION (Giống ảnh 1) ================= */
+    #hero {
+        height: 500px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #333; /* Fallback */
+    }
+
+    /* Carousel làm nền */
+    #hero-carousel {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        z-index: 1;
+    }
+    .carousel-item { height: 500px; }
+    .carousel-item img {
+        width: 100%; height: 100%; object-fit: cover;
+        filter: brightness(0.6); /* Làm tối để nổi bật search */
+    }
+
+    /* Khung tìm kiếm */
+    .search-container {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        max-width: 900px;
+        padding: 0 15px;
+    }
+
+    /* Tabs phía trên input */
+    .search-tabs {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 15px;
+    }
+
+    .search-tab {
+        color: #fff;
+        font-weight: 600;
+        font-size: 1rem;
+        padding-bottom: 8px;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        opacity: 0.8;
+        transition: 0.3s;
+    }
+    
+    .search-tab:hover { opacity: 1; }
+    
+    .search-tab.active {
+        opacity: 1;
+        border-bottom: 3px solid var(--primary-color);
+    }
+
+    /* Ô Input lớn */
+    .search-box-wrapper {
+        background: #fff;
+        border-radius: 8px;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .search-box-input {
+        flex-grow: 1;
+        border: none;
+        outline: none;
+        padding: 0 15px;
+        font-size: 1rem;
+        color: #333;
+    }
+    
+    .search-box-input::placeholder { color: #999; }
+
+    /* Nút Tìm kiếm bên trong */
+    .btn-search-main {
+        background: var(--primary-color);
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 10px 24px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: 0.3s;
+    }
+    .btn-search-main:hover { background: var(--hover-color); }
+
+
+    /* ================= CARD BẤT ĐỘNG SẢN ================= */
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-top: 50px;
+        margin-bottom: 25px;
+        color: #2C2C2C;
+    }
+
+    .property-card {
+        border: 1px solid #f2f2f2;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: box-shadow 0.3s;
+        height: 100%;
+        background: #fff;
+    }
+    
+    .property-card:hover {
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .card-img-wrap {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+    .card-img-wrap img {
+        width: 100%; height: 100%; object-fit: cover;
+        transition: transform 0.5s;
+    }
+    .property-card:hover .card-img-wrap img { transform: scale(1.05); }
+
+    .prop-info { padding: 15px; }
+    
+    .prop-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        line-height: 1.4;
+        height: 42px; /* 2 dòng */
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+    
+    .prop-price-area {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 8px;
+    }
+    .prop-price { color: var(--primary-color); font-weight: 700; font-size: 1.1rem; }
+    .prop-area { font-size: 0.9rem; color: #555; }
+    
+    .prop-address {
+        font-size: 0.85rem;
+        color: #777;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .prop-meta {
+        border-top: 1px solid #f2f2f2;
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.8rem;
+        color: #999;
+    }
+    
+    /* ================= FOOTER (MÀU SẮC ĐẸP) ================= */
+    footer {
+        background-color: var(--footer-bg); /* Màu xám nhạt chuyên nghiệp */
+        padding: 60px 0 30px;
+        margin-top: 60px;
+        color: #333;
+        border-top: 4px solid var(--primary-color); /* Viền đỏ trên cùng */
+    }
+    
+    footer h5 {
+        font-weight: 700;
+        font-size: 1rem;
+        margin-bottom: 20px;
+        color: #000;
+    }
+    
+    footer ul li { margin-bottom: 10px; }
+    footer a { text-decoration: none; color: #555; font-size: 0.9rem; transition: 0.2s; }
+    footer a:hover { color: var(--primary-color); }
+    
+    .footer-logo { font-weight: 800; font-size: 1.5rem; color: var(--primary-color); margin-bottom: 15px; display: block; }
+    .social-links a { font-size: 1.5rem; margin-right: 15px; color: #666; }
+    .social-links a:hover { color: var(--primary-color); }
+
+    /* Chỉnh lại nav-link để đẹp hơn */
+.navbar-nav .nav-link {
+    font-weight: 600;
+    color: #2C2C2C !important;
+    padding: 0 15px !important; /* Khoảng cách giữa các chữ menu */
+}
+.navbar-nav .nav-link:hover {
+    color: var(--primary-color) !important;
+}
+
+/* Class hỗ trợ Javascript render */
+.header-icon-btn {
+    font-size: 1.3rem;
+    color: #333;
+    position: relative;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+/* Dropdown User */
+.user-dropdown .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Khoảng cách giữa avatar và tên */
+    text-decoration: none;
+    color: #333;
+}
+
+/* Nút đăng tin */
+.btn-post-news {
+    background-color: white;
+    border: 1px solid #ccc;
+    color: #333;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap; /* Không xuống dòng */
+    transition: 0.3s;
+}
+.btn-post-news:hover {
+    border-color: #E03C31;
+    color: #E03C31;
+}
+
+
+/* Ép header phải full màn hình */
+#header {
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+}
+
+/* Menu chữ đậm lên và cách nhau ra cho giống web BĐS chuyên nghiệp */
+.navbar-nav .nav-link {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #2C2C2C;
+}
+
+/* Nếu màn hình quá to (trên 1920px), container-fluid vẫn full */
+.container-fluid {
+    max-width: 100% !important;
+}
+  </style>
 </head>
 
 <body>
 
-  <header id="header" class="header fixed-top shadow-sm">
-    <div class="container d-flex align-items-center justify-content-between">
+  <!-- ================= HEADER (Giống ảnh 2) ================= -->
+<nav id="header" class="navbar navbar-expand-lg fixed-top bg-white shadow-sm" style="width: 100%; max-width: 100vw;">
+  
+  <div class="container-fluid px-4 px-lg-5"> 
+    
+    <a href="Building_trangchu.html" class="navbar-brand d-flex align-items-center me-4">
+      <img src="assets/img/unnamed.jpg" alt="Logo" style="height: 50px; width: auto;">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
       
-      <div class="d-flex align-items-center">
-        <a href="Bulding_trangchu.html" class="logo d-flex align-items-center">
-          <i class="bi bi-buildings-fill"></i>
-          <span>Nhom13BDS</span>
-        </a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-bold">
+        <li class="nav-item"><a class="nav-link px-3" href="#">Nhà đất bán</a></li>
+        <li class="nav-item"><a class="nav-link px-3" href="#">Nhà đất cho thuê</a></li>
+        <li class="nav-item"><a class="nav-link px-3" href="#">Tin tức</a></li>
+        <li class="nav-item"><a class="nav-link px-3" href="#">Công ty môi giới</a></li>
+      </ul>
 
-        <nav class="header-nav-main d-none d-lg-flex ms-4">
-          <ul class="d-flex align-items-center list-unstyled m-0">
-            <li><a href="#">Nhà đất bán</a></li>
-            <li><a href="#">Nhà đất cho thuê</a></li>
-            <li><a href="#">Dự án</a></li>
-            <li><a href="#">Tin tức</a></li>
-          </ul>
-        </nav>
+      <div id="auth-section" class="d-flex align-items-center gap-3">
+         <div class="spinner-border spinner-border-sm text-secondary" role="status"></div>
       </div>
 
-      <div class="d-flex align-items-center">
-        <nav class="header-nav-secondary d-none d-lg-flex align-items-center">
-          <ul class="d-flex align-items-center list-unstyled m-0">
-            <li><a href="#">Tải ứng dụng</a></li>
-            <li><a href="#" class="ms-3"><i class="bi bi-heart me-1"></i>Yêu thích</a></li>
-            
-            <li id="auth-links" class="ms-3">
-              <a href="login.html">Đăng nhập</a>
-              <span class="mx-1">|</span>
-              <a href="register.html">Đăng ký</a>
-            </li>
-            <li id="user-dropdown" class="nav-item dropdown ms-3 d-none">
-              <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                <img id="user-avatar-sm" src="https://placehold.co/40x40" alt="Profile" class="rounded-circle">
-                <span id="user-name-sm" class="d-none d-md-block dropdown-toggle ps-2">...</span>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                </ul>
-            </li>
-            
-          </ul>
-        </nav>
-
-        <a class="btn btn-outline-danger ms-3 btn-dang-tin" href="Building_them.html">
-          Đăng tin
-        </a>
-
-        <i class="bi bi-list d-lg-none ms-3 mobile-nav-toggle"></i>
-      </div>
-      
     </div>
-  </header>
+  </div>
+</nav>
 
-  <section class="hero-section">
-    <div class="hero-overlay"></div>
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-10">
-          <h1 class="hero-title">Tìm kiếm bất động sản mơ ước của bạn</h1>
-          <p class="hero-subtitle">Nền tảng uy tín cho mọi nhu cầu về nhà ở.</p>
 
-          <div class="search-box card shadow-lg">
-            <div class="card-body p-4">
-              <ul class="nav nav-tabs" id="searchTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="buy-tab" data-bs-toggle="tab" data-bs-target="#buy-content" type="button" role="tab">
-                    <i class="bi bi-house-door-fill"></i> Mua Bán
-                  </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="rent-tab" data-bs-toggle="tab" data-bs-target="#rent-content" type="button" role="tab">
-                    <i class="bi bi-key-fill"></i> Cho Thuê
-                  </button>
-                </li>
-              </ul>
-              
-              <div class="tab-content" id="searchTabContent">
-                <div class="tab-pane fade show active" id="buy-content" role="tabpanel">
-                  <form class="row g-3 mt-2" id="searchFormBuy">
-                    <div class="col-md-4">
-                      <select id="loaiBds" class="form-select form-select-lg">
-                        <option value="">Chọn loại nhà đất</option>
-                        <option value="can_ho">Căn hộ</option>
-                        <option value="nha_o">Nhà ở</option>
-                        <option value="dat">Đất</option>
-                        <option value="thuong_mai">Thương mại</option>
-                      </select>
-                    </div>
-                    <div class="col-md-4">
-                      <input type="text" id="khuVuc" class="form-control form-control-lg" placeholder="Nhập tỉnh/thành phố, quận/huyện...">
-                    </div>
-                    <div class="col-md-2">
-                      <select id="gia" class="form-select form-select-lg">
-                        <option value="">Mức giá</option>
-                        <option value="1-3ty">1 - 3 tỷ</option>
-                        <option value="3-5ty">3 - 5 tỷ</option>
-                        <option value="5-10ty">5 - 10 tỷ</option>
-                      </select>
-                    </div>
-                    <div class="col-md-2 d-grid">
-                      <button type="submit" class="btn btn-primary btn-lg btn-tim-kiem">
-                        <i class="bi bi-search"></i> Tìm
-                      </button>
-                    </div>
-                  </form>
-                </div>
-                <div class="tab-pane fade" id="rent-content" role="tabpanel">
-                   </div>
-              </div>
-            </div>
+  <!-- ================= HERO SEARCH (Giống ảnh 1) ================= -->
+  <section id="hero">
+      <!-- Carousel Nền -->
+      <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+          <div class="carousel-inner">
+            <div class="carousel-item active"><img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=2073&auto=format&fit=crop"></div>
+            <div class="carousel-item"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop"></div>
+            <div class="carousel-item"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"></div>
+            <div class="carousel-item"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2053&auto=format&fit=crop"></div>
           </div>
-        </div>
       </div>
+
+      <!-- Khung Tìm Kiếm -->
+      <div class="search-container">
+          <!-- Tabs -->
+          <div class="search-tabs">
+              <div class="search-tab active">Nhà đất bán</div>
+              <div class="search-tab">Nhà đất cho thuê</div>
+              <!-- Đã bỏ tab "Dự án" như yêu cầu -->
+          </div>
+
+          <!-- Input & Button -->
+          <div class="search-box-wrapper">
+              <i class="bi bi-search text-secondary ms-2"></i>
+              <input type="text" id="searchInput" class="search-box-input" placeholder="Tìm kiếm theo địa điểm, tên dự án...">
+              <button class="btn-search-main" id="btnSearch">Tìm kiếm</button>
+          </div>
+      </div>
+  </section>
+
+
+  <!-- ================= CONTENT ================= -->
+  <div class="container">
+
+    <!-- BẤT ĐỘNG SẢN NỔI BẬT -->
+    <div class="section-title">Bất động sản dành cho bạn</div>
+    
+    <div class="row g-4" id="featured-properties-container">
+        <div class="col-12 text-center py-5">
+            <div class="spinner-border text-danger" role="status"></div>
+        </div>
     </div>
-  </section><main id="main" class="container my-5">
 
-    <section class="py-4">
-      <h2 class="section-title">Khám phá theo loại hình</h2>
-      <div class="row g-4">
-        
-        <div class="col-6 col-md-4 col-lg-2">
-          <a href="#" class="category-box">
-            <i class="bi bi-building category-icon"></i>
-            <h5>Căn hộ</h5>
-            <p>(1,234 tin)</p>
-          </a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2">
-          <a href="#" class="category-box">
-            <i class="bi bi-house category-icon"></i>
-            <h5>Nhà riêng</h5>
-            <p>(5,678 tin)</p>
-          </a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2">
-          <a href="#" class="category-box">
-            <i class="bi bi-map category-icon"></i>
-            <h5>Đất nền</h5>
-            <p>(910 tin)</p>
-          </a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2">
-          <a href="#" class="category-box">
-            <i class="bi bi-shop category-icon"></i>
-            <h5>Thương mại</h5>
-            <p>(456 tin)</p>
-          </a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2">
-          <a href="#" class="category-box">
-            <i class="bi bi-house-gear category-icon"></i>
-            <h5>Biệt thự</h5>
-            <p>(789 tin)</p>
-          </a>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2">
-          <a href="#" class="category-box">
-            <i class="bi bi-door-open category-icon"></i>
-            <h5>Phòng trọ</h5>
-            <p>(2,345 tin)</p>
-          </a>
-        </div>
-        
-      </div>
-    </section>
-
-    <section class="py-5">
-      <h2 class="section-title">Tin đăng nổi bật 💎</h2>
-      <div id="featured-listings" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-        
-        <div class="col">
-          <div class="card property-card h-100">
-            <div class="property-card-img-container">
-              <span class="property-card-badge bg-danger">Bán</span>
-              <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNjUyOXwwfDF8c2VhcmNofDN8fG1vZGVybiUyMGhvdXNlfGVufDB8fHx8MTcxNzY2NzY3OHww&ixlib=rb-4.0.3&q=80&w=400" class="card-img-top property-card-img" alt="Tên nhà">
-            </div>
-            <div class="card-body d-flex flex-column">
-              <h5 class="property-card-price">5.2 Tỷ</h5>
-              <h6 class="property-card-title">Căn hộ cao cấp 2PN The Landmark 81, view sông Sài Gòn</h6>
-              <p class="property-card-address">
-                <i class="bi bi-geo-alt-fill"></i> Quận Bình Thạnh, TP. Hồ Chí Minh
-              </p>
-              <div class="property-card-stats mt-auto">
-                <span><i class="bi bi-building"></i> 2 PN</span>
-                <span><i class="bi bi-droplet"></i> 2 WC</span>
-                <span><i class="bi bi-arrows-fullscreen"></i> 75 m²</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card property-card h-100">
-            <div class="property-card-img-container">
-              <span class="property-card-badge bg-success">Cho Thuê</span>
-              <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNjUyOXwwfDF8c2VhcmNofDJ8fGhvdXNlfGVufDB8fHx8MTcxNzY2NzY0Nnww&ixlib=rb-4.0.3&q=80&w=400" class="card-img-top property-card-img" alt="Tên nhà">
-            </div>
-            <div class="card-body d-flex flex-column">
-              <h5 class="property-card-price">18 Triệu/tháng</h5>
-              <h6 class="property-card-title">Nhà mặt tiền đường Nguyễn Trãi, 1 trệt 2 lầu</h6>
-              <p class="property-card-address">
-                <i class="bi bi-geo-alt-fill"></i> Quận 1, TP. Hồ Chí Minh
-              </p>
-              <div class="property-card-stats mt-auto">
-                <span><i class="bi bi-building"></i> 4 PN</span>
-                <span><i class="bi bi-droplet"></i> 3 WC</span>
-                <span><i class="bi bi-arrows-fullscreen"></i> 120 m²</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        </div>
-      <div class="text-center mt-5">
-        <a href="#" class="btn btn-outline-primary btn-lg">Xem tất cả tin đăng</a>
-      </div>
-    </section>
-
-  </main><footer class="footer-dark pt-5 pb-4">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4 mb-3">
-          <h5>Nhom13BDS</h5>
-          <p>Nền tảng giao dịch bất động sản hàng đầu. Uy tín - Nhanh chóng - Bảo mật.</p>
-        </div>
-        <div class="col-md-2 mb-3">
-          <h6>Khám phá</h6>
-          <ul class="list-unstyled footer-links">
-            <li><a href="#">Nhà Bán</a></li>
-            <li><a href="#">Cho Thuê</a></li>
-            <li><a href="#">Dự Án</a></li>
-          </ul>
-        </div>
-        <div class="col-md-3 mb-3">
-          <h6>Liên kết</h6>
-          <ul class="list-unstyled footer-links">
-            <li><a href="#">Về chúng tôi</a></li>
-            <li><a href="#">Liên hệ</a></li>
-            <li><a href="#">Câu hỏi thường gặp</a></li>
-          </ul>
-        </div>
-        <div class="col-md-3 mb-3">
-          <h6>Theo dõi chúng tôi</h6>
-          <a href="#" class="footer-social me-2"><i class="bi bi-facebook fs-4"></i></a>
-          <a href="#" class="footer-social me-2"><i class="bi bi-youtube fs-4"></i></a>
-          <a href="#" class="footer-social"><i class="bi bi-linkedin fs-4"></i></a>
-        </div>
-      </div>
+    <!-- TIN TỨC (Grid Ngang mà bạn thích) -->
+    <div class="section-title mt-5">Tin tức thị trường</div>
+    <div class="row g-4" id="latest-news-container">
+        <!-- JS sẽ render tin tức vào đây -->
     </div>
+
+  </div>
+
+
+  <!-- ================= FOOTER (Mới & Đẹp) ================= -->
+  <footer>
+      <div class="container">
+          <div class="row">
+              <!-- Cột 1 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <a href="#" class="footer-logo">Vinland</a>
+                  <p class="small text-muted">
+                      <i class="bi bi-geo-alt-fill me-2"></i> Tầng 13, Tòa nhà Vinland, Q.1, TP.HCM<br>
+                      <i class="bi bi-telephone-fill me-2"></i> (028) 3999 8888<br>
+                      <i class="bi bi-envelope-fill me-2"></i> hotro@vinland.vn
+                  </p>
+                  <div class="social-links">
+                      <a href="#"><i class="bi bi-facebook"></i></a>
+                      <a href="#"><i class="bi bi-youtube"></i></a>
+                      <a href="#"><i class="bi bi-tiktok"></i></a>
+                  </div>
+              </div>
+
+              <!-- Cột 2 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <h5>HƯỚNG DẪN</h5>
+                  <ul class="list-unstyled">
+                      <li><a href="#">Về chúng tôi</a></li>
+                      <li><a href="#">Báo giá & hỗ trợ</a></li>
+                      <li><a href="#">Câu hỏi thường gặp</a></li>
+                      <li><a href="#">Góp ý báo lỗi</a></li>
+                      <li><a href="#">Sitemap</a></li>
+                  </ul>
+              </div>
+
+              <!-- Cột 3 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <h5>QUY ĐỊNH</h5>
+                  <ul class="list-unstyled">
+                      <li><a href="#">Quy định đăng tin</a></li>
+                      <li><a href="#">Quy chế hoạt động</a></li>
+                      <li><a href="#">Điều khoản thỏa thuận</a></li>
+                      <li><a href="#">Chính sách bảo mật</a></li>
+                      <li><a href="#">Giải quyết khiếu nại</a></li>
+                  </ul>
+              </div>
+
+              <!-- Cột 4 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <h5>ĐĂNG KÝ NHẬN TIN</h5>
+                  <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Nhập email của bạn">
+                      <button class="btn btn-danger" type="button">Đăng ký</button>
+                  </div>
+                  <p class="small text-muted">Đăng ký để nhận những thông tin BĐS mới nhất từ hệ thống.</p>
+              </div>
+          </div>
+          <hr>
+          <div class="text-center small text-muted">
+              Copyright © 2024 Vinland. All Rights Reserved.
+          </div>
+      </div>
   </footer>
 
+
+  <!-- Scripts -->
   <script src="assets/jquery-3.7.1.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/dangxuat.js"></script>
-  <script src="assets/js/baomat.js"></script> 
+  
+  <!-- LOGIC CHÍNH -->
+  <script src="assets/js/trangchu.js"></script>
+
 </body>
 </html>
