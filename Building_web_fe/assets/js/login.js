@@ -47,10 +47,10 @@ $(document).ready(function() {
                 if (role === 'ADMIN' || role === 'AGENT' || role === 'NHANVIEN') {
                     // *** ĐÃ SỬA LỖI ALERT ***
                     alert('Đăng nhập thành công! Chào mừng ' + result.hoTen);
-                    window.location.href = '/Building_web_fe/Building_list.html';
+                    window.location.href = '/Building_list.html';
                 } else {
                     alert('Đăng nhập thành công! Chào mừng ' + result.hoTen);
-                    window.location.href = '/Building_web_fe/Bulding_trangchu.html';
+                    window.location.href = '/Bulding_trangchu.html';
                 }
             },
             

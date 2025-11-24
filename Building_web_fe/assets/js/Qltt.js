@@ -79,7 +79,7 @@ $(document).ready(function() {
                 }
 
                 const card = `
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="card news-card-item h-100">
                         <div class="row g-0">
                             <!-- Cột Ảnh -->
@@ -96,6 +96,7 @@ $(document).ready(function() {
                                         <p class="card-meta">
                                             ${new Date(item.ngayTao).toLocaleString('vi-VN')} • <span>${item.tenNguoiDang || 'N/A'}</span>
                                         </p>
+                                        
                                         <h5 class="card-title">${item.tieuDe}</h5>
                                         <p class="card-text text-muted">Mã Tin: ${item.maTin}</p>
                                     </div>
