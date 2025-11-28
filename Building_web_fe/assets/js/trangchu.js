@@ -291,7 +291,7 @@ $(document).ready(function() {
             <div class="col-lg-3 col-md-6 mb-4">
                 <div class="property-card-new shadow-sm bg-white rounded-3 overflow-hidden h-100 position-relative">
                     <div class="card-img-wrap position-relative">
-                        <a href="chi-tiet-bds.html?id=${id}"> 
+                        <a href="detail_bds_nd.html?id=${id}"> 
                             <img src="${img}" style="height:200px; object-fit:cover; width:100%" onerror="this.src='https://placehold.co/600x400'">
                         </a>
                         <span class="position-absolute bottom-0 end-0 m-2 badge bg-dark bg-opacity-75">${item.soAnh || 1} <i class="bi bi-image"></i></span>
@@ -352,7 +352,7 @@ $(document).ready(function() {
             container.append(`
             <div class="col-md-6 col-lg-3 mb-4">
                 <div class="card h-100 border-0 shadow-sm news-card">
-                    <a href="chi-tiet-tin.html?id=${n.id}"><img src="${img}" class="card-img-top" style="height:160px; object-fit:cover" onerror="this.src='https://placehold.co/400x250'"></a>
+                    <a href="test.html?id=${n.id}"><img src="${img}" class="card-img-top" style="height:160px; object-fit:cover" onerror="this.src='https://placehold.co/400x250'"></a>
                     <div class="card-body p-3">
                         <h6 class="fw-bold mb-2"><a href="chi-tiet-tin.html?id=${n.id}" class="text-dark text-decoration-none text-truncate-2">${n.tieuDe}</a></h6>
                         <p class="small text-muted mb-0 text-truncate">${n.tomTat || ''}</p>

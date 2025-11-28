@@ -1,0 +1,464 @@
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f0f2f5; /* Màu nền nhẹ nhàng */
+    padding-top: 100px;
+}
+
+/* --- Container chính của thanh tìm kiếm --- */
+.search-filter-container {
+    background-color: #fff;
+    padding: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+    width: 1500px;
+    text-align: center;
+    margin: auto;
+
+}
+.search-filter-container .container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* --- Ô tìm kiếm chính với nút --- */
+.main-search-bar {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden; /* Quan trọng để bo góc đều */
+    height: 48px;
+    display: flex; /* Dùng flexbox để căn chỉnh input và button */
+}
+.main-search-bar .form-control {
+    border: none;
+    box-shadow: none !important;
+    font-size: 1rem;
+    color: #333;
+    padding: 0 15px;
+    background-color: #f8f8f8; /* Nền nhạt cho input */
+    flex-grow: 1; /* Cho input chiếm hết không gian */
+}
+.main-search-bar .form-control::placeholder {
+    color: #888;
+}
+.main-search-bar .btn-search {
+    background-color: #dc3545; /* Màu đỏ */
+    border: none;
+    color: #fff;
+    padding: 0 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 0 8px 8px 0; /* Chỉ bo góc phải */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* Ngăn nút co lại */
+}
+.main-search-bar .btn-search:hover {
+    background-color: #c82333; /* Màu đỏ đậm hơn khi hover */
+}
+/* Icon search trong nút */
+.main-search-bar .btn-search i {
+    margin-right: 5px;
+}
+
+
+/* --- Container cho các nút lọc bên dưới --- */
+.filter-buttons-row {
+    margin-top: 15px;
+    display: flex; /* Dùng flexbox để căn chỉnh */
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    gap: 10px; /* Khoảng cách giữa các nút */
+    align-items: center;
+    justify-content: flex-start; /* Căn trái */
+}
+
+/* Nút Lọc chung */
+.btn-filter {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    color: #333;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 8px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.95rem;
+    height: 42px; /* Chiều cao cố định */
+    white-space: nowrap; /* Ngăn chữ bị xuống dòng */
+}
+.btn-filter i {
+    margin-right: 8px;
+}
+.btn-filter:hover {
+    background-color: #f0f0f0;
+    border-color: #c9c9c9;
+}
+
+/* Nút Lọc chính (có badge) */
+.btn-filter-main .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    padding: 4px 7px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    background-color: #dc3545 !important; /* Màu đỏ */
+    color: white;
+    line-height: 1;
+}
+/* Mũi tên dropdown */
+.btn-filter.dropdown-toggle::after {
+    margin-left: 10px;
+}
+
+/* Dropdown menu chung (Loại nhà đất) */
+.dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: none;
+    padding: 10px;
+    font-size: 0.9rem;
+}
+.dropdown-menu .dropdown-item {
+    padding: 8px 15px;
+    border-radius: 6px;
+    color: #333;
+}
+.dropdown-menu .dropdown-item:hover {
+    background-color: #e9ecef;
+}
+.dropdown-menu .dropdown-item.active { /* Style cho item được chọn */
+    background-color: #dc3545; /* Màu đỏ */
+    color: white;
+    font-weight: 500;
+}
+
+
+/* =================================================== */
+/* CSS cho Offcanvas "Khoảng giá" và "Diện tích" */
+/* =================================================== */
+
+.offcanvas.offcanvas-end {
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    max-width: 450px; /* Nhưng giới hạn max-width trên desktop */
+    transition: transform 0.3s ease-in-out;
+    border-left: none;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    z-index: 1060 !important; /* Đảm bảo nổi trên modal */
+}
+.offcanvas-header {
+    border-bottom: 1px solid #eee;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.offcanvas-header .offcanvas-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+.offcanvas-header .offcanvas-title i.bi-arrow-left {
+    margin-right: 15px;
+    cursor: pointer;
+    font-size: 1.4rem;
+}
+.offcanvas-header .btn-close {
+    margin-left: auto; /* Đẩy nút đóng sang phải */
+    font-size: 1rem;
+    opacity: 0.6;
+}
+.offcanvas-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Cho phép nội dung và footer ở cuối */
+    justify-content: space-between; /* Đẩy footer xuống cuối */
+}
+.offcanvas-content {
+    flex-grow: 1; /* Cho phép nội dung giãn nở */
+}
+
+/* Nhãn "Từ" và "Đến" */
+.offcanvas-body .form-label {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 5px;
+    font-weight: normal; /* Không in đậm */
+}
+
+/* Input Từ - Đến */
+.offcanvas-body .filter-input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa các input và mũi tên */
+    margin-bottom: 20px;
+}
+.offcanvas-body .filter-input-group {
+    flex: 1; /* Cho input chiếm hết không gian */
+}
+.offcanvas-body .filter-input-group .form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    text-align: center;
+    -moz-appearance: textfield; /* Loại bỏ mũi tên mặc định của input number Firefox */
+}
+.offcanvas-body .filter-input-group .form-control::-webkit-outer-spin-button,
+.offcanvas-body .filter-input-group .form-control::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.offcanvas-body .filter-input-row .fw-bold {
+    font-size: 1rem;
+    color: #6c757d;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+/* Cập nhật style cho các tùy chọn trong Offcanvas (không còn radio button) */
+.offcanvas-body .filter-option-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+    border: 1px solid #e0e0e0;
+    font-weight: normal;
+    color: #333;
+    line-height: 1.4;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    position: relative; /* Để đặt icon check */
+}
+.offcanvas-body .filter-option-item:hover {
+    background-color: #f5f5f5;
+    border-color: #d0d0d0;
+}
+.offcanvas-body .filter-option-item.selected {
+    background-color: #fff0f0; /* Nền đỏ nhạt khi chọn */
+    border-color: #dc3545; /* Viền đỏ */
+    color: #dc3545; /* Chữ đỏ */
+    font-weight: 500;
+}
+.offcanvas-body .filter-option-item .check-icon {
+    position: absolute;
+    top: 5px; /* Điều chỉnh vị trí icon */
+    right: 8px; /* Điều chỉnh vị trí icon */
+    color: #dc3545;
+    font-size: 1.2rem;
+    display: none; /* Mặc định ẩn */
+}
+.offcanvas-body .filter-option-item.selected .check-icon {
+    display: block; /* Hiển thị khi được chọn */
+}
+            
+/* Footer với nút Đặt lại và Áp dụng */
+.offcanvas-footer {
+    border-top: 1px solid #eee;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: #fff; /* Đảm bảo nền trắng */
+}
+.offcanvas-footer .btn {
+    flex: 1; /* Các nút chiếm đều không gian */
+    padding: 10px 0;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+}
+.offcanvas-footer .btn-secondary {
+    background-color: #e9ecef;
+    border-color: #e9ecef;
+    color: #495057;
+}
+.offcanvas-footer .btn-secondary:hover {
+    background-color: #dee2e6;
+    border-color: #dee2e6;
+}
+.offcanvas-footer .btn-primary-apply { /* Custom class cho nút Áp dụng */
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+.offcanvas-footer .btn-primary-apply:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+
+/* =================================================== */
+/* CSS cho Modal Lọc nâng cao (Thiết kế lại) */
+/* =================================================== */
+
+#filterModal .modal-content {
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+#filterModal .modal-header {
+    border-bottom: none;
+    padding: 20px 25px 10px;
+    align-items: center;
+}
+#filterModal .modal-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333;
+}
+#filterModal .modal-body {
+    padding: 15px 25px 25px;
+}
+#filterModal .form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+#filterModal .form-select,
+#filterModal .form-control {
+    border-radius: 8px;
+    border-color: #e0e0e0;
+    padding: 10px 15px;
+    font-size: 0.95rem;
+}
+#filterModal .input-group-text {
+    border-radius: 8px;
+    border-color: #e0e0e0;
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+#filterModal .modal-footer {
+    border-top: 1px solid #eee;
+    padding: 20px 25px;
+    background-color: #f8f9fa; /* Nền nhẹ cho footer */
+    border-radius: 0 0 12px 12px;
+    gap: 10px;
+}
+#filterModal .modal-footer .btn {
+    flex: 1; /* Các nút chiếm đều */
+    padding: 12px 0;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+}
+#filterModal .modal-footer .btn-outline-secondary {
+    border-color: #ced4da;
+    color: #6c757d;
+}
+#filterModal .modal-footer .btn-primary {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+#filterModal .modal-footer .btn-primary:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Style cho nút mở Offcanvas trong Modal */
+.modal .btn-offcanvas-trigger {
+    width: 100%;
+    text-align: left;
+    justify-content: flex-start; /* Sửa lại để icon và text căn trái */
+    background-color: #f8f9fa; /* Nền xám nhạt */
+    border: 1px solid #e0e0e0;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    height: 48px;
+    gap: 12px; /* Khoảng cách giữa icon và text */
+}
+
+.modal .btn-offcanvas-trigger:hover {
+    background-color: #f0f2f5;
+    border-color: #c9c9c9;
+}
+
+/* Icon (Ví dụ: tiền, diện tích) */
+.modal .btn-offcanvas-trigger > i:first-child {
+    font-size: 1.1rem;
+    color: #495057;
+}
+
+/* Mũi tên (sang phải) */
+.modal .btn-offcanvas-trigger .bi-chevron-right {
+    margin-left: auto; /* Quan trọng: Đẩy mũi tên sang phải */
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+/* Text (Giá trị được chọn) */
+.modal .btn-offcanvas-trigger span {
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+/* * Style cho trạng thái MẶC ĐỊNH (default-value)
+ * Chữ sẽ có màu đen
+*/
+.modal .btn-offcanvas-trigger.default-value span {
+    color: #333;
+}
+
+/* * Style cho trạng thái ĐÃ CHỌN (khi KHÔNG có class default-value)
+ * Chữ sẽ có màu đỏ
+*/
+.modal .btn-offcanvas-trigger:not(.default-value) span {
+    color: #dc3545; /* Màu đỏ */
+    font-weight: 600;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .filter-buttons-row {
+        justify-content: flex-start; /* Giữ căn trái trên di động */
+    }
+    .btn-filter.dropdown-toggle, .btn-filter-main {
+        flex-grow: 0; /* Không giãn hết cỡ, để flexbox tự quản lý */
+    }
+    .main-search-bar {
+        width: 100%;
+        flex-direction: column; /* Xếp input và button theo cột trên mobile */
+        height: auto;
+    }
+    .main-search-bar .form-control {
+        border-radius: 8px;
+        margin-bottom: 10px; /* Khoảng cách giữa input và button */
+        background-color: #fff; /* Nền trắng cho input chính trên di động */
+        height: 48px; /* Giữ chiều cao cố định */
+    }
+    .main-search-bar .btn-search {
+        width: 100%;
+        border-radius: 8px; /* Bo góc toàn bộ nút trên di động */
+        height: 48px; /* Giữ chiều cao cố định */
+    }
+    .offcanvas.offcanvas-end {
+        width: 100%; /* Trên di động, offcanvas chiếm toàn bộ màn hình */
+        max-width: none;
+    }
+    .offcanvas-footer {
+        position: sticky; /* Đảm bảo footer luôn ở cuối màn hình */
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1040; /* Cao hơn nội dung */
+    }
+    .offcanvas-body {
+        padding-bottom: 80px; /* Tạo khoảng trống cho footer sticky */
+    }
+}
