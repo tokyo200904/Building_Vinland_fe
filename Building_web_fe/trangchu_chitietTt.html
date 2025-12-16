@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đang tải...</title> <!-- Title sẽ được cập nhật bằng JS -->
+    
+
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/timkiem_trangchu.css">
+  <link rel="stylesheet" href="assets/css/trangchu.css">
+    <style>
+        /* =========================================
+           CẤU HÌNH CHUNG
+           ========================================= */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fff;
+            color: #2c2c2c;
+        }
+
+        a { text-decoration: none; transition: 0.2s; color: inherit; }
+        a:hover { color: #E03C31; }
+
+        /* =========================================
+           CHI TIẾT TIN TỨC (MAIN CONTENT)
+           ========================================= */
+        .article-category {
+            color: #E03C31; font-weight: 700; text-transform: uppercase;
+            font-size: 0.85rem; margin-bottom: 10px; display: inline-block;
+        }
+
+        .article-title {
+            font-size: 2rem; font-weight: 800; line-height: 1.3;
+            color: #1a202c; margin-bottom: 20px;
+        }
+
+        .article-meta {
+            display: flex; align-items: center; gap: 15px;
+            padding-bottom: 20px; border-bottom: 1px solid #eee;
+            margin-bottom: 30px; font-size: 0.9rem; color: #718096;
+        }
+        
+        .meta-item { display: flex; align-items: center; gap: 6px; }
+        .meta-icon { font-size: 1rem; }
+
+        /* Style cho Nội dung bài viết (Rich Text) */
+        .article-content {
+            font-size: 1.05rem; line-height: 1.8; color: #2d3748;
+        }
+        
+        /* Đảm bảo ảnh trong bài viết responsive */
+        .article-content img {
+            max-width: 100%; height: auto !important;
+            border-radius: 8px; margin: 20px 0;
+            display: block;
+        }
+        
+        .article-content h2, .article-content h3 {
+            font-weight: 700; color: #1a202c; margin-top: 30px; margin-bottom: 15px;
+        }
+        
+        .article-content p { margin-bottom: 20px; }
+        
+        .article-content blockquote {
+            border-left: 4px solid #E03C31;
+            padding-left: 20px; font-style: italic; color: #4a5568;
+            background: #f9f9f9; padding: 15px 20px; border-radius: 0 8px 8px 0;
+        }
+
+        /* Tác giả box cuối bài */
+        .author-box {
+            background: #f8f9fa; padding: 20px; border-radius: 8px;
+            margin-top: 40px; border-left: 4px solid #2d3748;
+        }
+
+        /* =========================================
+           SIDEBAR (Giống trang danh sách)
+           ========================================= */
+        .sidebar-wrapper { position: sticky; top: 90px; }
+        .sidebar-card {
+            background: #fff; border-radius: 8px;
+            padding: 20px; margin-bottom: 24px;
+            border: 1px solid #f0f0f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .sidebar-title {
+            font-weight: 700; font-size: 1.1rem; margin-bottom: 16px;
+            position: relative; padding-left: 10px; border-left: 4px solid #E03C31;
+        }
+        
+        /* Trending Item Mini */
+        .mini-news-item {
+            display: flex; gap: 10px; margin-bottom: 15px; padding-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+        }
+        .mini-news-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .mini-news-img { width: 80px; height: 60px; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
+        .mini-news-title { font-size: 0.9rem; font-weight: 600; line-height: 1.35; margin: 0; }
+        
+        @media (max-width: 768px) {
+            .article-title { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+  <!-- ================= HEADER (Giống ảnh 2) ================= -->
+<nav id="header" class="navbar navbar-expand-lg fixed-top bg-white shadow-sm" style="width: 100%; max-width: 100vw;">
+  
+  <div class="container-fluid px-4 px-lg-5"> 
+    
+    <a href="Building_trangchu.html" class="navbar-brand d-flex align-items-center me-4">
+      <img src="assets/img/unnamed.jpg" alt="Logo" style="height: 50px; width: auto;">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-bold">
+          <!-- SỬA: Thêm data-muc-dich để JS bắt sự kiện -->
+          <li class="nav-item"><a class="nav-link" href="Trangchu_nhadatban.html" data-muc-dich="BAN">Nhà đất bán</a></li>
+          <li class="nav-item"><a class="nav-link" href="Trangchu_nhaDct.html" data-muc-dich="THUE">Nhà đất cho thuê</a></li>
+          <li class="nav-item"><a class="nav-link" href="Trangchu_tintuc.html">Tin tức</a></li>
+         <li class="nav-item"><a class="nav-link" href="Trangchu_danhbaMoigioi.html">Danh bạ môi giới</a></li>
+
+        </ul>
+
+        <div id="auth-section" class="d-flex align-items-center gap-3">
+           <div class="spinner-border spinner-border-sm text-secondary" role="status"></div>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+    <!-- BREADCRUMB -->
+    <div class="container mt-3 mb-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb m-0 small">
+                <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="tintuc_full.html">Tin tức</a></li>
+                <li class="breadcrumb-item active text-muted" id="breadcrumb-title">Đang tải...</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container mb-5">
+        <div class="row">
+            
+            <!-- CỘT TRÁI: NỘI DUNG CHI TIẾT -->
+            <div class="col-lg-8">
+                
+                <!-- Loading Spinner -->
+                <div id="loading-spinner" class="text-center py-5">
+                    <div class="spinner-border text-danger"></div>
+                    <p class="mt-2 text-muted">Đang tải nội dung bài viết...</p>
+                </div>
+
+                <!-- Content Wrapper (Ẩn lúc đầu) -->
+                <div id="article-wrapper" style="display: none;">
+                    
+                    <span class="article-category">Tin tức thị trường</span>
+                    
+                    <h1 class="article-title" id="d-title"></h1>
+
+                    <div class="article-meta">
+                        <div class="meta-item text-dark fw-bold">
+                            <i class="bi bi-person-circle meta-icon"></i>
+                            <span id="d-author"></span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="bi bi-calendar3 meta-icon"></i>
+                            <span id="d-date"></span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="bi bi-eye meta-icon"></i>
+                            <span id="d-views">0</span> lượt xem
+                        </div>
+                    </div>
+
+                    <!-- Ảnh đại diện (Cover Image) -->
+                    <div class="mb-4">
+                        <img id="d-cover-img" src="" alt="Cover Image" class="w-100 rounded" style="max-height: 500px; object-fit: cover;">
+                        <p class="text-center text-muted small mt-2 fst-italic" id="d-img-caption"></p>
+                    </div>
+
+                    <!-- Nội dung chính (HTML from DB) -->
+                    <div class="article-content" id="d-content">
+                        <!-- Nội dung sẽ được inject vào đây -->
+                    </div>
+
+                    <!-- Author Box Footer -->
+                    <div class="author-box">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; font-size: 1.5rem;">
+                                <i class="bi bi-person"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0">Đăng bởi: <span id="d-author-footer"></span></h6>
+                                <small class="text-muted">Vinland Sage</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tin liên quan (Giả lập) -->
+                    <div class="mt-5 pt-4 border-top">
+                        <h4 class="fw-bold mb-4">Tin tức liên quan</h4>
+                        <div class="row" id="related-news-container">
+                            <!-- JS render -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- CỘT PHẢI: SIDEBAR -->
+            <div class="col-lg-4">
+                <div class="sidebar-wrapper">
+                    <div class="sidebar-card">
+                        <h6 class="sidebar-title">Tìm kiếm</h6>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Từ khóa...">
+                            <button class="btn btn-danger"><i class="bi bi-search"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h6 class="sidebar-title">Tin xem nhiều</h6>
+                        <div id="mini-trending-list">
+                             <p class="text-center text-muted small">Đang tải...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+                <!-- ================= FOOTER (Mới & Đẹp) ================= -->
+  <footer>
+      <div class="container">
+          <div class="row">
+              <!-- Cột 1 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <a href="#" class="footer-logo">Vinland</a>
+                  <p class="small text-muted">
+                      <i class="bi bi-geo-alt-fill me-2"></i> Tầng 13, Tòa nhà Vinland, Q.1, TP.HCM<br>
+                      <i class="bi bi-telephone-fill me-2"></i> (028) 3999 8888<br>
+                      <i class="bi bi-envelope-fill me-2"></i> hotro@vinland.vn
+                  </p>
+                  <div class="social-links">
+                      <a href="#"><i class="bi bi-facebook"></i></a>
+                      <a href="#"><i class="bi bi-youtube"></i></a>
+                      <a href="#"><i class="bi bi-tiktok"></i></a>
+                  </div>
+              </div>
+
+              <!-- Cột 2 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <h5>HƯỚNG DẪN</h5>
+                  <ul class="list-unstyled">
+                      <li><a href="#">Về chúng tôi</a></li>
+                      <li><a href="#">Báo giá & hỗ trợ</a></li>
+                      <li><a href="#">Câu hỏi thường gặp</a></li>
+                      <li><a href="#">Góp ý báo lỗi</a></li>
+                      <li><a href="#">Sitemap</a></li>
+                  </ul>
+              </div>
+
+              <!-- Cột 3 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <h5>QUY ĐỊNH</h5>
+                  <ul class="list-unstyled">
+                      <li><a href="#">Quy định đăng tin</a></li>
+                      <li><a href="#">Quy chế hoạt động</a></li>
+                      <li><a href="#">Điều khoản thỏa thuận</a></li>
+                      <li><a href="#">Chính sách bảo mật</a></li>
+                      <li><a href="#">Giải quyết khiếu nại</a></li>
+                  </ul>
+              </div>
+
+              <!-- Cột 4 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <h5>ĐĂNG KÝ NHẬN TIN</h5>
+                  <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Nhập email của bạn">
+                      <button class="btn btn-danger" type="button">Đăng ký</button>
+                  </div>
+                  <p class="small text-muted">Đăng ký để nhận những thông tin BĐS mới nhất từ hệ thống.</p>
+              </div>
+          </div>
+          <hr>
+          <div class="text-center small text-muted">
+              Copyright © 2024 Vinland. All Rights Reserved.
+          </div>
+      </div>
+  </footer>
+
+    <!-- JAVASCRIPT -->
+          <script src="assets/jquery-3.7.1.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/trangchu.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Lấy ID từ URL (Ví dụ: chi-tiet-tin.html?id=123)
+            const urlParams = new URLSearchParams(window.location.search);
+            const newsId = urlParams.get('id');
+
+            // Cấu hình API
+            const API_BASE_URL = 'http://localhost:8081/api/admin/tintuc';
+            // Endpoint lấy chi tiết: /api/admin/tintuc/{id}
+            const API_DETAIL_URL = `${API_BASE_URL}/${newsId}`; 
+            // Endpoint lấy danh sách (để làm sidebar/tin liên quan):
+            const API_LIST_URL = `${API_BASE_URL}/tintucs`; 
+
+            if (!newsId) {
+                $('#loading-spinner').html('<div class="alert alert-warning">Không tìm thấy mã bài viết. <a href="tintuc_full.html">Quay lại danh sách</a></div>');
+                return;
+            }
+
+            // 1. Gọi API Chi tiết
+            loadNewsDetail();
+            // 2. Gọi API Danh sách để lấy tin xem nhiều & liên quan
+            loadRelatedAndTrending();
+
+            function loadNewsDetail() {
+                $.ajax({
+                    url: API_DETAIL_URL,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        // Response là TinTucDetailDTO
+                        renderDetail(response);
+                    },
+                    error: function(err) {
+                        console.error("Lỗi tải chi tiết:", err);
+                        $('#loading-spinner').html('<div class="alert alert-danger">Bài viết không tồn tại hoặc đã bị xóa. <a href="tintuc_full.html">Quay lại</a></div>');
+                    }
+                });
+            }
+
+            function renderDetail(data) {
+                // Ẩn spinner, hiện nội dung
+                $('#loading-spinner').hide();
+                $('#article-wrapper').fadeIn();
+
+                // Map dữ liệu từ TinTucDetailDTO
+                const title = data.tieuDe || "Không có tiêu đề";
+                const content = data.noiDung || "<p>Nội dung đang cập nhật...</p>";
+                const author = data.tenNguoiDang || "Admin";
+                const views = data.luotXem || 0;
+                // Dùng ngayXuatBan, fallback ngayTao
+                const dateVal = data.ngayXuatBan || data.ngayTao; 
+                const coverImg = data.anhDaiDien || 'https://placehold.co/800x450?text=BatDongSan';
+
+                // Update UI
+                document.title = title; // Update Tab title
+                $('#breadcrumb-title').text(title); // Update breadcrumb
+
+                $('#d-title').text(title);
+                $('#d-author').text(author);
+                $('#d-author-footer').text(author);
+                $('#d-date').text(formatDate(dateVal));
+                $('#d-views').text(views);
+                $('#d-cover-img').attr('src', coverImg);
+                $('#d-img-caption').text(title); // Caption ảnh đại diện
+                
+                // Render HTML Content
+                $('#d-content').html(content);
+            }
+
+            function loadRelatedAndTrending() {
+                $.ajax({
+                    url: API_LIST_URL,
+                    type: 'GET',
+                    success: function(response) {
+                        let data = Array.isArray(response) ? response : (response.content || []);
+                        
+                        // Loại bỏ bài hiện tại đang xem khỏi danh sách gợi ý
+                        data = data.filter(item => item.maTin != newsId);
+
+                        renderTrending(data);
+                        renderRelated(data);
+                    }
+                });
+            }
+
+            function renderTrending(data) {
+                // Sort view giảm dần
+                const sorted = [...data].sort((a,b) => (b.luotXem||0) - (a.luotXem||0)).slice(0, 5);
+                const container = $('#mini-trending-list');
+                container.empty();
+
+                sorted.forEach(item => {
+                    const img = item.anhDaiDien || 'https://placehold.co/100x100';
+                    const html = `
+                        <div class="mini-news-item">
+                            <a href="chi-tiet-tin.html?id=${item.maTin}">
+                                <img src="${img}" class="mini-news-img">
+                            </a>
+                            <div>
+                                <h6 class="mini-news-title">
+                                    <a href="chi-tiet-tin.html?id=${item.maTin}">${item.tieuDe}</a>
+                                </h6>
+                                <small class="text-muted" style="font-size:0.75rem">${formatDate(item.ngayXuatBan || item.ngayTao)}</small>
+                            </div>
+                        </div>
+                    `;
+                    container.append(html);
+                });
+            }
+
+            function renderRelated(data) {
+                // Lấy ngẫu nhiên 3 tin
+                const related = data.slice(0, 3);
+                const container = $('#related-news-container');
+                container.empty();
+
+                related.forEach(item => {
+                     const img = item.anhDaiDien || 'https://placehold.co/300x200';
+                     const html = `
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <a href="chi-tiet-tin.html?id=${item.maTin}">
+                                    <img src="${img}" class="card-img-top" style="height: 150px; object-fit: cover;">
+                                </a>
+                                <div class="card-body p-3">
+                                    <h6 class="fw-bold mb-2" style="font-size: 0.95rem; line-height: 1.4;">
+                                        <a href="chi-tiet-tin.html?id=${item.maTin}" class="text-decoration-none text-dark">${item.tieuDe}</a>
+                                    </h6>
+                                    <small class="text-muted">${formatDate(item.ngayXuatBan || item.ngayTao)}</small>
+                                </div>
+                            </div>
+                        </div>
+                     `;
+                     container.append(html);
+                });
+            }
+
+            // Helper Format Date (Dùng chung logic với trang trước)
+            function formatDate(input) {
+                if (!input) return "Vừa xong";
+                try {
+                    let date;
+                    if (Array.isArray(input)) {
+                        date = new Date(input[0], input[1] - 1, input[2], input[3] || 0, input[4] || 0);
+                    } else {
+                        date = new Date(input);
+                    }
+                    if (isNaN(date.getTime())) return "Vừa xong";
+
+                    const day = ("0" + date.getDate()).slice(-2);
+                    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+                    const year = date.getFullYear();
+                    return `${day}/${month}/${year}`;
+                } catch (e) { return ""; }
+            }
+        });
+    </script>
+</body>
+</html>

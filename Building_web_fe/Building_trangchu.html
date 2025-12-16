@@ -13,6 +13,60 @@
   <!-- Google Fonts (Inter & Roboto) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/trangchu.css">
+
+   <style>
+    /* Modal Styles */
+    .modal-auth-content { border-radius: 16px; overflow: hidden; border: none; }
+    .modal-auth-body { padding: 0; }
+    
+    .auth-split-layout { display: flex; min-height: 550px; }
+    
+    /* Cột Form (Trái) */
+    .auth-form-side { 
+        flex: 1; padding: 40px 50px; display: flex; flex-direction: column; justify-content: center; background: #fff; 
+    }
+    
+    /* Cột Ảnh (Phải) - Giống ảnh mẫu Pattern */
+    .auth-image-side { 
+        flex: 1; 
+        background: url('https://img.freepik.com/free-vector/seamless-pattern-with-business-people_23-2148066223.jpg') no-repeat center center;
+        background-size: cover;
+        position: relative;
+    }
+    /* Lớp phủ mờ màu đỏ nhẹ lên ảnh */
+    .auth-image-side::before {
+        content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(224, 60, 49, 0.1); 
+    }
+
+    .auth-title { font-size: 1.8rem; font-weight: 800; color: #E03C31; margin-bottom: 5px; }
+    .auth-subtitle { color: #718096; margin-bottom: 25px; font-size: 0.95rem; }
+    
+    .form-floating > .form-control:focus ~ label { color: #E03C31; }
+    .form-control:focus { border-color: #E03C31; box-shadow: 0 0 0 0.25rem rgba(224, 60, 49, 0.1); }
+    
+    .btn-auth-primary {
+        background-color: #E03C31; color: white; width: 100%; padding: 12px;
+        border-radius: 8px; font-weight: 600; border: none; margin-top: 15px; transition: 0.2s;
+    }
+    .btn-auth-primary:hover { background-color: #c53026; }
+    
+    .social-auth { display: flex; gap: 15px; margin-top: 20px; justify-content: center; }
+    .btn-social-circle {
+        width: 40px; height: 40px; border-radius: 50%; border: 1px solid #ddd;
+        display: flex; align-items: center; justify-content: center; transition: 0.2s; color: #555; text-decoration: none;
+    }
+    .btn-social-circle:hover { background: #f8f9fa; border-color: #ccc; color: #000; }
+
+    .switch-auth-link { color: #E03C31; font-weight: 600; cursor: pointer; text-decoration: none; }
+    .switch-auth-link:hover { text-decoration: underline; }
+
+    /* Responsive: Ẩn ảnh trên mobile */
+    @media (max-width: 992px) {
+        .auth-image-side { display: none; }
+        .auth-form-side { padding: 30px 20px; }
+    }
+  </style>
 </head>
 
 <body>
@@ -34,14 +88,15 @@
       
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-bold">
           <!-- SỬA: Thêm data-muc-dich để JS bắt sự kiện -->
-          <li class="nav-item"><a class="nav-link nav-filter" href="#" data-muc-dich="BAN">Nhà đất bán</a></li>
-          <li class="nav-item"><a class="nav-link nav-filter" href="#" data-muc-dich="THUE">Nhà đất cho thuê</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Dự án</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Tin tức</a></li>
+          <li class="nav-item"><a class="nav-link" href="Trangchu_nhadatban.html" data-muc-dich="BAN">Nhà đất bán</a></li>
+          <li class="nav-item"><a class="nav-link" href="Trangchu_nhaDct.html" data-muc-dich="THUE">Nhà đất cho thuê</a></li>
+          <li class="nav-item"><a class="nav-link" href="Trangchu_tintuc.html">Tin tức</a></li>
+         <li class="nav-item"><a class="nav-link" href="Trangchu_danhbaMoigioi.html">Danh bạ môi giới</a></li>
+
         </ul>
 
-      <div id="auth-section" class="d-flex align-items-center gap-3">
-         <div class="spinner-border spinner-border-sm text-secondary" role="status"></div>
+        <div id="auth-section" class="d-flex align-items-center gap-3">
+           <div class="spinner-border spinner-border-sm text-secondary" role="status"></div>
       </div>
 
     </div>
@@ -192,12 +247,301 @@
   </footer>
 
 
+
+  <!-- ============================================== -->
+  <!-- MODAL AUTH (ĐĂNG NHẬP / ĐĂNG KÝ CHUNG)     -->
+  <!-- ============================================== -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content modal-auth-content">
+        <div class="modal-body modal-auth-body">
+            
+            <!-- VIEW ĐĂNG NHẬP -->
+            <div id="view-login" class="auth-split-layout">
+                <div class="auth-form-side">
+                    <h2 class="auth-title">Đăng Nhập</h2>
+                    <p class="auth-subtitle">Chào mừng bạn quay trở lại!</p>
+                    
+                    <!-- Alert Error -->
+                    <div class="alert alert-danger d-none" id="login-alert"></div>
+
+                    <form id="form-login-modal">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="login-email" placeholder="Email" required>
+                            <label for="login-email">Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="login-password" placeholder="Mật khẩu" required>
+                            <label for="login-password">Mật khẩu</label>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="rememberMe">
+                                <label class="form-check-label small" for="rememberMe">Ghi nhớ</label>
+                            </div>
+                            <a href="#" class="small text-decoration-none text-danger">Quên mật khẩu?</a>
+                        </div>
+                        <button type="submit" class="btn btn-auth-primary" id="btn-submit-login">
+                            <span class="spinner-border spinner-border-sm d-none me-2"></span> Đăng Nhập
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-3 small">
+                        Hoặc đăng nhập bằng
+                        <div class="social-auth">
+                            <a href="#" class="btn-social-circle"><i class="bi bi-google"></i></a>
+                            <a href="#" class="btn-social-circle"><i class="bi bi-facebook"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        Chưa có tài khoản? <a href="#" class="switch-auth-link" onclick="switchAuthView('register')">Đăng ký ngay</a>
+                    </div>
+                </div>
+                <div class="auth-image-side"></div>
+            </div>
+
+            <!-- VIEW ĐĂNG KÝ (ĐƠN GIẢN HÓA) -->
+            <div id="view-register" class="auth-split-layout d-none">
+                <div class="auth-form-side">
+                    <h2 class="auth-title">Tạo Tài Khoản</h2>
+                    <p class="auth-subtitle">Đăng ký thành viên Vinland ngay.</p>
+                    
+                    <div class="alert alert-danger d-none" id="register-alert"></div>
+                    <div class="alert alert-success d-none" id="register-success">Đăng ký thành công! Đang chuyển hướng...</div>
+
+                    <form id="form-register-modal">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="reg-fullname" placeholder="Họ tên" required>
+                            <label>Họ và tên</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="reg-email" placeholder="Email" required>
+                            <label>Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="reg-pass" placeholder="Mật khẩu" required>
+                            <label>Mật khẩu</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="reg-confirm-pass" placeholder="Nhập lại mật khẩu" required>
+                            <label>Nhập lại mật khẩu</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-auth-primary" id="btn-submit-register">
+                            <span class="spinner-border spinner-border-sm d-none me-2"></span> Đăng Ký
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        Đã có tài khoản? <a href="#" class="switch-auth-link" onclick="switchAuthView('login')">Đăng nhập</a>
+                    </div>
+                </div>
+                <!-- Ảnh trang trí bên phải -->
+                <div class="auth-image-side"></div>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script src="assets/jquery-3.7.1.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   
   <!-- LOGIC CHÍNH -->
   <script src="assets/js/trangchu.js"></script>
+
+
+  <script>
+    // ===============================================
+    // JAVASCRIPT XỬ LÝ AUTH (Tích hợp tại chỗ)
+    // ===============================================
+    
+    // Cấu hình API Backend của bạn
+    const API_BASE_URL = 'http://localhost:8081/api'; 
+    const LOGIN_URL = `${API_BASE_URL}/dangnhap`;
+    const REGISTER_URL = `${API_BASE_URL}/dangKy`;
+
+    // Khởi tạo Modal Bootstrap
+    let authModal; 
+
+    $(document).ready(function() {
+        authModal = new bootstrap.Modal(document.getElementById('authModal'));
+        checkLoginState(); // Kiểm tra xem đã đăng nhập chưa để render header
+    });
+
+    // 1. HÀM MỞ MODAL & CHUYỂN VIEW
+    window.openAuthModal = function(view) {
+        switchAuthView(view);
+        authModal.show();
+    }
+
+    window.switchAuthView = function(view) {
+        // Reset form & alert
+        $('form').trigger("reset");
+        $('.alert').addClass('d-none').text('');
+
+        if(view === 'login') {
+            $('#view-login').removeClass('d-none');
+            $('#view-register').addClass('d-none');
+        } else {
+            $('#view-login').addClass('d-none');
+            $('#view-register').removeClass('d-none');
+        }
+    }
+
+    // 2. XỬ LÝ ĐĂNG NHẬP
+    $('#form-login-modal').on('submit', function(e) {
+        e.preventDefault();
+        const btn = $('#btn-submit-login');
+        const alertBox = $('#login-alert');
+        
+        // Loading UI
+        btn.prop('disabled', true).find('span').removeClass('d-none');
+        alertBox.addClass('d-none');
+
+        const email = $('#login-email').val().trim();
+        const password = $('#login-password').val().trim();
+
+        $.ajax({
+            url: LOGIN_URL,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ email: email, matKhau: password }),
+            success: function(res) {
+                // Lưu Token & Info
+                localStorage.setItem('access_token', res.token);
+                localStorage.setItem('user_name', res.hoTen);
+                localStorage.setItem('user_role', res.vaiTro);
+                localStorage.setItem('user_avatar', res.anhDaiDien || '');
+
+                // Ẩn Modal & Cập nhật UI
+                authModal.hide();
+                checkLoginState();
+                
+                // Alert chào mừng
+                alert('Đăng nhập thành công! Chào mừng ' + res.hoTen);
+                
+                // Nếu cần redirect cho Admin/Agent (Logic của bạn)
+                if(['ADMIN', 'AGENT', 'NHANVIEN'].includes(res.vaiTro)) {
+                    // window.location.href = 'admin-dashboard.html'; // Bỏ comment nếu cần
+                }
+            },
+            error: function(err) {
+                let msg = "Đăng nhập thất bại.";
+                if (err.responseText) {
+                    try { msg = JSON.parse(err.responseText).message || err.responseText; } 
+                    catch(e) { msg = err.responseText; }
+                }
+                if (err.status === 401) msg = "Sai email hoặc mật khẩu.";
+                alertBox.text(msg).removeClass('d-none');
+            },
+            complete: function() {
+                btn.prop('disabled', false).find('span').addClass('d-none');
+            }
+        });
+    });
+
+    // 3. XỬ LÝ ĐĂNG KÝ
+    $('#form-register-modal').on('submit', function(e) {
+        e.preventDefault();
+        const btn = $('#btn-submit-register');
+        const alertErr = $('#register-alert');
+        const alertOk = $('#register-success');
+
+        const hoTen = $('#reg-fullname').val().trim();
+        const email = $('#reg-email').val().trim();
+        const pass = $('#reg-pass').val();
+        const confirm = $('#reg-confirm-pass').val();
+
+        if(pass !== confirm) {
+            alertErr.text("Mật khẩu xác nhận không khớp!").removeClass('d-none');
+            return;
+        }
+
+        btn.prop('disabled', true).find('span').removeClass('d-none');
+        alertErr.addClass('d-none'); alertOk.addClass('d-none');
+
+        // Payload gửi đi (Chỉ gồm các trường bạn yêu cầu)
+        const payload = {
+            hoTen: hoTen,
+            email: email,
+            matKhau: pass
+            // vaiTro mặc định là CUSTOMER do Backend xử lý hoặc thêm vào nếu cần
+        };
+
+        $.ajax({
+            url: REGISTER_URL,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(payload),
+            success: function(res) {
+                alertOk.text(res || "Đăng ký thành công!").removeClass('d-none');
+                
+                // Chuyển sang View Login sau 1.5s
+                setTimeout(() => {
+                    switchAuthView('login');
+                    $('#login-email').val(email); // Điền sẵn email
+                }, 1500);
+            },
+            error: function(err) {
+                let msg = "Đăng ký thất bại.";
+                if(err.responseJSON && err.responseJSON.message) msg = err.responseJSON.message;
+                else if(err.responseText) msg = err.responseText;
+                alertErr.text(msg).removeClass('d-none');
+            },
+            complete: function() {
+                btn.prop('disabled', false).find('span').addClass('d-none');
+            }
+        });
+    });
+
+    // 4. KIỂM TRA TRẠNG THÁI ĐĂNG NHẬP & RENDER HEADER
+    function checkLoginState() {
+        const token = localStorage.getItem('access_token');
+        const name = localStorage.getItem('user_name');
+        const avatar = localStorage.getItem('user_avatar');
+        const authSection = $('#auth-section');
+
+        if (token) {
+            // Đã đăng nhập -> Hiện Avatar + Dropdown
+            const imgUrl = (avatar && avatar !== 'null') ? avatar : `https://placehold.co/40x40/E03C31/fff?text=${name.charAt(0).toUpperCase()}`;
+            
+            const html = `
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" data-bs-toggle="dropdown">
+                        <img src="${imgUrl}" class="rounded-circle border" style="width: 40px; height: 40px; object-fit: cover;">
+                        <span class="ms-2 fw-bold d-none d-lg-block">${name}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                        <li><a class="dropdown-item py-2" href="Building_list.html">Quản lý tin</a></li>
+                        <li><a class="dropdown-item py-2" href="Profile.html">Hồ sơ cá nhân</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item py-2 text-danger fw-bold" href="#" onclick="logout()">Đăng xuất</a></li>
+                    </ul>
+                </div>
+                <a href="Building_them.html" class="btn btn-danger rounded-pill px-4 btn-sm fw-bold ms-2">Đăng tin</a>
+            `;
+            authSection.html(html);
+        } else {
+            // Chưa đăng nhập -> Hiện nút Đăng nhập / Đăng ký
+            authSection.html(`
+                <button class="btn btn-outline-dark rounded-pill px-4 btn-sm fw-bold me-2" onclick="openAuthModal('login')">Đăng nhập</button>
+                <button class="btn btn-danger rounded-pill px-4 btn-sm fw-bold" onclick="openAuthModal('register')">Đăng ký</button>
+            `);
+        }
+    }
+
+    window.logout = function() {
+        if(confirm('Bạn muốn đăng xuất?')) {
+            localStorage.clear();
+            window.location.reload();
+        }
+    }
+  </script>
+
 
 </body>
 </html>

@@ -52,7 +52,7 @@
                         alert(responseMessage);
                         
                         // Tự động chuyển về trang đăng nhập
-                        window.location.href = '/Building_web_fe/login.html';
+                        window.location.href = 'Building_trangchu.html';
                     },
                     
                     // 3. Nếu thất bại:

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin Nhà Môi Giới</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/trangchu.css">
+    <style>
+        /* =========================================
+           CẤU HÌNH CHUNG
+           ========================================= */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f5f7;
+            color: #2c2c2c;
+        }
+        a { text-decoration: none; transition: 0.2s; color: inherit; }
+        
+        :root {
+            --primary-color: #E03C31;
+            --text-dark: #2D3748;
+        }
+
+        .navbar-brand { font-weight: 800; }
+
+        /* =========================================
+           HEADER PROFILE
+           ========================================= */
+        .profile-header-wrap {
+            background: #fff; margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-bottom: 1px solid #eee;
+        }
+        .cover-photo {
+            height: 250px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background-size: cover; background-position: center;
+        }
+        .profile-info-container {
+            position: relative; padding: 0 20px 30px 20px; margin-top: -60px;
+        }
+        .profile-avatar-xl {
+            width: 140px; height: 140px;
+            border-radius: 50%; border: 4px solid #fff;
+            object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.1); background: #fff;
+        }
+        .ent-logo-xl {
+            width: 140px; height: 140px;
+            border-radius: 12px; border: 4px solid #fff;
+            object-fit: contain; box-shadow: 0 4px 10px rgba(0,0,0,0.1); background: #fff; padding: 5px;
+        }
+        .broker-name-large {
+            font-size: 1.75rem; font-weight: 800; color: #1a202c;
+            margin-top: 15px; margin-bottom: 5px;
+        }
+        .broker-badge {
+            background-color: #e7f1ff; color: #0d6efd;
+            font-size: 0.85rem; padding: 4px 10px;
+            border-radius: 20px; font-weight: 600;
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+        .btn-contact-lg {
+            padding: 10px 25px; border-radius: 8px; font-weight: 600;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-phone { background-color: var(--primary-color); color: #fff; border: none; }
+        .btn-phone:hover { background-color: #c53026; color: #fff; }
+        
+        /* =========================================
+           CONTENT SECTION
+           ========================================= */
+        .content-card {
+            background: #fff; border-radius: 12px;
+            padding: 25px; margin-bottom: 25px;
+            border: 1px solid #eee; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .section-title {
+            font-weight: 700; font-size: 1.2rem; margin-bottom: 20px;
+            padding-bottom: 10px; border-bottom: 2px solid #f0f0f0;
+            position: relative;
+        }
+        .section-title::after {
+            content: ''; position: absolute; bottom: -2px; left: 0; width: 50px; height: 2px; background: var(--primary-color);
+        }
+        .info-list-item { display: flex; margin-bottom: 12px; font-size: 0.95rem; }
+        .info-label { width: 120px; color: #718096; font-weight: 500; flex-shrink: 0; }
+        .info-value { color: #2d3748; font-weight: 600; word-break: break-word; }
+
+        /* Employee Item */
+        .employee-item {
+            display: flex; align-items: center; gap: 15px;
+            padding: 15px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 15px;
+            transition: 0.2s;
+        }
+        .employee-item:hover { background-color: #f8f9fa; border-color: #ddd; }
+        .emp-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+        
+        /* Property Card */
+        .property-card-new { transition: transform 0.2s; border: 1px solid #eee; }
+        .property-card-new:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .prop-title a {
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+            font-size: 0.95rem; font-weight: 700; line-height: 1.4; color: #2c2c2c;
+        }
+        .prop-price { color: var(--primary-color); font-weight: 700; font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+
+  <!-- ================= HEADER (Giống ảnh 2) ================= -->
+<nav id="header" class="navbar navbar-expand-lg fixed-top bg-white shadow-sm" style="width: 100%; max-width: 100vw;">
+  
+  <div class="container-fluid px-4 px-lg-5"> 
+    
+    <a href="Building_trangchu.html" class="navbar-brand d-flex align-items-center me-4">
+      <img src="assets/img/unnamed.jpg" alt="Logo" style="height: 50px; width: auto;">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-bold">
+          <!-- SỬA: Thêm data-muc-dich để JS bắt sự kiện -->
+          <li class="nav-item"><a class="nav-link" href="Trangchu_nhadatban.html" data-muc-dich="BAN">Nhà đất bán</a></li>
+          <li class="nav-item"><a class="nav-link" href="Trangchu_nhaDct.html" data-muc-dich="THUE">Nhà đất cho thuê</a></li>
+          <li class="nav-item"><a class="nav-link" href="Trangchu_tintuc.html">Tin tức</a></li>
+         <li class="nav-item"><a class="nav-link" href="Trangchu_danhbaMoigioi.html">Danh bạ môi giới</a></li>
+
+        </ul>
+
+        <div id="auth-section" class="d-flex align-items-center gap-3">
+           <div class="spinner-border spinner-border-sm text-secondary" role="status"></div>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+    <!-- LOADING STATE -->
+    <div id="page-loading" class="text-center py-5">
+        <div class="spinner-border text-danger"></div>
+        <p class="mt-2 text-muted">Đang tải dữ liệu...</p>
+    </div>
+
+    <!-- ERROR STATE -->
+    <div id="page-error" class="container py-5 text-center d-none">
+        <div class="alert alert-danger d-inline-block">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <span id="error-message">Không thể tải thông tin.</span>
+        </div>
+        <div class="mt-3">
+            <a href="danh-ba-moi-gioi.html" class="btn btn-outline-secondary">Quay lại danh bạ</a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main-content" style="display: none;">
+        
+        <!-- HEADER -->
+        <div class="profile-header-wrap">
+            <div class="cover-photo"></div>
+            <div class="container profile-info-container">
+                <div class="d-md-flex align-items-end gap-4">
+                    <div class="flex-shrink-0 text-center text-md-start">
+                        <img src="" id="profile-avatar" class="profile-avatar-xl">
+                    </div>
+                    <div class="flex-grow-1 text-center text-md-start pb-2">
+                        <h1 class="broker-name-large" id="broker-name"></h1>
+                        <div class="d-flex flex-wrap justify-content-center justify-content-md-start gap-2 mb-3">
+                            <span class="broker-badge"><i class="bi bi-check-circle-fill"></i> Đã xác thực</span>
+                            <span class="broker-badge bg-light text-dark border"><i class="bi bi-geo-alt"></i> <span id="broker-area">Toàn quốc</span></span>
+                        </div>
+                    </div>
+                    <div class="pb-3 text-center text-md-end">
+                        <div class="d-flex justify-content-center justify-content-md-end gap-2">
+                            <button class="btn btn-contact-lg btn-phone" id="btn-call-main">
+                                <i class="bi bi-telephone-fill"></i> <span id="text-phone">Hiện số</span>
+                            </button>
+                            <a href="#" id="link-zalo" target="_blank" class="btn btn-contact-lg bg-white text-primary border border-primary d-none">
+                                <i class="bi bi-chat-dots-fill"></i> Zalo
+                            </a>
+                            <a href="#" id="link-facebook" target="_blank" class="btn btn-contact-lg bg-white text-primary border border-primary d-none">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mb-5">
+            <div class="row">
+                <!-- LEFT COL -->
+                <div class="col-lg-8">
+                    
+                    <!-- INFO -->
+                    <div class="content-card">
+                        <h5 class="section-title">Giới thiệu</h5>
+                        <div class="mb-4 text-secondary" id="broker-intro" style="white-space: pre-line; line-height: 1.6;"></div>
+
+                        <h5 class="section-title">Thông tin liên hệ</h5>
+                        <div class="info-list-item">
+                            <span class="info-label">Địa chỉ:</span>
+                            <span class="info-value" id="info-address">...</span>
+                        </div>
+                        <div class="info-list-item">
+                            <span class="info-label">Email:</span>
+                            <span class="info-value" id="info-email">...</span>
+                        </div>
+                        <div class="info-list-item" id="info-license-row">
+                            <span class="info-label">Giấy phép:</span>
+                            <span class="info-value" id="info-license">...</span>
+                        </div>
+                    </div>
+
+                    <!-- EMPLOYEES (Only for Company) -->
+                    <div class="content-card" id="employees-section" style="display:none;">
+                        <h5 class="section-title">Đội ngũ nhân viên</h5>
+                        <div id="employees-list"></div>
+                    </div>
+
+                    <!-- LISTINGS -->
+                    <div class="content-card">
+                        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                            <h5 class="fw-bold m-0 border-start border-4 border-danger ps-3">Tin đang đăng bán</h5>
+                            <span class="badge bg-danger rounded-pill" id="listing-count">0 tin</span>
+                        </div>
+                        <div class="row g-3" id="broker-listings-container">
+                            <div class="col-12 text-center py-4 text-muted">Không có tin đăng nào.</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT COL -->
+                <div class="col-lg-4">
+                    <div class="content-card sticky-top" style="top: 90px;">
+                        <h5 class="fw-bold mb-3 text-center">Liên hệ tư vấn</h5>
+                        <div class="text-center mb-4">
+                            <img src="" id="form-avatar" class="rounded-circle mb-2" style="width: 60px; height: 60px; object-fit: cover;">
+                            <div class="fw-bold" id="form-name"></div>
+                        </div>
+                        <form>
+                            <div class="mb-3"><input type="text" class="form-control" placeholder="Tên của bạn"></div>
+                            <div class="mb-3"><input type="text" class="form-control" placeholder="Số điện thoại"></div>
+                            <div class="mb-3"><textarea class="form-control" rows="4" placeholder="Tôi quan tâm đến..."></textarea></div>
+                            <button type="button" class="btn btn-danger w-100 fw-bold py-2" onclick="alert('Đã gửi yêu cầu!')">Gửi yêu cầu</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ <!-- ================= FOOTER (Mới & Đẹp) ================= -->
+  <footer>
+      <div class="container">
+          <div class="row">
+              <!-- Cột 1 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <a href="#" class="footer-logo">Vinland</a>
+                  <p class="small text-muted">
+                      <i class="bi bi-geo-alt-fill me-2"></i> Tầng 13, Tòa nhà Vinland, Q.1, TP.HCM<br>
+                      <i class="bi bi-telephone-fill me-2"></i> (028) 3999 8888<br>
+                      <i class="bi bi-envelope-fill me-2"></i> hotro@vinland.vn
+                  </p>
+                  <div class="social-links">
+                      <a href="#"><i class="bi bi-facebook"></i></a>
+                      <a href="#"><i class="bi bi-youtube"></i></a>
+                      <a href="#"><i class="bi bi-tiktok"></i></a>
+                  </div>
+              </div>
+
+              <!-- Cột 2 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <h5>HƯỚNG DẪN</h5>
+                  <ul class="list-unstyled">
+                      <li><a href="#">Về chúng tôi</a></li>
+                      <li><a href="#">Báo giá & hỗ trợ</a></li>
+                      <li><a href="#">Câu hỏi thường gặp</a></li>
+                      <li><a href="#">Góp ý báo lỗi</a></li>
+                      <li><a href="#">Sitemap</a></li>
+                  </ul>
+              </div>
+
+              <!-- Cột 3 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <h5>QUY ĐỊNH</h5>
+                  <ul class="list-unstyled">
+                      <li><a href="#">Quy định đăng tin</a></li>
+                      <li><a href="#">Quy chế hoạt động</a></li>
+                      <li><a href="#">Điều khoản thỏa thuận</a></li>
+                      <li><a href="#">Chính sách bảo mật</a></li>
+                      <li><a href="#">Giải quyết khiếu nại</a></li>
+                  </ul>
+              </div>
+
+              <!-- Cột 4 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <h5>ĐĂNG KÝ NHẬN TIN</h5>
+                  <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Nhập email của bạn">
+                      <button class="btn btn-danger" type="button">Đăng ký</button>
+                  </div>
+                  <p class="small text-muted">Đăng ký để nhận những thông tin BĐS mới nhất từ hệ thống.</p>
+              </div>
+          </div>
+          <hr>
+          <div class="text-center small text-muted">
+              Copyright © 2024 Vinland. All Rights Reserved.
+          </div>
+      </div>
+  </footer>
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="assets/js/trangchu.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // 1. GET PARAMS
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            const type = urlParams.get('type'); // 'individual' or null (company)
+
+            if (!id) {
+                showError("Thiếu tham số ID trên URL.");
+                return;
+            }
+
+            // 2. CONFIG
+            const API_BASE_URL = 'http://localhost:8081/api';
+            const token = localStorage.getItem('access_token');
+
+            // 3. LOAD DATA
+            if (type === 'individual') {
+                loadIndividualData(id);
+            } else {
+                loadCompanyData(id);
+            }
+
+            // --- LOAD COMPANY (MoiGioiDTO) ---
+            function loadCompanyData(brokerId) {
+                $.ajax({
+                    url: `${API_BASE_URL}/moigioi/${brokerId}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        // Map MoiGioiDTO fields
+                        renderProfile({
+                            id: data.maMoiGioi,
+                            name: data.tenCongTy,
+                            avatar: data.hinhAnh,
+                            phone: data.soDienThoai,
+                            email: data.email,
+                            address: data.diaChi,
+                            intro: data.gioiThieu,
+                            license: data.soGiayPhep,
+                            employees: data.danhSachNhanVien,
+                            isCompany: true
+                        });
+                        // Load listings (Assuming filtering by Company ID)
+                        loadListings(brokerId, 'COMPANY');
+                    },
+                    error: function(err) {
+                        console.error(err);
+                        showError("Không tìm thấy thông tin công ty (404) hoặc lỗi server.");
+                    }
+                });
+            }
+
+            // --- LOAD INDIVIDUAL (ProfileDTO) ---
+            function loadIndividualData(userId) {
+                // Giả lập lấy từ list User vì chưa có API GetById public
+                const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+                
+                $.ajax({
+                    url: `${API_BASE_URL}/admin/user?role=AGENT`,
+                    type: 'GET',
+                    headers: headers,
+                    dataType: 'json',
+                    success: function(list) {
+                        const user = list.find(u => u.userId == userId);
+                        if (user) {
+                            renderProfile({
+                                id: user.userId,
+                                name: user.hoTen,
+                                avatar: user.anhDaiDien,
+                                phone: user.soDienThoai,
+                                email: user.email,
+                                address: user.diaChi,
+                                intro: user.gioiThieu,
+                                facebook: user.facebookLink, // ProfileDTO fields
+                                zalo: user.zaloLink,
+                                isCompany: false
+                            });
+                            loadListings(userId, 'INDIVIDUAL');
+                        } else {
+                            showError("Không tìm thấy môi giới này trong danh sách.");
+                        }
+                    },
+                    error: function(err) {
+                        if (err.status === 401 || err.status === 403) {
+                            showError("Bạn cần đăng nhập để xem thông tin cá nhân này.");
+                        } else {
+                            showError("Lỗi kết nối server.");
+                        }
+                    }
+                });
+            }
+
+            // --- RENDER UI ---
+            function renderProfile(data) {
+                document.title = data.name;
+                
+                // 1. Basic Info
+                $('#broker-name').text(data.name);
+                $('#form-name').text(data.name);
+                
+                const defImg = data.isCompany ? 'https://placehold.co/150x150?text=Logo' : 'https://placehold.co/150x150?text=Avatar';
+                const img = data.avatar || defImg;
+                $('#profile-avatar').attr('src', img).attr('onerror', `this.src='${defImg}'`);
+                $('#form-avatar').attr('src', img);
+
+                if (data.isCompany) $('#profile-avatar').removeClass('profile-avatar-xl').addClass('ent-logo-xl');
+
+                // 2. Contact Info
+                $('#text-phone').text(data.phone || "Chưa cập nhật");
+                $('#btn-call-main').attr('onclick', `alert('Gọi số: ${data.phone}')`);
+                $('#info-email').text(data.email || "Chưa cập nhật");
+                $('#info-address').text(data.address || "Chưa cập nhật");
+                $('#broker-area').text(data.address ? data.address.split(',').pop() : 'Toàn quốc');
+                
+                // Intro
+                $('#broker-intro').html(data.intro ? data.intro.replace(/\n/g, '<br>') : "Chưa có thông tin giới thiệu.");
+
+                // 3. License (Company only)
+                if (data.license) {
+                    $('#info-license').text(data.license);
+                } else {
+                    $('#info-license-row').hide();
+                }
+
+                // 4. Social Links (Individual only)
+                if (data.zalo) $('#link-zalo').attr('href', data.zalo).removeClass('d-none');
+                if (data.facebook) $('#link-facebook').attr('href', data.facebook).removeClass('d-none');
+
+                // 5. Employees List (Company only)
+                if (data.isCompany && data.employees && data.employees.length > 0) {
+                    $('#employees-section').show();
+                    const empContainer = $('#employees-list');
+                    data.employees.forEach(emp => {
+                        const eImg = emp.anhDaiDien || 'https://placehold.co/50x50';
+                        empContainer.append(`
+                            <div class="employee-item">
+                                <img src="${eImg}" class="emp-avatar">
+                                <div>
+                                    <div class="fw-bold">${emp.hoTen}</div>
+                                    <div class="small text-muted">${emp.email}</div>
+                                </div>
+                                <a href="chi-tiet-moi-gioi.html?type=individual&id=${emp.userId}" class="btn btn-sm btn-outline-secondary ms-auto">Xem</a>
+                            </div>
+                        `);
+                    });
+                }
+
+                $('#page-loading').hide();
+                $('#main-content').fadeIn();
+            }
+
+            // --- LOAD LISTINGS ---
+            function loadListings(ownerId, type) {
+                // Gọi API lấy tất cả BĐS (hoặc API search nếu backend hỗ trợ filter by user)
+                $.ajax({
+                    url: `${API_BASE_URL}/admin/bds`,
+                    type: 'GET',
+                    success: function(res) {
+                        const all = Array.isArray(res) ? res : (res.content || []);
+                        
+                        // Client-side Filter: Tìm tin của người này
+                        const myProps = all.filter(p => {
+                            // Check link User
+                            const uId = p.user ? p.user.userId : p.userId;
+                            // Check link MoiGioi (nếu có trường maMoiGioi trong BĐS)
+                            const mgId = p.maMoiGioi; 
+
+                            if (type === 'COMPANY') {
+                                // Nếu BĐS có trường maMoiGioi -> dùng nó
+                                if (mgId) return mgId == ownerId;
+                                // Nếu không, tạm thời check userId của người tạo (admin cty)
+                                return uId == ownerId; // Logic này tùy thuộc DB của bạn
+                            } else {
+                                return uId == ownerId;
+                            }
+                        });
+
+                        renderListings(myProps);
+                    },
+                    error: function() {
+                        $('#broker-listings-container').html('<div class="col-12 text-center text-danger">Lỗi tải tin đăng.</div>');
+                    }
+                });
+            }
+
+            function renderListings(list) {
+                const container = $('#broker-listings-container').empty();
+                $('#listing-count').text(`${list.length} tin`);
+
+                if (list.length === 0) {
+                    container.html('<div class="col-12 text-center py-4 text-muted">Chưa có tin đăng nào.</div>');
+                    return;
+                }
+
+                list.forEach(item => {
+                    const img = item.anhChinh || 'https://placehold.co/300x200';
+                    const price = formatPrice(item.gia || item.giaTien);
+                    const loc = item.diaChi || "Đang cập nhật";
+                    
+                    container.append(`
+                        <div class="col-md-6">
+                            <div class="card property-card-new h-100 border-0 shadow-sm">
+                                <div class="row g-0 h-100">
+                                    <div class="col-4">
+                                        <a href="chi-tiet-bds.html?id=${item.maBds || item.id}">
+                                            <img src="${img}" class="img-fluid rounded-start h-100" style="object-fit: cover; min-height:100px;">
+                                        </a>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="card-body p-2">
+                                            <h6 class="prop-title mb-1"><a href="chi-tiet-bds.html?id=${item.maBds || item.id}" class="text-dark text-decoration-none">${item.tieuDe}</a></h6>
+                                            <div class="prop-price mb-1">${price}</div>
+                                            <div class="small text-muted text-truncate"><i class="bi bi-geo-alt"></i> ${loc}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                });
+            }
+
+            function showError(msg) {
+                $('#page-loading').hide();
+                $('#main-content').hide();
+                $('#page-error').removeClass('d-none');
+                $('#error-message').text(msg);
+            }
+
+            function formatPrice(val) {
+                if (!val) return "Thỏa thuận";
+                if (val >= 1000000000) return (val/1000000000).toFixed(1) + " tỷ";
+                return (val/1000000).toFixed(0) + " triệu";
+            }
+        });
+    </script>
+</body>
+</html>

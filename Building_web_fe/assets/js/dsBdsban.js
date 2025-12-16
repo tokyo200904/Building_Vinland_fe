@@ -417,11 +417,11 @@ function viewBds(id) {
         authSection.html(`
             <a href="#" class="header-icon-btn me-2"><i class="bi bi-heart"></i></a>
             <div class="d-flex align-items-center gap-2">
-                <a href="login.html" class="fw-bold text-dark text-decoration-none">Đăng nhập</a>
+                <a href="Building_trangchu.html" class="fw-bold text-dark text-decoration-none">Đăng nhập</a>
                 <span class="text-muted">|</span>
                 <a href="register.html" class="fw-bold text-dark text-decoration-none">Đăng ký</a>
             </div>
-            <a href="login.html" class="btn-post-news ms-2">Đăng tin</a>
+            <a href="Building_trangchu.html" class="btn-post-news ms-2">Đăng tin</a>
         `);
         loadPropertiesOnly();
     }

@@ -114,11 +114,11 @@ $(document).ready(function() {
         authSection.html(`
             <a href="#" class="header-icon-btn me-2"><i class="bi bi-heart"></i></a>
             <div class="d-flex align-items-center gap-2">
-                <a href="login.html" class="fw-bold text-dark text-decoration-none">Đăng nhập</a>
+                <a href="Building_trangchu.html" class="fw-bold text-dark text-decoration-none">Đăng nhập</a>
                 <span class="text-muted">|</span>
                 <a href="register.html" class="fw-bold text-dark text-decoration-none">Đăng ký</a>
             </div>
-            <a href="login.html" class="btn-post-news ms-2">Đăng tin</a>
+            <a href="Building_trangchu.html" class="btn-post-news ms-2">Đăng tin</a>
         `);
         loadPropertiesOnly();
     }
@@ -324,37 +324,60 @@ $(document).ready(function() {
         }
     }
 
-    // ==========================================
-    // 6. DOANH NGHIỆP & TIN TỨC
+ // ==========================================
+    // 6. DOANH NGHIỆP & TIN TỨC (ĐÃ SỬA LỖI)
     // ==========================================
     
+    // Load Doanh Nghiệp
     $.getJSON(API_DOANH_NGHIEP_URL, function(res) {
         const list = Array.isArray(res) ? res : (res.content || []);
         const wrap = $('#featured-agents-wrapper').empty();
+        
         list.slice(0, 15).forEach(a => {
+            // 1. Lấy ID Doanh nghiệp (Thử cả maMoiGioi và id)
+            const agentId = a.maMoiGioi || a.id;
             const img = a.hinhAnh || 'https://placehold.co/100x100?text=Logo';
+            
+            // 2. Sửa nút "Xem hồ sơ" thành thẻ <a> để chuyển trang được
+            // Giả sử trang chi tiết là: chi-tiet-doanh-nghiep.html
             wrap.append(`
             <div class="agent-slider-item">
                 <img src="${img}" class="agent-slider-avatar" onerror="this.src='https://placehold.co/100x100'">
                 <h6 class="fw-bold text-truncate w-100 px-2 mb-2" title="${a.tenCongTy}">${a.tenCongTy}</h6>
                 <div class="text-muted small mb-3">Đối tác chiến lược</div>
-                <button class="btn btn-sm btn-outline-danger rounded-pill px-4">Xem hồ sơ</button>
+                
+                <a href="Trangchu_chitietMg.html?id=${agentId}" class="btn btn-sm btn-outline-danger rounded-pill px-4 text-decoration-none">
+                    Xem hồ sơ
+                </a>
             </div>`);
         });
     });
 
+    // Load Tin Tức
     $.getJSON(API_TIN_TUC_URL, function(res) {
         const list = Array.isArray(res) ? res : (res.content || []);
         const container = $('#latest-news-container').empty();
         
+        console.log("Dữ liệu Tin tức:", list); // Debug xem tên biến ID là gì
+
         list.slice(0, 8).forEach(n => {
+            // 3. Lấy ID Tin tức (Thử cả maTinTuc và id)
+            const newsId = n.maTin || n.id; 
             const img = n.anhDaiDien || 'https://placehold.co/400x250';
+            
+            // Link chi tiết tin tức
+            const linkDetail = `trangchu_chitietTt.html?id=${newsId}`;
+
             container.append(`
             <div class="col-md-6 col-lg-3 mb-4">
                 <div class="card h-100 border-0 shadow-sm news-card">
-                    <a href="test.html?id=${n.id}"><img src="${img}" class="card-img-top" style="height:160px; object-fit:cover" onerror="this.src='https://placehold.co/400x250'"></a>
+                    <a href="${linkDetail}">
+                        <img src="${img}" class="card-img-top" style="height:160px; object-fit:cover" onerror="this.src='https://placehold.co/400x250'">
+                    </a>
                     <div class="card-body p-3">
-                        <h6 class="fw-bold mb-2"><a href="chi-tiet-tin.html?id=${n.id}" class="text-dark text-decoration-none text-truncate-2">${n.tieuDe}</a></h6>
+                        <h6 class="fw-bold mb-2">
+                            <a href="${linkDetail}" class="text-dark text-decoration-none text-truncate-2">${n.tieuDe}</a>
+                        </h6>
                         <p class="small text-muted mb-0 text-truncate">${n.tomTat || ''}</p>
                     </div>
                 </div>
@@ -364,7 +387,7 @@ $(document).ready(function() {
         if (list.length > 8) {
             container.append(`
                 <div class="col-12 text-center mt-3">
-                    <a href="tin-tuc.html" class="btn btn-outline-primary px-5 py-2 rounded-pill fw-bold">Xem thêm tin tức <i class="bi bi-arrow-right ms-2"></i></a>
+                    <a href="Trangchu_tintuc.html" class="btn btn-outline-primary px-5 py-2 rounded-pill fw-bold">Xem thêm tin tức <i class="bi bi-arrow-right ms-2"></i></a>
                 </div>
             `);
         }

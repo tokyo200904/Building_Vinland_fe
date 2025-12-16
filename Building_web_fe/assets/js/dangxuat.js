@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
             e.preventDefault();
             if(confirm('Đăng xuất?')) {
                 localStorage.clear();
-                window.location.href = 'login.html';
+                window.location.href = 'Building_trangchu.html';
             }
         })
     }

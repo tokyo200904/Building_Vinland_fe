@@ -18,7 +18,7 @@ $(document).ready(function() {
         const token = localStorage.getItem('access_token');
         if (!token) {
             showError("Không tìm thấy token. Đang chuyển về trang đăng nhập.");
-            window.location.href = '/Building_web_fe/login.html'; // Chuyển về login
+            window.location.href = 'Building_trangchu.html'; // Chuyển về login
             return; // Dừng hàm
         }
         $.ajax({

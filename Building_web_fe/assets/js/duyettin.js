@@ -33,7 +33,7 @@ function handleApiError(jqXHR) {
     if (jqXHR.status === 401 || jqXHR.status === 403) {
         alert('Phiên đăng nhập đã hết hạn hoặc bạn không có quyền. Vui lòng đăng nhập lại.');
         localStorage.clear(); // Xóa tất cả localStorage
-        window.location.href = '/Building_web_fe/login.html';
+        window.location.href = 'Building_trangchu.html';
     } else {
         let errorMsg = 'Có lỗi xảy ra, vui lòng thử lại.';
         if (jqXHR.responseJSON && jqXHR.responseJSON.message) {

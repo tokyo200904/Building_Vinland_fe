@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh bạ Nhà Môi Giới Bất Động Sản</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/trangchu.css">
+    <style>
+        /* =========================================
+           CẤU HÌNH CHUNG
+           ========================================= */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f5f7;
+            color: #2c2c2c;
+        }
+
+        a { text-decoration: none; transition: 0.2s; color: inherit; }
+        
+        /* Màu chủ đạo */
+        :root {
+            --primary-color: #E03C31;
+            --text-dark: #2D3748;
+            --bg-card: #ffffff;
+        }
+
+        /* Navbar & Footer (Dùng chung style cũ) */
+        .navbar-brand { font-weight: 800; }
+
+        /* =========================================
+           THANH TÌM KIẾM (FILTER BAR)
+           ========================================= */
+        .filter-section {
+            background-color: #fff;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .search-input-group {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            background: #fff;
+        }
+        
+        .search-input-group input, .search-input-group select {
+            border: none;
+            box-shadow: none;
+        }
+        
+        .search-input-group .btn-search {
+            background-color: var(--primary-color);
+            color: #fff;
+            border-radius: 6px;
+            padding: 8px 24px;
+            font-weight: 600;
+        }
+        .search-input-group .btn-search:hover {
+            background-color: #c53026;
+        }
+
+        /* =========================================
+           TAB CHUYỂN ĐỔI (DOANH NGHIỆP / CÁ NHÂN)
+           ========================================= */
+        .broker-type-tabs {
+            display: inline-flex;
+            background-color: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            padding: 4px;
+            margin-bottom: 24px;
+        }
+
+        .broker-tab-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 24px;
+            font-weight: 600;
+            color: #718096;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .broker-tab-btn.active {
+            background-color: #f1f5f9; /* Màu nền nhẹ khi active */
+            color: var(--text-dark);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            font-weight: 700;
+        }
+        
+        .broker-tab-btn:hover:not(.active) {
+            color: var(--primary-color);
+        }
+
+        /* =========================================
+           CARD MÔI GIỚI (GRID)
+           ========================================= */
+        .broker-card {
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            padding: 24px;
+            height: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .broker-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+            border-color: #fac7c5;
+        }
+
+        /* Doanh nghiệp Style */
+        .ent-logo {
+            width: 80px; height: 80px;
+            object-fit: contain;
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            padding: 5px;
+            margin: 0 auto 15px auto;
+            background: #fff;
+        }
+
+        /* Cá nhân Style */
+        .ind-avatar {
+            width: 90px; height: 90px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: 0 auto 15px auto;
+        }
+
+        .broker-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+            display: block;
+            text-decoration: none;
+        }
+        .broker-name:hover { color: var(--primary-color); }
+
+        .broker-license {
+            font-size: 0.75rem;
+            color: #2e7d32;
+            background: #e8f5e9;
+            padding: 2px 8px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .broker-location {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-bottom: 8px;
+            display: flex; align-items: center; justify-content: center; gap: 5px;
+        }
+        
+        .broker-email {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-bottom: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .broker-intro {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.5;
+            flex-grow: 1; /* Đẩy footer xuống đáy */
+        }
+
+        .btn-contact {
+            width: 100%;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            background: #fff;
+            font-weight: 600;
+            padding: 8px;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+        .btn-contact:hover {
+            background: var(--primary-color);
+            color: #fff;
+        }
+
+        .verified-badge {
+            position: absolute; top: 15px; right: 15px;
+            color: #0d6efd; font-size: 1.2rem;
+            background: #e7f1ff; border-radius: 50%;
+            width: 28px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* Rating Stars */
+        .stars { color: #F6AD55; font-size: 0.9rem; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+  <!-- ================= HEADER (Giống ảnh 2) ================= -->
+<nav id="header" class="navbar navbar-expand-lg fixed-top bg-white shadow-sm" style="width: 100%; max-width: 100vw;">
+  
+  <div class="container-fluid px-4 px-lg-5"> 
+    
+    <a href="Building_trangchu.html" class="navbar-brand d-flex align-items-center me-4">
+      <img src="assets/img/unnamed.jpg" alt="Logo" style="height: 50px; width: auto;">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-bold">
+          <!-- SỬA: Thêm data-muc-dich để JS bắt sự kiện -->
+          <li class="nav-item"><a class="nav-link" href="Trangchu_nhadatban.html" data-muc-dich="BAN">Nhà đất bán</a></li>
+          <li class="nav-item"><a class="nav-link" href="Trangchu_nhaDct.html" data-muc-dich="THUE">Nhà đất cho thuê</a></li>
+          <li class="nav-item"><a class="nav-link" href="Trangchu_tintuc.html">Tin tức</a></li>
+         <li class="nav-item"><a class="nav-link" href="Trangchu_danhbaMoigioi.html">Danh bạ môi giới</a></li>
+
+        </ul>
+
+        <div id="auth-section" class="d-flex align-items-center gap-3">
+           <div class="spinner-border spinner-border-sm text-secondary" role="status"></div>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+    <!-- BREADCRUMB -->
+    <div class="container mt-3 mb-3" style="padding-top: 100px;">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb m-0 small">
+                <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item active text-muted">Danh bạ nhà môi giới</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container mb-5">
+        
+        <!-- TITLE & TAB SWITCHER -->
+        <div class="d-flex flex-column align-items-start mb-4">
+            <h3 class="fw-bold mb-3">Danh bạ nhà môi giới</h3>
+            
+            <!-- TAB SWITCH GIỐNG ẢNH MẪU -->
+            <div class="broker-type-tabs">
+                <button class="broker-tab-btn active" id="btn-tab-enterprise" onclick="switchTab('ENTERPRISE')">Công ty môi giới</button>
+                <button class="broker-tab-btn" id="btn-tab-individual" onclick="switchTab('INDIVIDUAL')">Cá nhân môi giới</button>
+            </div>
+        </div>
+
+        <!-- SEARCH BAR -->
+        <div class="filter-section rounded-3 px-4">
+            <div class="row g-3">
+                <div class="col-md-5">
+                    <input type="text" class="form-control py-2" id="keyword-input" placeholder="Tìm theo tên công ty, môi giới...">
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select py-2" id="province-select">
+                        <option value="">Toàn quốc</option>
+                        <option value="HN">Hà Nội</option>
+                        <option value="HCM">TP. Hồ Chí Minh</option>
+                        <option value="DN">Đà Nẵng</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-select py-2">
+                        <option value="">Lĩnh vực</option>
+                        <option>Bán căn hộ</option>
+                        <option>Cho thuê</option>
+                        <option>Đất nền</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-danger w-100 fw-bold py-2" onclick="performSearch()">
+                        <i class="bi bi-search me-1"></i> Tìm kiếm
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- LIST CONTAINER -->
+        <div id="broker-list-container" class="row g-4">
+            <!-- JS sẽ render card vào đây -->
+            <div class="col-12 text-center py-5">
+                <div class="spinner-border text-danger"></div>
+                <p class="mt-2 text-muted">Đang tải danh sách...</p>
+            </div>
+        </div>
+
+        <!-- PAGINATION (Có thể ẩn nếu data ít) -->
+        <div class="d-flex justify-content-center mt-5" id="pagination-container" style="display:none;">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item disabled"><a class="page-link">Trước</a></li>
+                    <li class="page-item active"><a class="page-link bg-danger border-danger">1</a></li>
+                    <li class="page-item"><a class="page-link text-dark">2</a></li>
+                    <li class="page-item"><a class="page-link text-dark">Sau</a></li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+
+ <!-- ================= FOOTER (Mới & Đẹp) ================= -->
+  <footer>
+      <div class="container">
+          <div class="row">
+              <!-- Cột 1 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <a href="#" class="footer-logo">Vinland</a>
+                  <p class="small text-muted">
+                      <i class="bi bi-geo-alt-fill me-2"></i> Tầng 13, Tòa nhà Vinland, Q.1, TP.HCM<br>
+                      <i class="bi bi-telephone-fill me-2"></i> (028) 3999 8888<br>
+                      <i class="bi bi-envelope-fill me-2"></i> hotro@vinland.vn
+                  </p>
+                  <div class="social-links">
+                      <a href="#"><i class="bi bi-facebook"></i></a>
+                      <a href="#"><i class="bi bi-youtube"></i></a>
+                      <a href="#"><i class="bi bi-tiktok"></i></a>
+                  </div>
+              </div>
+
+              <!-- Cột 2 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <h5>HƯỚNG DẪN</h5>
+                  <ul class="list-unstyled">
+                      <li><a href="#">Về chúng tôi</a></li>
+                      <li><a href="#">Báo giá & hỗ trợ</a></li>
+                      <li><a href="#">Câu hỏi thường gặp</a></li>
+                      <li><a href="#">Góp ý báo lỗi</a></li>
+                      <li><a href="#">Sitemap</a></li>
+                  </ul>
+              </div>
+
+              <!-- Cột 3 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <h5>QUY ĐỊNH</h5>
+                  <ul class="list-unstyled">
+                      <li><a href="#">Quy định đăng tin</a></li>
+                      <li><a href="#">Quy chế hoạt động</a></li>
+                      <li><a href="#">Điều khoản thỏa thuận</a></li>
+                      <li><a href="#">Chính sách bảo mật</a></li>
+                      <li><a href="#">Giải quyết khiếu nại</a></li>
+                  </ul>
+              </div>
+
+              <!-- Cột 4 -->
+              <div class="col-lg-3 col-md-6 mb-4">
+                  <h5>ĐĂNG KÝ NHẬN TIN</h5>
+                  <div class="input-group mb-3">
+                      <input type="text" class="form-control" placeholder="Nhập email của bạn">
+                      <button class="btn btn-danger" type="button">Đăng ký</button>
+                  </div>
+                  <p class="small text-muted">Đăng ký để nhận những thông tin BĐS mới nhất từ hệ thống.</p>
+              </div>
+          </div>
+          <hr>
+          <div class="text-center small text-muted">
+              Copyright © 2024 Vinland. All Rights Reserved.
+          </div>
+      </div>
+  </footer>
+
+    <!-- JAVASCRIPT -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="assets/js/trangchu.js"></script>
+
+    <script>
+        // Cấu hình API
+        const API_BASE_URL = 'http://localhost:8081/api'; 
+        const API_ENTERPRISE_URL = `${API_BASE_URL}/moigioi`; // API cho Công ty
+        // API cho Cá nhân (Lấy User có role AGENT)
+        const API_INDIVIDUAL_URL = `${API_BASE_URL}/admin/user?role=AGENT`; 
+
+        // Biến lưu trữ dữ liệu riêng biệt
+        let enterpriseList = [];
+        let individualList = [];
+        
+        let currentTab = 'ENTERPRISE'; 
+
+        // Lấy token từ localStorage (nếu có) để gọi API /admin/user
+        const token = localStorage.getItem('access_token');
+
+        $(document).ready(function() {
+            // Mặc định load tab Doanh nghiệp
+            loadEnterpriseData();
+        });
+
+        // ==========================================
+        // 1. HÀM LOAD DỮ LIỆU
+        // ==========================================
+        
+        // Load Công ty (Public API - MoiGioiController)
+        function loadEnterpriseData() {
+            // Nếu đã có dữ liệu thì không gọi lại (cache client-side đơn giản)
+            if (enterpriseList.length > 0) {
+                renderData();
+                return;
+            }
+
+            $('#broker-list-container').html('<div class="col-12 text-center py-5"><div class="spinner-border text-danger"></div><p>Đang tải danh sách công ty...</p></div>');
+
+            $.ajax({
+                url: API_ENTERPRISE_URL,
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    enterpriseList = response || [];
+                    renderData();
+                },
+                error: function(err) {
+                    console.error("Lỗi API Công Ty:", err);
+                    $('#broker-list-container').html('<div class="col-12 text-center py-5 text-danger">Không tải được danh sách công ty.</div>');
+                }
+            });
+        }
+
+        // Load Cá nhân (Protected API - UserController)
+        function loadIndividualData() {
+            if (individualList.length > 0) {
+                renderData();
+                return;
+            }
+
+            $('#broker-list-container').html('<div class="col-12 text-center py-5"><div class="spinner-border text-danger"></div><p>Đang tải danh sách môi giới...</p></div>');
+
+            // Cấu hình Header nếu có token (vì API này có @PreAuthorize)
+            const headers = {};
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+
+            $.ajax({
+                url: API_INDIVIDUAL_URL,
+                type: 'GET',
+                dataType: 'json',
+                headers: headers,
+                success: function(response) {
+                    // response trả về List<UserReponse/ProfileReponse>
+                    individualList = response || [];
+                    renderData();
+                },
+                error: function(err) {
+                    console.error("Lỗi API Cá Nhân:", err);
+                    let msg = "Không tải được danh sách cá nhân.";
+                    if(err.status === 401 || err.status === 403) {
+                        msg = "Bạn cần đăng nhập (quyền Admin/User) để xem danh sách này.";
+                    }
+                    $('#broker-list-container').html(`<div class="col-12 text-center py-5 text-danger">${msg}</div>`);
+                }
+            });
+        }
+
+        // ==========================================
+        // 2. CHUYỂN TAB
+        // ==========================================
+        function switchTab(type) {
+            currentTab = type;
+            
+            // UI Button Update
+            $('.broker-tab-btn').removeClass('active');
+            if(type === 'ENTERPRISE') {
+                $('#btn-tab-enterprise').addClass('active');
+                $('#keyword-input').attr('placeholder', 'Tìm theo tên công ty...');
+                loadEnterpriseData(); // Load nếu chưa có
+            } else {
+                $('#btn-tab-individual').addClass('active');
+                $('#keyword-input').attr('placeholder', 'Tìm theo tên môi giới...');
+                loadIndividualData(); // Load nếu chưa có
+            }
+        }
+
+        // ==========================================
+        // 3. RENDER DỮ LIỆU
+        // ==========================================
+        function renderData() {
+            const container = $('#broker-list-container');
+            container.empty();
+            
+            // Xác định nguồn dữ liệu
+            let sourceList = (currentTab === 'ENTERPRISE') ? enterpriseList : individualList;
+
+            // --- FILTER CLIENT-SIDE ---
+            const keyword = $('#keyword-input').val().toLowerCase().trim();
+            const province = $('#province-select').val();
+
+            const finalRenderList = sourceList.filter(item => {
+                // Mapping tên và địa chỉ dựa trên loại DTO
+                let name = "";
+                let address = "";
+                
+                if (currentTab === 'ENTERPRISE') {
+                    // MoiGioiDTO
+                    name = (item.tenCongTy || "").toLowerCase();
+                    address = (item.diaChi || "").toLowerCase();
+                } else {
+                    // ProfileReponse / UserReponse
+                    name = (item.hoTen || "").toLowerCase();
+                    address = (item.diaChi || "").toLowerCase();
+                }
+                
+                const matchKeyword = !keyword || name.includes(keyword);
+                const matchProvince = !province || address.includes(province === 'HN' ? 'hà nội' : (province === 'HCM' ? 'hồ chí minh' : 'đà nẵng'));
+
+                return matchKeyword && matchProvince;
+            });
+
+            if (finalRenderList.length === 0) {
+                container.html('<div class="col-12 text-center py-5 text-muted">Không tìm thấy kết quả phù hợp.</div>');
+                $('#pagination-container').hide();
+                return;
+            }
+
+            // Render HTML tương ứng
+            if(currentTab === 'ENTERPRISE') {
+                renderEnterpriseList(finalRenderList, container);
+            } else {
+                renderIndividualList(finalRenderList, container);
+            }
+            
+            $('#pagination-container').show();
+        }
+
+        // --- RENDER CARD DOANH NGHIỆP ---
+        // Input: MoiGioiDTO
+        function renderEnterpriseList(list, container) {
+            list.forEach(item => {
+                const img = item.hinhAnh || 'https://placehold.co/100x100?text=Logo';
+                const name = item.tenCongTy || "Chưa cập nhật tên";
+                const address = item.diaChi || "Đang cập nhật";
+                const phone = item.soDienThoai || "";
+                const email = item.email || "";
+                const license = item.soGiayPhep ? `GPKD: ${item.soGiayPhep}` : "";
+                const intro = item.gioiThieu || "Chưa có thông tin giới thiệu.";
+                const id = item.maMoiGioi;
+
+                const html = `
+                <div class="col-lg-4 col-md-6">
+                    <div class="broker-card text-center">
+                        <div class="verified-badge" title="Đối tác xác thực"><i class="bi bi-check-lg"></i></div>
+                        <img src="${img}" alt="${name}" class="ent-logo" onerror="this.src='https://placehold.co/100x100?text=Logo'">
+                        
+                        <a href="Trangchu_chitietMg.html?id=${id}" class="broker-name text-truncate" title="${name}">${name}</a>
+                        
+                        ${license ? `<div class="mb-2"><span class="broker-license">${license}</span></div>` : ''}
+
+                        <div class="broker-location text-truncate">
+                            <i class="bi bi-geo-alt-fill text-danger"></i> ${address}
+                        </div>
+                        
+                        <div class="broker-email" title="${email}">
+                            <i class="bi bi-envelope"></i> ${email}
+                        </div>
+                        
+                        <div class="broker-intro">
+                            ${intro}
+                        </div>
+                        
+                        <div class="mt-auto">
+                            <button class="btn-contact" onclick="alert('Liên hệ: ${phone}')">
+                                <i class="bi bi-telephone-fill me-2"></i> ${phone}
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+                container.append(html);
+            });
+        }
+
+        // --- RENDER CARD CÁ NHÂN ---
+        // Input: ProfileReponse
+        function renderIndividualList(list, container) {
+            list.forEach(item => {
+                const img = item.anhDaiDien || 'https://placehold.co/150x150?text=Avatar';
+                const name = item.hoTen || "Môi giới";
+                const address = item.diaChi || "Toàn quốc";
+                const phone = item.soDienThoai || "";
+                const email = item.email || "";
+                const intro = item.gioiThieu || "Chưa có giới thiệu.";
+                const id = item.userId; // Dùng userId để xem chi tiết
+                
+                // Zalo/FB links (nếu có trong DTO)
+                const zalo = item.zaloLink; 
+                // const fb = item.facebookLink;
+
+                const html = `
+                <div class="col-lg-4 col-md-6">
+                    <div class="broker-card text-center">
+                        <img src="${img}" alt="${name}" class="ind-avatar" onerror="this.src='https://placehold.co/150x150?text=Avatar'">
+                        
+                        <a href="Trangchu_chitietMg.html?id=${id}" class="broker-name">${name}</a>
+                        <div class="stars"><i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i></div>
+                        
+                        <div class="broker-location justify-content-center text-truncate">
+                            <i class="bi bi-geo-alt"></i> ${address}
+                        </div>
+
+                        <div class="broker-email small text-muted mb-2" title="${email}">
+                             ${email}
+                        </div>
+                        
+                        <div class="broker-intro small text-muted mb-3" style="-webkit-line-clamp: 2;">
+                            ${intro}
+                        </div>
+                        
+                        <div class="d-flex gap-2 mt-auto">
+                            <button class="btn-contact flex-grow-1" onclick="alert('Gọi: ${phone}')">
+                                <i class="bi bi-telephone-fill"></i> Gọi điện
+                            </button>
+                            ${zalo ? `<a href="${zalo}" target="_blank" class="btn btn-outline-primary" title="Zalo"><i class="bi bi-chat-dots"></i></a>` : 
+                                     `<button class="btn btn-outline-secondary" title="Email" onclick="alert('Email: ${email}')"><i class="bi bi-envelope"></i></button>`}
+                        </div>
+                    </div>
+                </div>`;
+                container.append(html);
+            });
+        }
+
+        function performSearch() {
+            renderData(); 
+        }
+
+        $('#keyword-input').on('keypress', function (e) {
+            if(e.which === 13) performSearch();
+        });
+        
+        $('#province-select').change(function() {
+            performSearch();
+        });
+
+    </script>
+</body>
+</html>

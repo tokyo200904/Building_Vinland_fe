@@ -6,7 +6,7 @@
             localStorage.removeItem('user_role');
             localStorage.removeItem('user_name');
             localStorage.removeItem('user_avatar');
-            window.location.href = '/Building_web_fe/login.html';
+            window.location.href = 'Building_trangchu.html';
         } else {
             let msg = 'Đã có lỗi xảy ra. Vui lòng thử lại.';
             if (jqXHR.responseJSON) {

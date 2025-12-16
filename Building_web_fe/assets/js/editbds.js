@@ -150,7 +150,7 @@ const token = localStorage.getItem('access_token');
         if (!token) {
             alert("Token không hợp lệ. Vui lòng đăng nhập lại.");
             localStorage.clear();
-            window.location.href = '/Building_web_fe/login.html';
+            window.location.href = 'Building_trangchu.html';
             return;
         }
         const formData = new FormData();

@@ -24,8 +24,7 @@
     ];
 
     // Định nghĩa các trang công khai
-    const loginPage = '/Building_web_fe/login.html';
-    const registerPage = '/Building_web_fe/register.html';
+    const loginPage = 'Building_trangchu.html';
     const homePage = '/Building_web_fe/Bulding_trangchu.html'; // Trang chủ của bạn
     const forbiddenPage = '/Building_web_fe/403.html'; // Trang cấm
     // === KẾT THÚC SỬA ĐỔI ===
