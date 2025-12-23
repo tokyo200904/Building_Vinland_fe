@@ -88,7 +88,6 @@ $(document).ready(function() {
                 <div class="dropdown-favorites" id="dropdown-favorites-model">
                     <div class="fav-header">Tin đăng đã lưu</div>
                     <ul class="fav-list" id="fav-list-items"><li class="p-3 small text-center">Đang tải...</li></ul>
-                    <div class="fav-footer"><a href="danh-sach-yeu-thich.html" class="text-decoration-none">Xem tất cả</a></div>
                 </div>
             </div>
             <div class="dropdown user-dropdown ms-3">
@@ -166,7 +165,7 @@ $(document).ready(function() {
             const price = formatPrice(item.gia || item.giaTien);
             listContainer.append(`
             <li>
-                <a href="chi-tiet-bds.html?id=${id}" class="fav-item">
+                <a href="detail_bds_nd.html?id=${id}" class="fav-item">
                     <img src="${imgUrl}" onerror="this.src='https://placehold.co/60x40'">
                     <div class="fav-info">
                         <span class="fav-title" title="${item.tieuDe}">${item.tieuDe}</span>
@@ -297,7 +296,7 @@ $(document).ready(function() {
                         <span class="position-absolute bottom-0 end-0 m-2 badge bg-dark bg-opacity-75">${item.soAnh || 1} <i class="bi bi-image"></i></span>
                     </div>
                     <div class="card-body-content p-3">
-                        <h5 class="fw-bold mb-1 prop-title-style"><a href="chi-tiet-bds.html?id=${id}" class="text-dark text-decoration-none" title="${item.tieuDe}">${item.tieuDe}</a></h5>
+                        <h5 class="fw-bold mb-1 prop-title-style"><a href="detail_bds_nd.html?id=${id}" class="text-dark text-decoration-none" title="${item.tieuDe}">${item.tieuDe}</a></h5>
                         <div class="d-flex align-items-center mb-2 mt-2">
                             <span class="text-danger fw-bold me-3 fs-5">${price}</span>
                             <span class="text-muted small">${item.dienTich ? item.dienTich + ' m²' : ''}</span>
@@ -316,7 +315,7 @@ $(document).ready(function() {
         if (showButton && data.length > 8) {
             container.append(`
                 <div class="col-12 text-center mt-4">
-                    <a href="danh-sach-bds.html" class="btn btn-outline-danger px-5 py-2 rounded-pill fw-bold">
+                    <a href="Building_web_fe/Trangchu_nhadatban.html" class="btn btn-outline-danger px-5 py-2 rounded-pill fw-bold">
                         Xem thêm <i class="bi bi-arrow-right ms-2"></i>
                     </a>
                 </div>

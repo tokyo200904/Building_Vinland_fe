@@ -66,6 +66,7 @@
         .auth-image-side { display: none; }
         .auth-form-side { padding: 30px 20px; }
     }
+    
   </style>
 </head>
 
@@ -499,40 +500,56 @@
     });
 
     // 4. KIỂM TRA TRẠNG THÁI ĐĂNG NHẬP & RENDER HEADER
-    function checkLoginState() {
-        const token = localStorage.getItem('access_token');
-        const name = localStorage.getItem('user_name');
-        const avatar = localStorage.getItem('user_avatar');
-        const authSection = $('#auth-section');
+// 4. KIỂM TRA TRẠNG THÁI ĐĂNG NHẬP & RENDER HEADER (ĐÃ SỬA)
+function checkLoginState() {
+    const token = localStorage.getItem('access_token');
+    const name = localStorage.getItem('user_name');
+    const avatar = localStorage.getItem('user_avatar');
+    
+    // 1. LẤY ROLE TỪ STORAGE
+    const role = localStorage.getItem('user_role'); 
+    
+    const authSection = $('#auth-section');
 
-        if (token) {
-            // Đã đăng nhập -> Hiện Avatar + Dropdown
-            const imgUrl = (avatar && avatar !== 'null') ? avatar : `https://placehold.co/40x40/E03C31/fff?text=${name.charAt(0).toUpperCase()}`;
-            
-            const html = `
-                <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" data-bs-toggle="dropdown">
-                        <img src="${imgUrl}" class="rounded-circle border" style="width: 40px; height: 40px; object-fit: cover;">
-                        <span class="ms-2 fw-bold d-none d-lg-block">${name}</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-                        <li><a class="dropdown-item py-2" href="Building_list.html">Quản lý tin</a></li>
-                        <li><a class="dropdown-item py-2" href="Profile.html">Hồ sơ cá nhân</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item py-2 text-danger fw-bold" href="#" onclick="logout()">Đăng xuất</a></li>
-                    </ul>
-                </div>
-                <a href="Building_them.html" class="btn btn-danger rounded-pill px-4 btn-sm fw-bold ms-2">Đăng tin</a>
-            `;
-            authSection.html(html);
-        } else {
-            // Chưa đăng nhập -> Hiện nút Đăng nhập / Đăng ký
-            authSection.html(`
-                <button class="btn btn-outline-dark rounded-pill px-4 btn-sm fw-bold me-2" onclick="openAuthModal('login')">Đăng nhập</button>
-                <button class="btn btn-danger rounded-pill px-4 btn-sm fw-bold" onclick="openAuthModal('register')">Đăng ký</button>
-            `);
+    if (token) {
+        // Đã đăng nhập -> Hiện Avatar + Dropdown
+        const imgUrl = (avatar && avatar !== 'null') ? avatar : `https://placehold.co/40x40/E03C31/fff?text=${name.charAt(0).toUpperCase()}`;
+        
+        // 2. LOGIC ẨN/HIỆN NÚT ĐĂNG TIN
+        // Danh sách các vai trò ĐƯỢC PHÉP thấy nút đăng tin
+        const allowedRoles = ['ADMIN', 'AGENT', 'NHANVIEN'];
+        
+        let btnDangTinHtml = ''; // Mặc định là rỗng (ẩn)
+
+        // Kiểm tra: Nếu role hiện tại nằm trong danh sách cho phép -> Gán HTML nút
+        if (allowedRoles.includes(role)) {
+            btnDangTinHtml = `<a href="Building_them.html" class="btn btn-danger rounded-pill px-4 btn-sm fw-bold ms-2">Đăng tin</a>`;
         }
+
+        // 3. RENDER HTML
+        const html = `
+            <div class="dropdown">
+                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" data-bs-toggle="dropdown">
+                    <img src="${imgUrl}" class="rounded-circle border" style="width: 40px; height: 40px; object-fit: cover;">
+                    <span class="ms-2 fw-bold d-none d-lg-block">${name}</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                    ${allowedRoles.includes(role) ? '<li><a class="dropdown-item py-2" href="Building_list.html">Quản lý tin</a></li>' : ''}
+                    <li><a class="dropdown-item py-2" href="Profile.html">Hồ sơ cá nhân</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item py-2 text-danger fw-bold" href="#" onclick="logout()">Đăng xuất</a></li>
+                </ul>
+            </div>
+            ${btnDangTinHtml} `;
+        authSection.html(html);
+    } else {
+        // Chưa đăng nhập -> Hiện nút Đăng nhập / Đăng ký
+        authSection.html(`
+            <button class="btn btn-outline-dark rounded-pill px-4 btn-sm fw-bold me-2" onclick="openAuthModal('login')">Đăng nhập</button>
+            <button class="btn btn-danger rounded-pill px-4 btn-sm fw-bold" onclick="openAuthModal('register')">Đăng ký</button>
+        `);
     }
+}
 
     window.logout = function() {
         if(confirm('Bạn muốn đăng xuất?')) {
